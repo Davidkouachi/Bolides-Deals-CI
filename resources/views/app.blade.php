@@ -25,7 +25,7 @@
     <div class="nk-app-root">
         <div class="nk-main ">
 
-            @if(request()->routeIs('index_accueil_bord') )
+            @if(request()->routeIs('index_accueil_bord','index_bord_marque') )
             <div class="nk-sidebar is-light nk-sidebar-fixed " data-content="sidebarMenu">
                 <div class="nk-sidebar-element nk-sidebar-head">
                     <div class="nk-sidebar-brand">
@@ -44,77 +44,15 @@
                         <div class="nk-sidebar-menu" data-simplebar="">
                             <ul class="nk-menu">
                                 <li class="nk-menu-item">
-                                    <a class="nk-menu-link" href="">
+                                    <a class="nk-menu-link" href="#">
                                         <span class="nk-menu-icon">
                                             <em class="icon ni ni-trend-up">
                                             </em>
                                         </span>
                                         <span class="nk-menu-text">
-                                            Tableau de bord
+                                            Tableau de Bord
                                         </span>
                                     </a>
-                                </li>
-                                <li class="nk-menu-item has-sub">
-                                    <a class="nk-menu-link nk-menu-toggle" href="#">
-                                        <span class="nk-menu-icon">
-                                            <em class="icon ni ni-list">
-                                            </em>
-                                        </span>
-                                        <span class="nk-menu-text">
-                                            Listes
-                                        </span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="">
-                                                <span class="nk-menu-text">
-                                                    Catégories
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="">
-                                                <span class="nk-menu-text">
-                                                    Sous-catégories
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="">
-                                                <span class="nk-menu-text">
-                                                    Villes
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="">
-                                                <span class="nk-menu-text">
-                                                    Communes
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="#">
-                                                <span class="nk-menu-text">
-                                                    Marque de voitures
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="#">
-                                                <span class="nk-menu-text">
-                                                    Marque de téléphones
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="#">
-                                                <span class="nk-menu-text">
-                                                    Marque d'ordinateurs
-                                                </span>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
                                 <li class="nk-menu-item">
                                     <a class="nk-menu-link" href="#">
@@ -128,13 +66,24 @@
                                     </a>
                                 </li>
                                 <li class="nk-menu-item">
+                                    <a class="nk-menu-link" href="{{route('index_bord_marque')}}">
+                                        <span class="nk-menu-icon">
+                                            <em class="icon ni ni-layout-fill">
+                                            </em>
+                                        </span>
+                                        <span class="nk-menu-text">
+                                            Marques de Véhicules
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
                                     <a class="nk-menu-link" href="#">
                                         <span class="nk-menu-icon">
                                             <em class="icon ni ni-building">
                                             </em>
                                         </span>
                                         <span class="nk-menu-text">
-                                            Entreprise / Magasin
+                                            Parcs Automobiles
                                         </span>
                                     </a>
                                 </li>
@@ -244,6 +193,7 @@
                                             </div>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-end">
+                                            @if(Auth::user())
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
                                                     <li>
@@ -252,6 +202,15 @@
                                                             </em>
                                                             <span>
                                                                 Voir profil
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <em class="icon ni ni-plus-circle">
+                                                            </em>
+                                                            <span>
+                                                                Parc Auto
                                                             </span>
                                                         </a>
                                                     </li>
@@ -269,7 +228,7 @@
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
                                                     <li>
-                                                        <a href="">
+                                                        <a href="{{route('deconnexion')}}">
                                                             <em class="icon ni ni-signout">
                                                             </em>
                                                             <span>
@@ -279,6 +238,7 @@
                                                     </li>
                                                 </ul>
                                             </div>
+                                            @else
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
                                                     <li>
@@ -301,6 +261,7 @@
                                                     </li>
                                                 </ul>
                                             </div>
+                                            @endif
                                         </div>
                                     </li>
                                 </ul>
@@ -350,9 +311,6 @@
         </li>
     </ul>
 
-        
-
-   
     <a class="pmo-st pmo-dark active bg-success" data-bs-toggle="modal" data-bs-target="#modalCommentaire" >
         <div class="pmo-st-img">
             <em class="icon ni ni-chat" style="font-size: 25px;"></em>
@@ -400,120 +358,60 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalSinscrire" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal fade" id="modalConnexion" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body bg-white rounded">
                     <div class="nk-block-head">
                         <div class="brand-logo pb-4 text-center">
                             <a class="logo-link">
-                                <img class="logo-dark logo-img logo-img-lg" src="{{asset('images/logo/logo.png')}}" srcset="{{asset('images/logo/logo.png')}}">
+                                <img height="200px" width="auto" class="logo-dark logo-img logo-img-lg" src="{{asset('images/logo/logo.png')}}" srcset="{{asset('images/logo/logo.png')}}">
                             </a>
                         </div>
                         <div class="nk-block-head-content">
-                            <h4 class="nk-block-title">Création de compte</h4>
+                            <h4 class="nk-block-title">Se connecter</h4>
                         </div>
                     </div>
-                    <form id="registre_sinscrire" class="" action="/auth_registre" method="post">
+                    <form id="registre_connexion" class="" action="{{route('trait_login')}}" method="post">
                         @csrf
-                        <div class="form-group">
-                            <label class="form-label">Nom et Prénoms</label>
-                            <div class="form-control-wrap">
-                                <input type="text" class="form-control form-control-md" name="nom" id="nom_sinscrire" placeholder="Entrer votre Nom et prénoms">
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label class="form-label">Email</label>
                             <div class="form-control-wrap">
-                                <input type="email" class="form-control form-control-md" name="email" id="email_sinscrire" placeholder="Entrer votre email">
+                                <input name="email" type="email" class="form-control form-control-md" id="email" placeholder="Entrer votre Email">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Contact</label>
-                            <div class="form-control-wrap mb-2">
-                                <input name="tel" id="tel_sinscrire" type="tel" class="form-control form-control-md" placeholder="Entrer votre contact" maxlength="10">
+                            <div class="form-label-group">
+                                <label class="form-label" for="password">Mot de passe</label>
+                                <a class="link link-primary link-sm" href="#">Mot de passe oublié ?</a>
                             </div>
-                            <div class="form-group">
-                                <ul class="custom-control-group g-3 align-center" id="checkboxGroup">
-                                    <li>
-                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                            <input name="sms" type="checkbox" class="custom-control-input" id="chat" value="oui">
-                                            <label class="custom-control-label" for="chat">
-                                                <span>Sms</span>
-                                                <em class="icon ni ni-chat"></em>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                            <input name="whatsapp" type="checkbox" class="custom-control-input" id="whatsapp" value="oui">
-                                            <label class="custom-control-label" for="whatsapp">
-                                                <span>Whatsapp</span>
-                                                <em class="icon ni ni-whatsapp"></em>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="custom-control custom-control-sm custom-checkbox">
-                                            <input name="appel" type="checkbox" class="custom-control-input" id="call" value="oui">
-                                            <label class="custom-control-label" for="call">
-                                                <span>Appel</span>
-                                                <em class="icon ni ni-call"></em>
-                                            </label>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <p id="errorMessage" style="color:red; display:none;">Veuillez sélectionner au moins une option.</p>
-                            </div>
-                            <script>
-                                var inputElement = document.getElementById('tel');
-                                inputElement.addEventListener('input', function() {
-                                    // Supprimer tout sauf les chiffres
-                                    this.value = this.value.replace(/[^0-9]/g, '');
-                                });
-                            </script>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Mot de passe</label>
                             <div class="form-control-wrap">
-                                <a href="#" class="form-icon form-icon-right passcode-switch md" data-target="password_sinscrire">
+                                <a href="#" class="form-icon form-icon-right passcode-switch md" data-target="password">
                                     <em class="passcode-icon icon-show icon ni ni-eye"></em>
                                     <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
                                 </a>
-                                <input name="password" type="password" class="form-control form-control-md" id="password_sinscrire" placeholder="Entrer votre mot de passe">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Confirmer le mot de passe</label>
-                            <div class="form-control-wrap">
-                                <a href="#" class="form-icon form-icon-right passcode-switch md" data-target="password2_sinscrire">
-                                    <em class="passcode-icon icon-show icon ni ni-eye"></em>
-                                    <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
-                                </a>
-                                <input name="password2" type="password" class="form-control form-control-md" id="password2_sinscrire" placeholder="Entrer a nouveau votre mot de passe">
+                                <input type="password" name="password" class="form-control form-control-md" id="password" placeholder="Entrer votre Mot de passe">
                             </div>
                         </div>
                         <div class="form-group row g-gs">
                             <div class="col-lg-6">
-                                <a data-bs-dismiss="modal" aria-label="Close" class="btn btn-md btn-white btn-outline-danger btn-block btn-dim ">
+                                <a data-bs-dismiss="modal" aria-label="Close" class="btn btn-md btn-white btn-dim btn-outline-danger btn-block">
                                     <em class="icon ni ni-cross-circle"></em>
                                     <span>Fermer</span>
                                 </a>
                             </div>
                             <div class="col-lg-6">
-                                <button type="submit" class="btn btn-md btn-white btn-outline-success btn-block btn-dim ">
-                                    <span>Création de compte</span>
+                                <button type="submit" class="btn btn-md btn-white btn-dim btn-outline-success btn-block" >
+                                    <span>Connexion</span>
                                     <em class="icon ni ni-arrow-right-circle"></em>
                                 </button>
                             </div>
                         </div>
                     </form>
                     <div class="form-note-s2 text-center pt-4">
-                        Vous avez déja un compte ?
-                        <a href="">
-                            <strong>Se connecter</strong>
-                        </a>
-                    </div>  
+                        Vous n'avez pas de compte ?
+                        <a class="" href="">Créer un compte</a>
+                    </div>
                 </div>
             </div>
         </div>

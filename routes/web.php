@@ -12,11 +12,7 @@ Route::get('/Annonces', [Controller::class, 'index_annonce'])->name('index_annon
 Route::post('/form_login', [AuthController::class, 'trait_login'])->name('trait_login');
 
 Route::middleware(['auth'])->group(function () {
-
-    /*--Deconnexion---*/
     Route::get('/Deconnexion', [AuthController::class, 'deconnexion'])->name('deconnexion');
-    /*------*/
-
 });
 
 Route::middleware(['role:ADMINISTRATEUR'])->group(function () {
@@ -24,5 +20,7 @@ Route::middleware(['role:ADMINISTRATEUR'])->group(function () {
 
     Route::get('/Tableau de Bord/Marques de véhicules', [BordController::class, 'index_bord_marque'])->name('index_bord_marque');
     Route::post('/Traitement marque', [BordController::class, 'trait_marque'])->name('trait_marque');
+    Route::post('/Supprimer marques', [BordController::class, 'suppr_marque'])->name('suppr_marque');
+    Route::post('/Update marque/{id}', [BordController::class, 'update_marque'])->name('update_marque');
 });
 

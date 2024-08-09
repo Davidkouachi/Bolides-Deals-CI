@@ -299,6 +299,7 @@
 
     
     <ul class="nk-sticky-toolbar">
+        @yield('btn_lateral')
         <li class="demo-thumb bg-white">
             <a class="tipinfo" href="" title="Nouvelle Annonce">
                 <em class="icon ni ni-plus-circle"></em>

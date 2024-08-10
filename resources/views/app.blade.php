@@ -331,7 +331,7 @@
     
 
     <div class="modal fade" tabindex="-1" id="modalCommentaire">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Nouvelle suggestion</h5>
@@ -340,6 +340,27 @@
                 <div class="modal-body">
                     <form id="form" method="POST" action="#" class="form-validate">
                         @csrf
+                        <div class="form-group">
+                            <label class="form-label" for="default-textarea">Nom</label>
+                            <div class="form-control-wrap">
+                                @if(Auth::user())
+                                    <input class="form-control" type="text" placeholder="Entrer votre nom" value="{{Auth::user()->name}}" />
+                                @else
+                                    <input class="form-control" type="text" placeholder="Entrer votre nom"/>
+                                @endif
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="default-textarea">Email</label>
+                            <div class="form-control-wrap">
+                                @if(Auth::user())
+                                    <input class="form-control" type="email" placeholder="Entrer votre email" value="{{Auth::user()->email}}"/>
+                                @else
+                                    <input class="form-control" type="email" placeholder="Entrer votre email"/>
+                                @endif
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="form-label" for="default-textarea">Suggestion</label>
                             <div class="form-control-wrap">

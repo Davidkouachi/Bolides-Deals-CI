@@ -32,7 +32,7 @@
 									            <a>
 									                <img id="imagePreview" style="object-fit: cover;height: 150px;" class="" src="" />
 									            </a>
-									            <ul class="product-badges" id="removeButton">
+									            <ul class="product-badges" id="removeButton" style="display: none;">
 									                <li>
 									                    <a class="btn btn-icon btn-danger btn-sm">
 									                        <em class="icon ni ni-cross"></em>

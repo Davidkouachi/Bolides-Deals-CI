@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Contact_user;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,9 +17,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $role_admin =Role::create(['nom' => 'ADMINISTRATEUR']);
-        $role_user =Role::create(['nom' => 'UTILISATEUR']);
+        $role_user =Role::create(['nom' => 'ACHETEUR']);
         $role_vendeur =Role::create(['nom' => 'VENDEUR']);
 
-        User::create(['name' => 'Admin','email' => 'admin@gmail.com','password' => bcrypt('Admin001'),'role_id' => $role_admin->id,]);
+        $admin = User::create(['name' => 'Admin','prenom' => 'admin','date_naissance' => '2000-08-10','email' => 'admin@gmail.com','password' => bcrypt('Admin001'),'role_id' => $role_admin->id,]);
+        Contact_user::create(['contact' => '0585782723','user_id' => $admin->id,]);
     }
 }

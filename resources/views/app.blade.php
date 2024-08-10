@@ -25,7 +25,7 @@
     <div class="nk-app-root">
         <div class="nk-main ">
 
-            @if(request()->routeIs('index_accueil_bord','index_bord_marque') )
+            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role') )
             <div class="nk-sidebar is-light nk-sidebar-fixed " data-content="sidebarMenu">
                 <div class="nk-sidebar-element nk-sidebar-head">
                     <div class="nk-sidebar-brand">
@@ -44,7 +44,7 @@
                         <div class="nk-sidebar-menu" data-simplebar="">
                             <ul class="nk-menu">
                                 <li class="nk-menu-item">
-                                    <a class="nk-menu-link" href="#">
+                                    <a class="nk-menu-link" href="{{route('index_accueil_bord')}}">
                                         <span class="nk-menu-icon">
                                             <em class="icon ni ni-trend-up">
                                             </em>
@@ -62,6 +62,17 @@
                                         </span>
                                         <span class="nk-menu-text">
                                             Utilisateurs
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a class="nk-menu-link" href="{{route('index_bord_role')}}">
+                                        <span class="nk-menu-icon">
+                                            <em class="icon ni ni-focus">
+                                            </em>
+                                        </span>
+                                        <span class="nk-menu-text">
+                                            Rôles
                                         </span>
                                     </a>
                                 </li>

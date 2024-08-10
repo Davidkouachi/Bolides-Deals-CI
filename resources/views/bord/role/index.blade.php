@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('titre', 'Marques de véhicules')
+@section('titre', 'Rôles')
 
 @section('content')
 
@@ -11,7 +11,7 @@
                 <div class="nk-block-head-between">
                     <div class="nk-block-head-content">
                         <h3 class="nk-block-title page-title">
-                            Marques de véhicules
+                            Rôles
                         </h3>
                     </div>
                 </div>
@@ -24,43 +24,19 @@
 			                    <div class="card-head">
 			                        <h5 class="card-title">Formulaire</h5>
 			                    </div>
-			                    <form id="form" action="{{route('trait_marque')}}" class="row g-gs" method="post" enctype="multipart/form-data">
+			                    <form id="form" action="{{route('trait_role')}}" class="row g-gs" method="post">
 			                    	@csrf
-			                    	<div class="col h-50" >
-									    <div class="">
-									        <div class="card" style="display: flex;justify-content: center;align-items: center;border:block; height: 150px;">
-									            <a>
-									                <img id="imagePreview" style="object-fit: cover;height: 150px;" class="" src="" />
-									            </a>
-									            <ul class="product-badges" id="removeButton">
-									                <li>
-									                    <a class="btn btn-icon btn-danger btn-sm">
-									                        <em class="icon ni ni-cross"></em>
-									                    </a>
-									                </li>
-									            </ul>
-									        </div>
-									    </div>
-									</div>
-
-                                    <div class="col-12" >
-					                    <div class="form-group">
-					                        <div class="form-control-wrap">
-					                            <input name="image" required type="file" id="imageInput" style="width:120px;" accept="image/*">
-					                        </div>
-					                    </div>
-				                    </div>
 				                    <div class="col-12" >
 					                    <div class="form-group">
 					                        <div class="form-control-wrap">
-					                            <input name="marque" class="form-control" required type="text" oninput="this.value = this.value.toUpperCase()" placeholder="Entrer la Marque"/>
+					                            <input name="role" class="form-control" required type="text" oninput="this.value = this.value.toUpperCase()" placeholder="Entrer la Marque"/>
 					                        </div>
 					                    </div>
 				                    </div>
 				                    <div class="col-12" >
 				                        <div class="form-group row g-gs">
 	                                        <div class="col-6 text-center">
-	                                            <button type="reset" class="btn btn-mw btn-dim btn-outline-danger btn-white" id="btn_reset">
+	                                            <button type="reset" class="btn btn-mw btn-dim btn-outline-danger btn-white">
 	                                                <em class="icon ni ni-plus-circle"></em>
 	                                                <span>Remise à Zéro</span>
 	                                            </button>
@@ -82,9 +58,13 @@
             <div class="nk-block">
 			    <div class="card card-preview">
 			        <div class="card-inner">
-			        	<form id="deleteForm" action="{{route('suppr_marque')}}" method="POST">
+			        	<form id="deleteForm" action="{{route('suppr_role')}}" method="POST">
 			        		@csrf
 				            <table class="datatable-init table">
+				            	<a id="allcheckbox" class="me-2 btn btn-white btn-dim btn-outline-primary btn-sm mb-2">
+	                                <em class="icon ni ni-check" ></em>
+	                                <span>Tout selectionné</span>
+	                            </a>
 	                            <a id="deleteButton" class="btn btn-white btn-dim btn-outline-danger btn-sm mb-2">
 	                                <em class="icon ni ni-trash" ></em>
 	                                <span>Supprimer</span>
@@ -92,23 +72,16 @@
 				                <thead>
 				                    <tr>
 				                        <th style="width: 50px;">
-				                        	<div class=" d-flex">
-				                        		
-	                                            <div class="custom-control me-1 custom-control-sm custom-checkbox notext">
-	                                            	<input type="checkbox" class="custom-control-input" id="pid">
-	                                            	<label class="custom-control-label" for="pid"></label>
-	                                            </div>
-	                                            <span>N°</span>
-	                                        </div>
+				                        	N°
 				                        </th>
-				                        <th style="width: 100px;">Image</th>
-				                        <th>Marque</th>
+				                        <th>Rôle</th>
+				                        <th>Nombre d'utilisateurs</th>
 				                        <th>Date de création</th>
 				                        <th></th>
 				                    </tr>
 				                </thead>
 				                <tbody>
-				                	@foreach($marques as $key => $value)
+				                	@foreach($roles as $key => $value)
 				                    <tr>
 				                        <td class="nk-tb-col " style="width: 50px;" >
 				                        	<div class="d-flex">
@@ -119,13 +92,11 @@
 	                                            <spany>{{ $key+1}}</span>
 	                                        </div>
 				                        </td>
-				                        <td class="nk-tb-col" style="width: 100px;" >
-	                                        <div class="user-avatar md sq" style="background: transparent;">
-	                                            <img src="{{asset('storage/images/'.$value->image_nom)}}" alt="{{$value->marque}}" class="thumb">
-	                                        </div>
+				                        <td class="nk-tb-col" >
+				                        	{{ $value->nom}}
 				                        </td>
 				                        <td class="nk-tb-col" >
-				                        	{{ $value->marque}}
+				                        	{{ $value->nbre_user}}
 				                        </td>
 				                        <td class="nk-tb-col" >
 				                        	{{ \Carbon\Carbon::parse($value->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}
@@ -177,7 +148,7 @@
 
 @endsection
 
-@foreach ($marques as $value)
+@foreach ($roles as $value)
 <div class="modal fade xxl" tabindex="-1" id="modalUpdate{{ $value->id }}" aria-modal="true" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content ">
@@ -187,35 +158,12 @@
                 </h5>
             </div>
             <div class="modal-body modal-body-lg">
-                <form id="form" action="{{route('update_marque',$value->id)}}" class="row g-gs" method="post" enctype="multipart/form-data">
+                <form id="form" action="{{route('update_role',$value->id)}}" class="row g-gs" method="post">
 				    @csrf
-				    <div class="col h-50">
-				        <div class="">
-				            <div class="card" style="display: flex;justify-content: center;align-items: center;border:block; height: 150px;">
-				                <a>
-				                    <img id="imagePreview{{$value->id}}" style="object-fit: cover;height: 150px;" class="" src="" />
-				                </a>
-				                <ul class="product-badges" id="removeButton{{$value->id}}">
-				                    <li>
-				                        <a class="btn btn-icon btn-danger btn-sm">
-				                            <em class="icon ni ni-cross"></em>
-				                        </a>
-				                    </li>
-				                </ul>
-				            </div>
-				        </div>
-				    </div>
 				    <div class="col-12">
 				        <div class="form-group">
 				            <div class="form-control-wrap">
-				                <input name="image" type="file" id="imageInput{{$value->id}}" style="width:120px;" accept="image/*">
-				            </div>
-				        </div>
-				    </div>
-				    <div class="col-12">
-				        <div class="form-group">
-				            <div class="form-control-wrap">
-				                <input name="marque" class="form-control" required type="text" oninput="this.value = this.value.toUpperCase()" value="{{$value->marque}}" placeholder="Entrer la Marque" />
+				                <input name="role" class="form-control" required type="text" oninput="this.value = this.value.toUpperCase()" value="{{$value->nom}}" placeholder="Entrer la Marque" />
 				            </div>
 				        </div>
 				    </div>
@@ -242,78 +190,90 @@
 </div>
 @endforeach
 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const allcheckbox = document.getElementById('allcheckbox');
+        const checkboxes = document.querySelectorAll('input[name="checkboxes[]"]');
+
+        // Store the roles' user counts in a JavaScript object for quick access
+        const rolesUserCounts = {
+            @foreach($roles as $value)
+                '{{ $value->id }}': {{ $value->nbre_user }},
+            @endforeach
+        };
+
+        allcheckbox.addEventListener('click', function() {
+            let Count = 0;
+
+            checkboxes.forEach(function(checkbox) {
+                const roleId = checkbox.value;
+                const nbreUser = rolesUserCounts[roleId];
+
+                if (nbreUser > 0) {
+                    checkbox.checked = false; // Uncheck the checkbox
+                    Count++; // Increment the count of unchecked boxes
+                } else {
+                    checkbox.checked = true; // Ensure it's checked if nbreUser <= 0
+                }
+            });
+
+            // Show warning if any checkboxes were unchecked due to existing users
+            if (Count > 0) {
+                NioApp.Toast("<h5>Information</h5><p>Toutes les cases ne peuvent pas être sélectionnées parce qu'il y a certains rôles qui sont déjà occupés.</p>", "info", {position: "top-right"});
+            }else {
+                NioApp.Toast("<h5>Information</h5><p>Toutes les cases ont été sélectionnées.</p>", "success", {position: "top-right"});
+            }
+        });
+    });
+</script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @foreach($roles as $key => $value)
+        const checkbox{{ $value->id }} = document.getElementById('checkbox{{ $value->id }}');
+
+        if (checkbox{{ $value->id }}) {
+            checkbox{{ $value->id }}.addEventListener('change', function() {
+                const nbreUser = {{ $value->nbre_user }};
+
+                if (nbreUser > 0) {
+                    NioApp.Toast("<h5>Alert</h5><p>Le nombre d\'utilisateurs pour ce rôle est supérieur a zéro. Ce rôle ne peut pas être sélectionné.</p>", "warning", {position: "top-right"});
+                    checkbox{{ $value->id }}.checked = false;
+                }
+            });
+        }
+        @endforeach
+    });
+</script>
+
+
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
-	    const selectAllCheckbox = document.getElementById('pid');
+	    const deleteButton = document.getElementById('deleteButton');
 	    const checkboxes = document.querySelectorAll('input[name="checkboxes[]"]');
 
-	    selectAllCheckbox.addEventListener('change', function() {
+	    deleteButton.addEventListener('click', function() {
+	        let checked = false;
+
 	        checkboxes.forEach(function(checkbox) {
-	            checkbox.checked = selectAllCheckbox.checked;
+	            if (checkbox.checked) {
+	                checked = true;
+	            }
 	        });
+
+	        if (checked) {
+	            // Au moins un checkbox est coché, ouvrir le modal de suppression
+	            const modalDelete = new bootstrap.Modal(document.getElementById('modalDelete'));
+	            modalDelete.show();
+	        } else {
+	            // Aucun checkbox n'est coché, afficher un message d'alerte
+	            NioApp.Toast("<h5>Information</h5><p>Veuillez sélectionner une marque SVP !!! .</p>", "info", {position: "top-right"});
+	        }
 	    });
 	});
 </script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const deleteButton = document.getElementById('deleteButton');
-    const checkboxes = document.querySelectorAll('input[name="checkboxes[]"]');
-
-    deleteButton.addEventListener('click', function() {
-        let checked = false;
-
-        checkboxes.forEach(function(checkbox) {
-            if (checkbox.checked) {
-                checked = true;
-            }
-        });
-
-        if (checked) {
-            // Au moins un checkbox est coché, ouvrir le modal de suppression
-            const modalDelete = new bootstrap.Modal(document.getElementById('modalDelete'));
-            modalDelete.show();
-        } else {
-            // Aucun checkbox n'est coché, afficher un message d'alerte
-            NioApp.Toast("<h5>Information</h5><p>Veuillez sélectionner une marque SVP !!! .</p>", "info", {position: "top-right"});
-        }
-    });
-});
-</script>
-
-<script>
-	document.addEventListener('DOMContentLoaded', function() {
-	    @foreach ($marques as $value)
-		    const fileInput{{ $value->id }} = document.getElementById('imageInput{{ $value->id }}');
-		    const imagePreview{{ $value->id }} = document.getElementById('imagePreview{{ $value->id }}');
-		    const removeButton{{ $value->id }} = document.getElementById('removeButton{{ $value->id }}');
-
-		    fileInput{{ $value->id }}.addEventListener('change', function(event) {
-		        const file = event.target.files[0];
-		        if (file) {
-		            const reader = new FileReader();
-		            reader.onload = function(e) {
-		                imagePreview{{ $value->id }}.src = e.target.result;
-		                removeButton{{ $value->id }}.style.display = 'block';
-		                fileInput{{ $value->id }}.style.display = 'none';
-		            }
-		            reader.readAsDataURL(file);
-		        }
-		    });
-
-		    removeButton{{ $value->id }}.addEventListener('click', function() {
-		        imagePreview{{ $value->id }}.src = ''; // Réinitialiser l'image
-		        fileInput{{ $value->id }}.value = ''; // Réinitialiser l'input file
-		        removeButton{{ $value->id }}.style.display = 'none'; // Masquer le bouton
-		        fileInput{{ $value->id }}.style.display = 'block'; // Réafficher l'input file
-		    });
-
-		    // Masquer le bouton au début
-		    removeButton{{ $value->id }}.style.display = 'none';
-	    @endforeach
-	});
-</script>
-
-<script src="{{asset('assets/js/app/js/download_image_marque_vehicule.js') }}"></script>
 
 @endsection

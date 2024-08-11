@@ -5,19 +5,19 @@ document.getElementById("registre_connexion").addEventListener("submit", functio
     var password = document.getElementById("password").value;
 
     if (!login || !password) {
-        NioApp.Toast("<h5>Alert</h5><p>Veuillez remplir tous les champs.</p>", "warning", { position: "top-right" });
+        NioApp.Toast("<h5>Alert</h5><p>Veuillez remplir tous les champs.</p>", "warning", { position: "top-center" });
         return false;
     }
 
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     var phoneRegex = /^[0-9]{10}$/;
     if (!emailRegex.test(login) && !phoneRegex.test(login)) {
-        NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une adresse e-mail ou un numéro de téléphone valide.</p>", "info", { position: "top-right" });
+        NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une adresse e-mail ou un numéro de téléphone valide.</p>", "info", { position: "top-center" });
         return false;
     }
 
     if (!verifierMotDePasse(password)) {
-        NioApp.Toast("<h5>Information</h5><p>Le mot de passe doit comporter au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.</p>", "error", { position: "top-right" });
+        NioApp.Toast("<h5>Information</h5><p>Le mot de passe doit comporter au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.</p>", "error", { position: "top-center" });
         return false;
     }
 

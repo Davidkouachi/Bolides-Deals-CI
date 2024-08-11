@@ -107,7 +107,7 @@
                         <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6 filter-item categorie-1" data-category="categorie-1">
                             <div class="card ">
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
-                                    <a href=" ">
+                                    <a href="{{route('index_detail')}}">
                                         <img style="object-fit: cover;height: 160px; width:auto;" src="{{asset('images/logo/selects/car.jpg')}}" />
                                     </a>
                                     <ul class="product-badges">
@@ -129,7 +129,7 @@
                                         </li>
                                     </ul>
                                     <p class="product-title text-dark fs-12px" style="margin-top: -5px;">
-                                        <a href="">
+                                        <a href="{{route('index_detail')}}">
                                             Classy Modern Smart watch Classy Modern Smart watch
                                             {{-- <div class="nk-ibx-context-group">
                                                 <div class="nk-ibx-context">
@@ -150,7 +150,7 @@
                         <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6 filter-item categorie-2" data-category="categorie-2">
                             <div class="card ">
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
-                                    <a href=" ">
+                                    <a href="{{route('index_detail')}}">
                                         <img style="object-fit: cover;height: 160px; width:auto;" src="{{asset('images/logo/selects/car.jpg')}}" />
                                     </a>
                                     <ul class="product-badges">
@@ -172,7 +172,7 @@
                                         </li>
                                     </ul>
                                     <p class="product-title text-dark fs-12px" style="margin-top: -5px;">
-                                        <a href="">
+                                        <a href="{{route('index_detail')}}">
                                             Classy Modern Smart watch Classy Modern Smart watch
                                             {{-- <div class="nk-ibx-context-group">
                                                 <div class="nk-ibx-context">

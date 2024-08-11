@@ -17,19 +17,19 @@
                                         <img height="200" width="200" src="{{asset('images/logo/logo.png')}}">
                                     </div>
                             </div>
-                            <div class="col-lg-12">
-                                <div class="form-group bg-primary rounded " style="padding: 15px 10px 0px 10px;">
-                                    <marquee behavior="" direction="">
-                                        <label class="form-label">
-                                            <span class="text-white">
-                                                Conseils de sécurité :
-                                            </span>
-                                            <span class="text-white">
-                                                1- N'envoyer pas de paiement sans avoir vérifié la produit ou l'identité du vendeur, 2- N'utilisez pas de myens de transfert d'argent, de virement bancaire ou tout autre moyen pour envoyer de l'argent au vendeur, 3- Rencontrer de préference le vendeur dans un lieu public fréquenté.
-                                            </span>
-                                        </label>
-                                    </marquee>
-                                </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group bg-primary rounded " style="padding: 15px 10px 0px 10px;">
+                                <marquee behavior="" direction="">
+                                    <label class="form-label">
+                                        <span class="text-white">
+                                            Conseils de sécurité :
+                                        </span>
+                                        <span class="text-white">
+                                            1- N'envoyer pas de paiement sans avoir vérifié la produit ou l'identité du vendeur, 2- N'utilisez pas de myens de transfert d'argent, de virement bancaire ou tout autre moyen pour envoyer de l'argent au vendeur, 3- Rencontrer de préference le vendeur dans un lieu public fréquenté.
+                                        </span>
+                                    </label>
+                                </marquee>
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                         <div class="col ">
                             <div class="card ">
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
-                                    <a href=" ">
+                                    <a href="{{route('index_detail')}}">
                                         <img class="rounded" style="object-fit: cover;height: 160px; width:auto;" src="{{asset('images/logo/selects/car.jpg')}}" />
                                     </a>
                                     <ul class="product-badges">
@@ -103,7 +103,7 @@
                                         </li>
                                     </ul>
                                     <p class="product-title text-dark fs-12px" style="margin-top: -5px;">
-                                        <a href="">
+                                        <a href="{{route('index_detail')}}">
                                             Classy Modern Smart watch Classy Modern Smart watch
                                             {{-- <div class="nk-ibx-context-group">
                                                 <div class="nk-ibx-context">

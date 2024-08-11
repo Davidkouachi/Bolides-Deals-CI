@@ -14,13 +14,4 @@ class Controller
         return view('index',['marques' => $marques]);
     }
 
-    public function index_accueil_vehicule()
-    {
-        return view('vehicule.accueil.index');
-    }
-
-    public function index_annonce()
-    {
-        return view('vehicule.annonce.index');
-    }
 }

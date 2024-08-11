@@ -52,4 +52,9 @@ class BordController extends Controller
         return view('bord.user.index',['users' => $users]);
     }
 
+    public function index_bord_sugg()
+    {
+        return view('bord.suggestion.index');
+    }
+
 }

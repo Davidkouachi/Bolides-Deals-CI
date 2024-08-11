@@ -111,7 +111,7 @@
                                             <div class="col-lg-6 text-center">
                                                 <a href="javascript:void(0);" onclick="history.back()" class="btn btn-md btn-white btn-dim btn-outline-danger btn-block">
                                                     <em class="icon ni ni-arrow-left-circle"></em>
-                                                    <span>Accueil</span>
+                                                    <span>Retour</span>
                                                 </a>
                                             </div>
                                             <div class="col-lg-6 text-center">

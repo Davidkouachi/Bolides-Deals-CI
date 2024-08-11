@@ -8,7 +8,7 @@
     <meta content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers." name="description">
     <link href="{{asset('images/logo/icon/logo.ico')}}" rel="shortcut icon">
     <title>
-        @yield('titre')
+        @yield('titre') | BOLIDES DEALS CI
     </title>
     <link href="{{asset('assets/css/dashlite55a0.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/theme55a0.css')}}" id="skin-default" rel="stylesheet">
@@ -25,7 +25,7 @@
     <div class="nk-app-root">
         <div class="nk-main ">
 
-            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role','index_bord_user') )
+            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role','index_bord_user','index_bord_sugg') )
             <div class="nk-sidebar is-light nk-sidebar-fixed " data-content="sidebarMenu">
                 <div class="nk-sidebar-element nk-sidebar-head">
                     <div class="nk-sidebar-brand">
@@ -98,6 +98,17 @@
                                         </span>
                                     </a>
                                 </li>
+                                <li class="nk-menu-item">
+                                    <a class="nk-menu-link" href="{{route('index_bord_sugg')}}">
+                                        <span class="nk-menu-icon">
+                                            <em class="icon ni ni-contact">
+                                            </em>
+                                        </span>
+                                        <span class="nk-menu-text">
+                                            Suggestions
+                                        </span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -110,7 +121,7 @@
                     <div class="container-xl wide-xl">
                         <div class="nk-header-wrap">
 
-                            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role','index_bord_user') )
+                            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role','index_bord_user','index_bord_sugg') )
                             <div class="nk-menu-trigger d-xl-none ms-n1 me-3">
                                 <a class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu" href="#">
                                     <em class="icon ni ni-menu">
@@ -127,7 +138,6 @@
                             </div>                           
                             <div class="nk-header-tools">
                                 <ul class="nk-quick-nav">
-                                    @if(!request()->routeIs('message_lock') )
                                     <li class="dropdown notification-dropdown">
                                         <a class=" nk-quick-nav-icon" href="{{route('index_accueil')}}">
                                             <em class="icon ni ni-home"></em>
@@ -140,7 +150,7 @@
                                             <span class="fs-15px"></span>
                                         </a>
                                     </li>
-                                    @if(Auth::user())
+                                    @auth()
                                     <li class="dropdown notification-dropdown">
                                         <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
                                             <div class="icon-status icon-status-info">
@@ -196,8 +206,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    @endif
-                                    @endif
+                                    @endauth
                                     <li class="dropdown user-dropdown">
                                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#">
                                             <div class="user-toggle">
@@ -209,39 +218,37 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-end">
                                             @if(Auth::user())
-                                                @if(!request()->routeIs('message_lock') )
-                                                <div class="dropdown-inner">
-                                                    <ul class="link-list">
-                                                        <li>
-                                                            <a href="">
-                                                                <em class="icon ni ni-user-alt">
-                                                                </em>
-                                                                <span>
-                                                                    Voir profil
-                                                                </span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="">
-                                                                <em class="icon ni ni-plus-circle">
-                                                                </em>
-                                                                <span>
-                                                                    Parc Auto
-                                                                </span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="{{route('index_accueil_bord')}}">
-                                                                <em class="icon ni ni-setting">
-                                                                </em>
-                                                                <span>
-                                                                    Configuration
-                                                                </span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                @endif
+                                            <div class="dropdown-inner">
+                                                <ul class="link-list">
+                                                    <li>
+                                                        <a href="{{route('index_profil')}}">
+                                                            <em class="icon ni ni-user-alt">
+                                                            </em>
+                                                            <span>
+                                                                Voir profil
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <em class="icon ni ni-plus-circle">
+                                                            </em>
+                                                            <span>
+                                                                Parc Auto
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{route('index_accueil_bord')}}">
+                                                            <em class="icon ni ni-setting">
+                                                            </em>
+                                                            <span>
+                                                                Configuration
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
                                                     <li>
@@ -303,7 +310,7 @@
                                         Conseils de sécurité :
                                     </span>
                                     <span class="" >
-                                        1- N'envoyer pas de paiement sans avoir vérifié la produit ou l'identité du vendeur, 2- N'utilisez pas de myens de transfert d'argent, de virement bancaire ou tout autre moyen pour envoyer de l'argent au vendeur, 3- Rencontrer de préference le vendeur dans un lieu public fréquenté.
+                                        1- N'envoyer pas de paiement sans avoir vérifié le véhicule ou l'identité du vendeur, 2- Rencontrer de préference le vendeur dans un lieu public fréquenté ou dans un parc automobile, 3- Etre accompagner de son mecanicien, pour des vérifications approfondie du véhicule.
                                     </span>
                                 </marquee>
                             </div>

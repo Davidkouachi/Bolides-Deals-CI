@@ -7,10 +7,12 @@ use App\Http\Controllers\BordController;
 use App\Http\Controllers\MarqueController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\LockController;
+use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\AnnonceController;
 
 Route::get('/', [Controller::class, 'index_accueil'])->name('index_accueil');
-Route::get('/Véhicules', [Controller::class, 'index_accueil_vehicule'])->name('index_accueil_vehicule');
-Route::get('/Annonces', [Controller::class, 'index_annonce'])->name('index_annonce');
+Route::get('/Annonces', [AnnonceController::class, 'index_annonce'])->name('index_annonce');
+Route::get('/Détail Annonces', [AnnonceController::class, 'index_detail'])->name('index_detail');
 
 Route::get('/Login', [AuthController::class, 'index_login'])->name('index_login');
 Route::get('/Registre', [AuthController::class, 'index_registre'])->name('index_registre');
@@ -20,10 +22,13 @@ Route::post('/form_registre', [AuthController::class, 'trait_registre'])->name('
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/Deconnexion', [AuthController::class, 'deconnexion'])->name('deconnexion');
+
+    Route::get('/Profil', [ProfilController::class, 'index_profil'])->name('index_profil');
 });
 
 Route::middleware(['role:ADMINISTRATEUR'])->group(function () {
     Route::get('/Tableau de Bord', [BordController::class, 'index_accueil_bord'])->name('index_accueil_bord');
+    Route::get('/Tableau de Bord/Suggestions', [BordController::class, 'index_bord_sugg'])->name('index_bord_sugg');
 
     Route::get('/Tableau de Bord/Marques de véhicules', [BordController::class, 'index_bord_marque'])->name('index_bord_marque');
     Route::post('/Traitement marque', [MarqueController::class, 'trait_marque'])->name('trait_marque');

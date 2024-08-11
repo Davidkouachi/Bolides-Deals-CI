@@ -22,8 +22,15 @@
 			            <div class="card h-100">
 			                <div class="card-inner">
 			                    <div class="card-head">
-			                        <h5 class="card-title">Formulaire</h5>
+			                        <h5 class="card-title">
+			                        	<span>Formulaire</span>
+			                        </h5>			                        
 			                    </div>
+			                    <span class="text-warning " >
+			                        <marquee>
+			                        	Il est préférable de choisir une photo avec un fond transparent ou blanc
+			                        </marquee>
+			                    </span>
 			                    <form id="form" action="{{route('trait_marque')}}" class="row g-gs" method="post" enctype="multipart/form-data">
 			                    	@csrf
 			                    	<div class="col h-50" >
@@ -61,7 +68,7 @@
 				                        <div class="form-group row g-gs">
 	                                        <div class="col-6 text-center">
 	                                            <button type="reset" class="btn btn-mw btn-dim btn-outline-danger btn-white" id="btn_reset">
-	                                                <em class="icon ni ni-plus-circle"></em>
+	                                                <em class="icon ni ni-cross-circle"></em>
 	                                                <span>Remise à Zéro</span>
 	                                            </button>
 	                                        </div>

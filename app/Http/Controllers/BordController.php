@@ -43,4 +43,13 @@ class BordController extends Controller
         return view('bord.role.index',['roles' => $roles]);
     }
 
+    public function index_bord_user()
+    {
+        $users = User::join('roles', 'users.role_id', 'roles.id')
+                    ->select('users.*','roles.nom as role')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+        return view('bord.user.index',['users' => $users]);
+    }
+
 }

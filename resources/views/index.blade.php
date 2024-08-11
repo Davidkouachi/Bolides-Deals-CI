@@ -16,7 +16,6 @@
                                     <div class="card-inner text-center rounded">
                                         <img height="200" width="200" src="{{asset('images/logo/logo.png')}}">
                                     </div>
-                                </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group bg-primary rounded " style="padding: 15px 10px 0px 10px;">

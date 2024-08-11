@@ -17,10 +17,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $role_admin =Role::create(['nom' => 'ADMINISTRATEUR']);
-        $role_user =Role::create(['nom' => 'ACHETEUR']);
+        $role_acheteur =Role::create(['nom' => 'ACHETEUR']);
         $role_vendeur =Role::create(['nom' => 'VENDEUR']);
 
-        $admin = User::create(['name' => 'Admin','prenom' => 'admin','date_naissance' => '2000-08-10','email' => 'admin@gmail.com','password' => bcrypt('Admin001'),'role_id' => $role_admin->id,]);
-        Contact_user::create(['contact' => '0585782723','user_id' => $admin->id,]);
+        $admin = User::create(['name' => 'Admin','prenom' => 'admin','phone' => '0585782723','lock' => 'non','email' => 'admin@gmail.com','password' => bcrypt('Admin001'),'role_id' => $role_admin->id,]);
+
+        $acheteur = User::create(['name' => 'Acheteur','prenom' => 'acheteur','phone' => '0585782724','lock' => 'non','email' => 'acheteur@gmail.com','password' => bcrypt('Acheteur001'),'role_id' => $role_acheteur->id,]);
+        
+        $vendeur = User::create(['name' => 'Vender','prenom' => 'vendeur','phone' => '0585782725','lock' => 'non','email' => 'vendeur@gmail.com','password' => bcrypt('Vendeur001'),'role_id' => $role_vendeur->id,]);
+
     }
 }

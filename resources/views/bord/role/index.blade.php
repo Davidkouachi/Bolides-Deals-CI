@@ -37,7 +37,7 @@
 				                        <div class="form-group row g-gs">
 	                                        <div class="col-6 text-center">
 	                                            <button type="reset" class="btn btn-mw btn-dim btn-outline-danger btn-white">
-	                                                <em class="icon ni ni-plus-circle"></em>
+	                                                <em class="icon ni ni-cross-circle"></em>
 	                                                <span>Remise à Zéro</span>
 	                                            </button>
 	                                        </div>

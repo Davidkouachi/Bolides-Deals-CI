@@ -12,7 +12,6 @@ class RoleMiddleware
 {
     public function handle($request, Closure $next, $role)
     {
-        // Vérifiez si l'utilisateur est authentifié
         if (!Auth::check()) {
             return redirect()->route('index_accueil')->with('error', 'Vous devez être connecté pour accéder à cette page.');
         }
@@ -25,11 +24,14 @@ class RoleMiddleware
         // Vérifiez le rôle de l'utilisateur
         if ($user->role !== $role) {
             return redirect()->route('index_accueil')->with('error', 'Vous n\'avez pas les permissions nécessaires pour accéder à cette page.');
+            // abort(403, 'Accès non autorisée.');
         }
 
         // Passe la requête au prochain middleware/handler
         return $next($request);
     }
 }
+
+
 
 

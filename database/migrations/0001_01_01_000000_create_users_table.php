@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('prenom');
-            $table->string('date_naissance');
+            $table->string('phone');
             $table->string('email')->unique();
+            $table->string('lock');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->unsignedBigInteger('role_id');

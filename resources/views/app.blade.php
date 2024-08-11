@@ -25,7 +25,7 @@
     <div class="nk-app-root">
         <div class="nk-main ">
 
-            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role') )
+            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role','index_bord_user') )
             <div class="nk-sidebar is-light nk-sidebar-fixed " data-content="sidebarMenu">
                 <div class="nk-sidebar-element nk-sidebar-head">
                     <div class="nk-sidebar-brand">
@@ -55,7 +55,7 @@
                                     </a>
                                 </li>
                                 <li class="nk-menu-item">
-                                    <a class="nk-menu-link" href="#">
+                                    <a class="nk-menu-link" href="{{route('index_bord_user')}}">
                                         <span class="nk-menu-icon">
                                             <em class="icon ni ni-user-list">
                                             </em>
@@ -110,7 +110,7 @@
                     <div class="container-xl wide-xl">
                         <div class="nk-header-wrap">
 
-                            @if(request()->routeIs('index_accueil_bord') )
+                            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role','index_bord_user') )
                             <div class="nk-menu-trigger d-xl-none ms-n1 me-3">
                                 <a class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu" href="#">
                                     <em class="icon ni ni-menu">
@@ -127,6 +127,7 @@
                             </div>                           
                             <div class="nk-header-tools">
                                 <ul class="nk-quick-nav">
+                                    @if(!request()->routeIs('message_lock') )
                                     <li class="dropdown notification-dropdown">
                                         <a class=" nk-quick-nav-icon" href="{{route('index_accueil')}}">
                                             <em class="icon ni ni-home"></em>
@@ -139,6 +140,7 @@
                                             <span class="fs-15px"></span>
                                         </a>
                                     </li>
+                                    @if(Auth::user())
                                     <li class="dropdown notification-dropdown">
                                         <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
                                             <div class="icon-status icon-status-info">
@@ -194,6 +196,8 @@
                                             </div>
                                         </div>
                                     </li>
+                                    @endif
+                                    @endif
                                     <li class="dropdown user-dropdown">
                                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#">
                                             <div class="user-toggle">
@@ -205,37 +209,39 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-end">
                                             @if(Auth::user())
-                                            <div class="dropdown-inner">
-                                                <ul class="link-list">
-                                                    <li>
-                                                        <a href="">
-                                                            <em class="icon ni ni-user-alt">
-                                                            </em>
-                                                            <span>
-                                                                Voir profil
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="">
-                                                            <em class="icon ni ni-plus-circle">
-                                                            </em>
-                                                            <span>
-                                                                Parc Auto
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{route('index_accueil_bord')}}">
-                                                            <em class="icon ni ni-setting">
-                                                            </em>
-                                                            <span>
-                                                                Configuration
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                                @if(!request()->routeIs('message_lock') )
+                                                <div class="dropdown-inner">
+                                                    <ul class="link-list">
+                                                        <li>
+                                                            <a href="">
+                                                                <em class="icon ni ni-user-alt">
+                                                                </em>
+                                                                <span>
+                                                                    Voir profil
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="">
+                                                                <em class="icon ni ni-plus-circle">
+                                                                </em>
+                                                                <span>
+                                                                    Parc Auto
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{{route('index_accueil_bord')}}">
+                                                                <em class="icon ni ni-setting">
+                                                                </em>
+                                                                <span>
+                                                                    Configuration
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                @endif
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
                                                     <li>
@@ -253,7 +259,7 @@
                                             <div class="dropdown-inner">
                                                 <ul class="link-list">
                                                     <li>
-                                                        <a data-bs-toggle="modal" data-bs-target="#modalSinscrire">
+                                                        <a href="{{route('index_registre')}}">
                                                             <em class="icon ni ni-user-add">
                                                             </em>
                                                             <span>
@@ -262,7 +268,7 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a data-bs-toggle="modal" data-bs-target="#modalConnexion">
+                                                        <a href="{{route('index_login')}}">
                                                             <em class="icon ni ni-lock">
                                                             </em>
                                                             <span>
@@ -308,7 +314,7 @@
         </div>
     </div>
 
-    
+    @if(!request()->routeIs('message_lock') )  
     <ul class="nk-sticky-toolbar">
         @yield('btn_lateral')
         <li class="demo-thumb bg-white">
@@ -322,13 +328,13 @@
             </a>
         </li>
     </ul>
+    @endif
 
     <a class="pmo-st pmo-dark active bg-success" data-bs-toggle="modal" data-bs-target="#modalCommentaire" >
         <div class="pmo-st-img">
             <em class="icon ni ni-chat" style="font-size: 25px;"></em>
         </div>
     </a>
-    
 
     <div class="modal fade" tabindex="-1" id="modalCommentaire">
         <div class="modal-dialog modal-md" role="document">
@@ -338,13 +344,13 @@
                     <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
                 </div>
                 <div class="modal-body">
-                    <form id="form" method="POST" action="#" class="form-validate">
+                    <form method="POST" action="#" class="form-validate">
                         @csrf
                         <div class="form-group">
                             <label class="form-label" for="default-textarea">Nom</label>
                             <div class="form-control-wrap">
                                 @if(Auth::user())
-                                    <input class="form-control" type="text" placeholder="Entrer votre nom" value="{{Auth::user()->name}}" />
+                                    <input class="form-control" disabled type="text" placeholder="Entrer votre nom" value="{{Auth::user()->name}}" />
                                 @else
                                     <input class="form-control" type="text" placeholder="Entrer votre nom"/>
                                 @endif
@@ -355,7 +361,7 @@
                             <label class="form-label" for="default-textarea">Email</label>
                             <div class="form-control-wrap">
                                 @if(Auth::user())
-                                    <input class="form-control" type="email" placeholder="Entrer votre email" value="{{Auth::user()->email}}"/>
+                                    <input class="form-control" disabled type="email" placeholder="Entrer votre email" value="{{Auth::user()->email}}"/>
                                 @else
                                     <input class="form-control" type="email" placeholder="Entrer votre email"/>
                                 @endif
@@ -391,127 +397,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalConnexion" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body bg-white rounded">
-                    <div class="nk-block-head">
-                        <div class="brand-logo pb-4 text-center">
-                            <a class="logo-link">
-                                <img height="200px" width="auto" class="logo-dark logo-img logo-img-lg" src="{{asset('images/logo/logo.png')}}" srcset="{{asset('images/logo/logo.png')}}">
-                            </a>
-                        </div>
-                        <div class="nk-block-head-content">
-                            <h4 class="nk-block-title">Se connecter</h4>
-                        </div>
-                    </div>
-                    <form id="registre_connexion" class="" action="{{route('trait_login')}}" method="post">
-                        @csrf
-                        <div class="form-group">
-                            <label class="form-label">Email</label>
-                            <div class="form-control-wrap">
-                                <input name="email" type="email" class="form-control form-control-md" id="email" placeholder="Entrer votre Email">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <label class="form-label" for="password">Mot de passe</label>
-                                <a class="link link-primary link-sm" href="#">Mot de passe oublié ?</a>
-                            </div>
-                            <div class="form-control-wrap">
-                                <a href="#" class="form-icon form-icon-right passcode-switch md" data-target="password">
-                                    <em class="passcode-icon icon-show icon ni ni-eye"></em>
-                                    <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
-                                </a>
-                                <input type="password" name="password" class="form-control form-control-md" id="password" placeholder="Entrer votre Mot de passe">
-                            </div>
-                        </div>
-                        <div class="form-group row g-gs">
-                            <div class="col-lg-6">
-                                <a data-bs-dismiss="modal" aria-label="Close" class="btn btn-md btn-white btn-dim btn-outline-danger btn-block">
-                                    <em class="icon ni ni-cross-circle"></em>
-                                    <span>Fermer</span>
-                                </a>
-                            </div>
-                            <div class="col-lg-6">
-                                <button type="submit" class="btn btn-md btn-white btn-dim btn-outline-success btn-block" >
-                                    <span>Connexion</span>
-                                    <em class="icon ni ni-arrow-right-circle"></em>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="form-note-s2 text-center pt-4">
-                        Vous n'avez pas de compte ?
-                        <a class="" href="">Créer un compte</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modalConnexion" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body bg-white rounded">
-                    <div class="nk-block-head">
-                        <div class="brand-logo pb-4 text-center">
-                            <a class="logo-link">
-                                <img class="logo-dark logo-img logo-img-lg" src="{{asset('images/logo/logo.png')}}" srcset="{{asset('images/logo/logo.png')}}">
-                            </a>
-                        </div>
-                        <div class="nk-block-head-content">
-                            <h4 class="nk-block-title">Se connecter</h4>
-                            <!-- <div class="nk-block-des">
-                                    <p>Create New Dashlite Account</p>
-                            </div> -->
-                        </div>
-                    </div>
-                    <form id="registre_connexion" class="" action="/auth_login" method="post">
-                        @csrf
-                        <div class="form-group">
-                            <label class="form-label">Email</label>
-                            <div class="form-control-wrap">
-                                <input name="email" type="email" class="form-control form-control-md" id="email" placeholder="Entrer votre Email" value="{{ old('email') }}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <label class="form-label" for="password">Mot de passe</label>
-                                <a class="link link-primary link-sm" href="#">Mot de passe oublié ?</a>
-                            </div>
-                            <div class="form-control-wrap">
-                                <a href="#" class="form-icon form-icon-right passcode-switch md" data-target="password">
-                                    <em class="passcode-icon icon-show icon ni ni-eye"></em>
-                                    <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
-                                </a>
-                                <input type="password" value="{{ old('password') }}" name="password" class="form-control form-control-md" id="password" placeholder="Entrer votre Mot de passe">
-                            </div>
-                        </div>
-                        <div class="form-group row g-gs">
-                            <div class="col-lg-6">
-                                <a data-bs-dismiss="modal" aria-label="Close" class="btn btn-md btn-white btn-dim btn-outline-danger btn-block">
-                                    <em class="icon ni ni-cross-circle"></em>
-                                    <span>Fermer</span>
-                                </a>
-                            </div>
-                            <div class="col-lg-6">
-                                <button type="submit" class="btn btn-md btn-white btn-dim btn-outline-success btn-block" >
-                                    <span>Connexion</span>
-                                    <em class="icon ni ni-arrow-right-circle"></em>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="form-note-s2 text-center pt-4">
-                        Vous n'avez pas de compte ?
-                        <a class="" href="">Créer un compte</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="{{asset('assets/js/bundle55a0.js')}}"></script>
     <script src="{{asset('assets/js/scripts55a0.js')}}"></script>
     <script src="{{asset('assets/js/demo-settings55a0.js')}}"></script>
@@ -519,30 +404,28 @@
     <script src="{{asset('assets/js/example-toastr55a0.js') }}"></script>
 
     <script src="{{asset('assets/js/app/js/form_load.js') }}"></script>
-    <script src="{{asset('assets/js/app/js/registre_connexion.js') }}"></script>
-    <script src="{{asset('assets/js/app/js/registre_sinscrire.js') }}"></script>
 
     @if (session('success'))
         <script>
-            NioApp.Toast("<h5>Succès</h5><p>{{ session('success') }}.</p>", "success", {position: "top-right"});
+            NioApp.Toast("<h5>Succès</h5><p>{{ session('success') }}.</p>", "success", {position: "top-center"});
         </script>
         {{ session()->forget('success') }}
     @endif
     @if (session('error'))
         <script>
-            NioApp.Toast("<h5>Erreur</h5><p>{{ session('error') }}.</p>", "error", {position: "top-right"});
+            NioApp.Toast("<h5>Erreur</h5><p>{{ session('error') }}.</p>", "error", {position: "top-center"});
         </script>
         {{ session()->forget('error') }}
     @endif
     @if (session('warning'))
         <script>
-            NioApp.Toast("<h5>Alert</h5><p>{{ session('warning') }}.</p>", "warning", {position: "top-right"});
+            NioApp.Toast("<h5>Alert</h5><p>{{ session('warning') }}.</p>", "warning", {position: "top-center"});
         </script>
         {{ session()->forget('warning') }}
     @endif
     @if (session('info'))
         <script>
-            NioApp.Toast("<h5>Information</h5><p>{{ session('info') }}.</p>", "info", {position: "top-right"});
+            NioApp.Toast("<h5>Information</h5><p>{{ session('info') }}.</p>", "info", {position: "top-center"});
         </script>
         {{ session()->forget('info') }}
     @endif

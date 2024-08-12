@@ -36,22 +36,22 @@
                                 <div class="slider-init row product-slider mb-3" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 1, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 1}} ]}'>
                                     <div class="col">
                                         <div class="card h-100" style=" display: flex;justify-content: center;align-items: center;">
-                                            <img style="height: auto; width:auto; object-fit: cover;" src="{{asset('images/logo/selects/car.jpg')}}"> 
+                                            <img style="height: auto; width:auto; object-fit: cover;" src="{{asset('images/logo/selects/car.jpg')}}" data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-image="{{ asset('images/logo/selects/car.jpg') }}" style="height: auto; width:auto; object-fit: cover; cursor: pointer;"> 
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="card h-100" style=" display: flex;justify-content: center;align-items: center;">
-                                            <img style="height: auto; width:auto; object-fit: cover;" src="{{asset('images/logo/selects/immeuble.jpg')}}">
+                                            <img style="height: auto; width:auto; object-fit: cover;" src="{{asset('images/logo/selects/immeuble.jpg')}}" data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-image="{{asset('images/logo/selects/immeuble.jpg')}}" style="height: auto; width:auto; object-fit: cover; cursor: pointer;">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="card h-100" style=" display: flex;justify-content: center;align-items: center;">
-                                            <img style="height: auto; width:auto; object-fit: cover;" src="{{asset('images/logo/Daewoo.jpg')}}"> 
+                                            <img style="height: auto; width:auto; object-fit: cover;" src="{{asset('images/logo/Daewoo.jpg')}}" data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-image="{{asset('images/logo/Daewoo.jpg')}}" style="height: auto; width:auto; object-fit: cover; cursor: pointer;"> 
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="card h-100" style=" display: flex;justify-content: center;align-items: center;">
-                                            <img style="height: auto; width:auto; object-fit: cover;" src="{{asset('images/logo/outside-guide-grand-canyon_h.webp')}}"> 
+                                            <img style="height: auto; width:auto; object-fit: cover;" src="{{asset('images/logo/outside-guide-grand-canyon_h.webp')}}" data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-image="{{asset('images/logo/outside-guide-grand-canyon_h.webp')}}" style="height: auto; width:auto; object-fit: cover; cursor: pointer;"> 
                                         </div>
                                     </div>
                                     <div class="col">
@@ -119,7 +119,7 @@
                                     <p>
                                         I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings. Unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae.
                                     </p>
-                                    <div class="alert alert-fill alert-danger alert-icon" role="alert">    
+                                    <div class="alert alert-fill alert-warning alert-icon" role="alert">    
                                         <em class="icon ni ni-alert-fill"></em>     
                                         <strong> Conseils de sécurité !!! </strong>
                                         <br> 
@@ -134,7 +134,7 @@
                                         <em class="icon ni ni-thumbs-down"></em>
                                         <span>Signaler le vendeur</span>
                                     </a>
-                                    <a class="btn btn-white btn-outline-warning btn-dim mt-2" data-bs-toggle="modal" data-bs-target="#modalContact">
+                                    <a class="btn btn-white btn-outline-info btn-dim mt-2" data-bs-toggle="modal" data-bs-target="#modalContact">
                                         <span>Voir contact</span>
                                         <em class="icon ni ni-user"></em>
                                     </a>
@@ -158,47 +158,55 @@
                     <div class="nk-block-between g-3">
                         <div class="nk-block-head-content">
                             <h5 class="nk-block-title">
-                                Quelques annonces
+                                Annonces similaires
                             </h5>
                         </div>
                     </div>
                 </div>
                 <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
-                    <div class="col">
-                        <div class="card ">
-                            <div class="card h-50" style="display: flex;justify-content: center;align-items: center;border:none;">
-                                <a href="{{route('index_detail')}} " >
-                                    <img style="object-fit: cover;height: auto;width: auto;" class="" src="image/1.png" />
-                                </a>
-                                <ul class="product-badges">
-                                    <li>
-                                        <span class="badge bg-light" >
-                                            <em class="icon ni ni-alarm"></em>
-                                            <span>il y a 5 jours</span>
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="card-inner text-center pt-2 pb-2">
-                                <ul class="product-tags">
-                                    <li>
-                                        <a>
-                                            <em class="icon ni ni-map-pin-fill"></em>
-                                            <span>Abidjan</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <h6 class="product-title text-dark fs-15px">
+                    <div class="col ">
+                            <div class="card ">
+                                <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                     <a href="{{route('index_detail')}}">
-                                        Classy Modern Smart watch
+                                        <img class="rounded" style="object-fit: cover;height: 160px; width:auto;" src="{{asset('images/logo/selects/car.jpg')}}" />
                                     </a>
-                                </h6>
-                                <div class="product-price h6 fs-17px ">
-                                    10.000 fcfa
+                                    <ul class="product-badges">
+                                        <li>
+                                            <span class="badge bg-danger">
+                                                <em class="icon ni ni-hot"></em>
+                                                <span>Pro</span>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-inner pt-0 pb-2" style="height:105px;padding-left: 5px;padding-right: 5px;">
+                                    <ul class="product-tags">
+                                        <li>
+                                            <a class="fs-13px">
+                                                <em class="icon ni ni-map-pin-fill"></em>
+                                                <span>Abidjan</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <p class="product-title text-dark fs-12px" style="margin-top: -5px;">
+                                        <a href="{{route('index_detail')}}">
+                                            Classy Modern Smart watch Classy Modern Smart watch
+                                            {{-- <div class="nk-ibx-context-group">
+                                                <div class="nk-ibx-context">
+                                                    <span class="nk-ibx-context-text">
+                                                        <span class="heading">
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div> --}}
+                                        </a>
+                                    </p>
+                                    <div class="h6 fs-13px text-warning" style="margin-top: -13px;">
+                                        90.000.000 fcfa
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -344,6 +352,15 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg align-items-center justify-content-center">
+        <img id="modalImage" src="" class="img-fluid" alt="Large Image" style="width: auto; height: auto;">
+    </div>
+</div>
+
+<script src="{{asset('assets/js/app/js/annonce/photo_view.js') }}"></script>
 
 {{-- <div class="nk-content nk-content-fluid">
     <div class="container-xl wide-xl">

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
     <link href="{{asset('images/logo/icon/logo.ico')}}" rel="shortcut icon">
-    <title>Login | BOLIDES DEALS CI</title>
+    <title>Mot de passe oublié | BOLIDES DEALS CI</title>
     <link href="{{asset('assets/css/dashlite55a0.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/theme55a0.css')}}" id="skin-default" rel="stylesheet">
 </head>
@@ -28,31 +28,18 @@
                             <div class="card-inner card-inner-lg">
                                 <div class="nk-block-head">
                                     <div class="nk-block-head-content">
-                                        <h4 class="nk-block-title">Se connecter</h4>
+                                        <h4 class="nk-block-title">Mot de passe oublié</h4>
                                         {{-- <div class="nk-block-des">
                                             <p></p>
                                         </div> --}}
                                     </div>
                                 </div>
-                                <form id="registre_connexion" class="" action="{{route('trait_login')}}" method="post">
+                                <form id="registre_password" class="" action="{{route('trait_password')}}" method="post">
                                     @csrf
                                     <div class="form-group">
-                                        <label class="form-label">Email ou Téléphone</label>
+                                        <label class="form-label">Email</label>
                                         <div class="form-control-wrap">
-                                            <input name="login" type="text" class="form-control form-control-md" id="login" placeholder="Entrer votre Email ou Téléphone" value="{{ old('login') }}" autocomplete="off">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-label-group">
-                                            <label class="form-label" for="password">Mot de passe</label>
-                                            <a class="link link-primary link-sm" href="{{route('index_password')}}">Mot de passe oublié ?</a>
-                                        </div>
-                                        <div class="form-control-wrap">
-                                            <a href="#" class="form-icon form-icon-right passcode-switch md" data-target="password">
-                                                <em class="passcode-icon icon-show icon ni ni-eye"></em>
-                                                <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
-                                            </a>
-                                            <input type="password" name="password" class="form-control form-control-md" id="password" placeholder="Entrer votre Mot de passe">
+                                            <input name="email" type="email" class="form-control form-control-md" id="email" placeholder="Entrer votre Email" value="{{ old('email') }}" autocomplete="off" required>
                                         </div>
                                     </div>
                                     <div class="form-group row g-gs">
@@ -64,23 +51,12 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <button type="submit" class="btn btn-md btn-white btn-dim btn-outline-success btn-block" >
-                                                <span>Connexion</span>
-                                                <em class="icon ni ni-arrow-right-circle"></em>
+                                                <span>Verification</span>
+                                                <em class="icon ni ni-check-circle"></em>
                                             </button>
                                         </div>
                                     </div>
                                 </form>
-                                <div class="form-note-s2 text-center pt-4"> 
-                                    Vous n'avez pas de compte ? 
-                                    <a href="{{route('index_registre')}}">Créer un Compte</a>
-                                </div>
-                                {{-- <div class="text-center pt-4 pb-3">
-                                    <h6 class="overline-title overline-title-sap"><span>OR</span></h6>
-                                </div>
-                                <ul class="nav justify-center gx-4">
-                                    <li class="nav-item"><a class="nav-link" href="#">Facebook</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#">Google</a></li>
-                                </ul> --}}
                             </div>
                         </div>
                     </div>
@@ -111,7 +87,7 @@
     <script src="{{asset('assets/js/scripts55a0.js')}}"></script>
     <script src="{{asset('assets/js/demo-settings55a0.js')}}"></script>
     <script src="{{asset('assets/js/example-toastr55a0.js') }}"></script>
-    <script src="{{asset('assets/js/app/js/registre_connexion.js') }}"></script>
+    <script src="{{asset('assets/js/app/js/form_password_email.js') }}"></script>
     <script src="{{asset('assets/js/app/js/ctrlv_ctrlc_login.js') }}"></script>
 
     @if (session('success'))

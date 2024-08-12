@@ -206,10 +206,29 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="nk-block-actions data-col data-col-end">
-                                            <a class="btn btn-primary" href="#">
-                                                Changer
-                                            </a>
+                                        <div class="nk-block-actions flex-shrink-sm-0">
+                                            <ul class="align-center flex-wrap flex-sm-nowrap gx-3 gy-2">
+                                                <li class="order-md-last">
+                                                    <a 
+                                                        @if($desac === 0)
+                                                            data-bs-target="#mdp_update" data-bs-toggle="modal"
+                                                        @else
+                                                            data-bs-target="#Alert_date_mdp" data-bs-toggle="modal"
+                                                        @endif
+
+                                                     class="btn btn-primary">
+                                                        Changer le mot de passe
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <em class="text-soft text-date fs-12px">
+                                                        Dérnière mise à jour: 
+                                                        <span>
+                                                            {{ \Carbon\Carbon::parse(Auth::user()->date_mdp)->translatedFormat('j F Y '.' à '.' H:i:s') }}
+                                                        </span>
+                                                    </em>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                     <div class="data-item">
@@ -403,6 +422,91 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="mdp_update" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <a class="close" data-bs-dismiss="modal" href="#">
+                <em class="icon ni ni-cross-sm">
+                </em>
+            </a>
+            <div class="modal-body modal-body-lg">
+                <h5 class="title">
+                    Mise à jour du mot de passe
+                </h5>
+                <ul class="nk-nav nav nav-tabs" style="display: none;">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#mdp">
+                            Mot de passe
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="mdp">
+                        <form class="row gy-4" action="{{route('trait_password_profil')}}" method="post" id="registre_password_profil">
+                            @csrf
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="full-name">
+                                        Nouveau mot de passe
+                                    </label>
+                                    <div class="form-control-wrap">
+                                        <a href="#" class="form-icon form-icon-right passcode-switch md" data-target="password">
+                                            <em class="passcode-icon icon-show icon ni ni-eye"></em>
+                                            <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                                        </a>
+                                        <input required type="password" name="password" class="form-control form-control-md" id="password" placeholder="Entrer le nouveau mot de passe" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="full-name">
+                                        Confirmer le mot de passe
+                                    </label>
+                                    <div class="form-control-wrap">
+                                        <a href="#" class="form-icon form-icon-right passcode-switch md" data-target="cpassword">
+                                            <em class="passcode-icon icon-show icon ni ni-eye"></em>
+                                            <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                                        </a>
+                                        <input required type="password" name="cpassword" class="form-control form-control-md" id="cpassword" placeholder="Confirmer le nouveau Mot de passe" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-white btn-lg btn-dim btn-outline-success">
+                                    <span>Enregistrer</span>
+                                    <em class="icon ni ni-arrow-right-circle"></em>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="Alert_date_mdp">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body modal-body-lg text-center">
+                <div class="nk-modal"><em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger"></em>
+                    <h4 class="nk-modal-title">Désolé!</h4>
+                    <div class="nk-modal-text">
+                        <p class="lead">
+                            La modification de votre mot de passe est temporairement indisponible. Vous devez attendre 60 jours à compter de la dernière mise à jour avant de pouvoir le modifier à nouveau.
+                        </p>
+                    </div>
+                    <div class="nk-modal-action mt-5"><a href="#" class="btn btn-lg btn-mw btn-light" data-bs-dismiss="modal">Fermer</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="{{asset('assets/js/app/js/form_password_reset_profil.js') }}"></script>
 
 @endsection
 

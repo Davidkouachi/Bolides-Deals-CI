@@ -9,21 +9,30 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\LockController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\AnnonceController;
+use App\Http\Controllers\PasswordresetController;
+
 
 Route::get('/', [Controller::class, 'index_accueil'])->name('index_accueil');
 Route::get('/Annonces', [AnnonceController::class, 'index_annonce'])->name('index_annonce');
 Route::get('/Détail Annonces', [AnnonceController::class, 'index_detail'])->name('index_detail');
 
 Route::get('/Login', [AuthController::class, 'index_login'])->name('index_login');
-Route::get('/Registre', [AuthController::class, 'index_registre'])->name('index_registre');
-
 Route::post('/form_login', [AuthController::class, 'trait_login'])->name('trait_login');
+Route::get('/Registre', [AuthController::class, 'index_registre'])->name('index_registre');
 Route::post('/form_registre', [AuthController::class, 'trait_registre'])->name('trait_registre');
+
+Route::get('Mot de passe oublié', [PasswordresetController::class, 'index_password'])->name('index_password');
+Route::post('traitement password', [PasswordresetController::class, 'trait_password'])->name('trait_password');
+Route::get('Reinitialisation/{token}', [PasswordresetController::class, 'index_new_password'])->name('index_new_password');
+Route::post('traitement password new', [PasswordresetController::class, 'trait_new_password'])->name('trait_new_password');
+Route::get('Succès Réinitialisation', [PasswordresetController::class, 'success_password'])->name('success_password');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/Deconnexion', [AuthController::class, 'deconnexion'])->name('deconnexion');
 
     Route::get('/Profil', [ProfilController::class, 'index_profil'])->name('index_profil');
+    Route::post('/form_password_reset', [ProfilController::class, 'trait_password_profil'])->name('trait_password_profil');
 });
 
 Route::middleware(['role:ADMINISTRATEUR'])->group(function () {

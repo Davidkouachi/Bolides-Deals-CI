@@ -210,9 +210,12 @@
                                     <li class="dropdown user-dropdown">
                                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#">
                                             <div class="user-toggle">
-                                                <div class="user-avatar sm">
+                                                <div class="user-avatar sm bg-primary">
                                                     <em class="icon ni ni-user-alt">
                                                     </em>
+                                                    @auth
+                                                    <div class="status dot dot-lg dot-success"></div>
+                                                    @endauth
                                                 </div>
                                             </div>
                                         </a>
@@ -416,25 +419,25 @@
         <script>
             NioApp.Toast("<h5>Succès</h5><p>{{ session('success') }}.</p>", "success", {position: "top-center"});
         </script>
-        {{ session()->forget('success') }}
+        @php session()->forget('success'); @endphp
     @endif
     @if (session('error'))
         <script>
             NioApp.Toast("<h5>Erreur</h5><p>{{ session('error') }}.</p>", "error", {position: "top-center"});
         </script>
-        {{ session()->forget('error') }}
+        @php session()->forget('error'); @endphp
     @endif
     @if (session('warning'))
         <script>
             NioApp.Toast("<h5>Alert</h5><p>{{ session('warning') }}.</p>", "warning", {position: "top-center"});
         </script>
-        {{ session()->forget('warning') }}
+        @php session()->forget('warning'); @endphp
     @endif
     @if (session('info'))
         <script>
             NioApp.Toast("<h5>Information</h5><p>{{ session('info') }}.</p>", "info", {position: "top-center"});
         </script>
-        {{ session()->forget('info') }}
+        @php session()->forget('info'); @endphp
     @endif
 
 </body>

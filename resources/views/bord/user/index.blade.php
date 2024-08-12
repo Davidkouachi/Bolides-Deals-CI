@@ -29,7 +29,6 @@
 			                        <th>Prénoms</th>
 			                        <th>Email</th>
 			                        <th>Rôle</th>
-			                        <th>Date de naissance</th>
 			                        <th>Date de création</th>
 			                        <th></th>
 			                        <th></th>
@@ -62,9 +61,6 @@
 			                        	@endphp 
 			                        ">
 			                        	{{$user->role}}
-			                        </td>
-			                        <td class="nk-tb-col">
-			                        	{{ \Carbon\Carbon::parse($user->date_naissance)->translatedFormat('j F Y ') }}
 			                        </td>
 			                        <td class="nk-tb-col">
 			                        	{{ \Carbon\Carbon::parse($user->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}

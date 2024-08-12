@@ -24,6 +24,8 @@ class User extends Authenticatable
         'password',
         'role_id',
         'lock',
+        'update_mdp',
+        'date_mdp',
     ];
 
     /**

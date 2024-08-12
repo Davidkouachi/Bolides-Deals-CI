@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('lock');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->integer('update_mdp')->default(0);
+            $table->string('date_mdp')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
             $table->rememberToken();

@@ -21,6 +21,7 @@ class AuthController extends Controller
 {
     public function index_login()
     {
+
         return view('auth.login');
     }
 
@@ -105,6 +106,7 @@ class AuthController extends Controller
         $user->prenom = $prenom;
         $user->phone = $phone;
         $user->email = $email;
+        $user->date_mdp = now();
         $user->password = bcrypt($password );
         $user->lock = 'non';
         $user->role_id =  $role_acheteur->id;

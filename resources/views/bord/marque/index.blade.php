@@ -194,7 +194,7 @@
                 </h5>
             </div>
             <div class="modal-body modal-body-lg">
-                <form id="form" action="{{route('update_marque',$value->id)}}" class="row g-gs" method="post" enctype="multipart/form-data">
+                <form action="{{route('update_marque',$value->id)}}" class="row g-gs" method="post" enctype="multipart/form-data">
 				    @csrf
 				    <div class="col h-50">
 				        <div class="">
@@ -229,10 +229,10 @@
 				    <div class="col-12">
 				        <div class="form-group row g-gs">
 				        	<div class="col-6 text-center">
-				                <button data-bs-dismiss="modal" class="btn btn-mw btn-dim btn-outline-danger">
+				                <a data-bs-dismiss="modal" class="btn btn-mw btn-dim btn-outline-danger">
 				                    <em class="icon ni ni-cross-circle"></em>
 				                    <span>Fermer</span>
-				                </button>
+				                </a>
 				            </div>
 				            <div class="col-6 text-center">
 				                <button class="btn btn-mw btn-dim btn-outline-primary " type="submit">
@@ -248,45 +248,6 @@
     </div>
 </div>
 @endforeach
-
-<script>
-	document.addEventListener('DOMContentLoaded', function() {
-	    const selectAllCheckbox = document.getElementById('pid');
-	    const checkboxes = document.querySelectorAll('input[name="checkboxes[]"]');
-
-	    selectAllCheckbox.addEventListener('change', function() {
-	        checkboxes.forEach(function(checkbox) {
-	            checkbox.checked = selectAllCheckbox.checked;
-	        });
-	    });
-	});
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const deleteButton = document.getElementById('deleteButton');
-    const checkboxes = document.querySelectorAll('input[name="checkboxes[]"]');
-
-    deleteButton.addEventListener('click', function() {
-        let checked = false;
-
-        checkboxes.forEach(function(checkbox) {
-            if (checkbox.checked) {
-                checked = true;
-            }
-        });
-
-        if (checked) {
-            // Au moins un checkbox est coché, ouvrir le modal de suppression
-            const modalDelete = new bootstrap.Modal(document.getElementById('modalDelete'));
-            modalDelete.show();
-        } else {
-            // Aucun checkbox n'est coché, afficher un message d'alerte
-            NioApp.Toast("<h5>Information</h5><p>Veuillez sélectionner une marque SVP !!! .</p>", "info", {position: "top-right"});
-        }
-    });
-});
-</script>
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
@@ -321,6 +282,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 </script>
 
-<script src="{{asset('assets/js/app/js/download_image_marque_vehicule.js') }}"></script>
+<script src="{{asset('assets/js/app/js/bord/marque/form.js') }}"></script>
+<script src="{{asset('assets/js/app/js/bord/marque/delete_select_verf.js') }}"></script>
+<script src="{{asset('assets/js/app/js/bord/marque/select_all.js') }}"></script>
+<script src="{{asset('assets/js/app/js/bord/marque/download_image_marque_vehicule.js') }}"></script>
 
 @endsection

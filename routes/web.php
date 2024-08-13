@@ -33,6 +33,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/Profil', [ProfilController::class, 'index_profil'])->name('index_profil');
     Route::post('/form_password_reset', [ProfilController::class, 'trait_password_profil'])->name('trait_password_profil');
+
+    Route::get('/Nouvelle Annonces Vente', [AnnonceController::class, 'index_vente'])->name('index_vente');
+    Route::get('/Nouvelle Annonces Location', [AnnonceController::class, 'index_location'])->name('index_location');
+
 });
 
 Route::middleware(['role:ADMINISTRATEUR'])->group(function () {

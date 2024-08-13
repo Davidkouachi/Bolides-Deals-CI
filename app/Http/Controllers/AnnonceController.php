@@ -29,4 +29,14 @@ class AnnonceController extends Controller
 
         return view('vehicule.annonce.detail',['imgqr' => $imgqr,'data_qrcode' => $data_qrcode]);
     }
+
+    public function index_vente()
+    {
+        return view('vehicule.annonce.new.vente');
+    }
+
+    public function index_location()
+    {
+        return view('vehicule.annonce.new.location');
+    }
 }

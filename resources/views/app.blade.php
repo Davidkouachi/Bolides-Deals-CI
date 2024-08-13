@@ -154,22 +154,34 @@
                                     <li class="dropdown notification-dropdown">
                                         <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
                                             <div class="icon-status icon-status-info">
-                                                <em class="icon ni ni-server"></em>
+                                                <em class="icon ni ni-plus-circle"></em>
                                             </div>
                                         </a>
-                                        <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end">
+                                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                                             <div class="dropdown-head">
-                                                <span class="sub-title nk-dropdown-title">Parc Automobiles</span>
+                                                <span class="sub-title nk-dropdown-title">Nouvelle annonce</span>
                                             </div>
                                             <div class="dropdown-body">
                                                 <div class="nk-notification">
-                                                    <a class="nk-notification-item dropdown-inner" href="">
+                                                    <a class="nk-notification-item dropdown-inner" href="{{route('index_vente')}}">
                                                         <div class="nk-notification-icon">
-                                                            <em class="icon icon-circle bg-primary-dim ni ni-table-view-fill"></em>
+                                                            <em class="icon icon-circle bg-primary-dim ni ni-truck"></em>
                                                         </div>
                                                         <div class="nk-notification-content">
                                                             <div class="nk-notification-text">
-                                                                1
+                                                                Vente de véhicule
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="nk-notification">
+                                                    <a class="nk-notification-item dropdown-inner" href="{{route('index_location')}}">
+                                                        <div class="nk-notification-icon">
+                                                            <em class="icon icon-circle bg-primary-dim ni ni-truck"></em>
+                                                        </div>
+                                                        <div class="nk-notification-content">
+                                                            <div class="nk-notification-text">
+                                                                Location de véhicule
                                                             </div>
                                                         </div>
                                                     </a>
@@ -340,7 +352,7 @@
     </ul>
     @endif
 
-    <a class="pmo-st pmo-dark active bg-success" data-bs-toggle="modal" data-bs-target="#modalCommentaire" >
+    <a style="z-index: 1;" class="pmo-st pmo-dark active bg-success" data-bs-toggle="modal" data-bs-target="#modalCommentaire" >
         <div class="pmo-st-img">
             <em class="icon ni ni-chat" style="font-size: 25px;"></em>
         </div>

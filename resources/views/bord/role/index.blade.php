@@ -158,7 +158,7 @@
                 </h5>
             </div>
             <div class="modal-body modal-body-lg">
-                <form id="form" action="{{route('update_role',$value->id)}}" class="row g-gs" method="post">
+                <form action="{{route('update_role',$value->id)}}" class="row g-gs" method="post">
 				    @csrf
 				    <div class="col-12">
 				        <div class="form-group">
@@ -170,10 +170,10 @@
 				    <div class="col-12">
 				        <div class="form-group row g-gs">
 				        	<div class="col-6 text-center">
-				                <button data-bs-dismiss="modal" class="btn btn-mw btn-dim btn-outline-danger">
+				                <a data-bs-dismiss="modal" class="btn btn-mw btn-dim btn-outline-danger">
 				                    <em class="icon ni ni-cross-circle"></em>
 				                    <span>Fermer</span>
-				                </button>
+				                </a>
 				            </div>
 				            <div class="col-6 text-center">
 				                <button class="btn btn-mw btn-dim btn-outline-primary " type="submit">
@@ -249,31 +249,7 @@
     });
 </script>
 
-
-<script>
-	document.addEventListener('DOMContentLoaded', function() {
-	    const deleteButton = document.getElementById('deleteButton');
-	    const checkboxes = document.querySelectorAll('input[name="checkboxes[]"]');
-
-	    deleteButton.addEventListener('click', function() {
-	        let checked = false;
-
-	        checkboxes.forEach(function(checkbox) {
-	            if (checkbox.checked) {
-	                checked = true;
-	            }
-	        });
-
-	        if (checked) {
-	            // Au moins un checkbox est coché, ouvrir le modal de suppression
-	            const modalDelete = new bootstrap.Modal(document.getElementById('modalDelete'));
-	            modalDelete.show();
-	        } else {
-	            // Aucun checkbox n'est coché, afficher un message d'alerte
-	            NioApp.Toast("<h5>Information</h5><p>Veuillez sélectionner une marque SVP !!! .</p>", "info", {position: "top-right"});
-	        }
-	    });
-	});
-</script>
+<script src="{{asset('assets/js/app/js/bord/role/form.js') }}"></script>
+<script src="{{asset('assets/js/app/js/bord/role/delete_select_verf.js') }}"></script>
 
 @endsection

@@ -21,35 +21,36 @@ document.getElementById("registre_connexion").addEventListener("submit", functio
         return false;
     }
 
+    // Cacher le modal s'il existe déjà
     var modalConnexion = bootstrap.Modal.getInstance(document.getElementById('modalConnexion'));
     if (modalConnexion) {
         modalConnexion.hide();
     }
 
-    // Preload modal HTML
-    // var modalHtml = `
-    //             <div class="modal fade" tabindex="-1" id="modalL" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-    //                 <div class="modal-dialog modal-sm" role="document">
-    //                     <div class="modal-content">
-    //                         <div class="modal-body modal-body-lg text-center">
-    //                             <div class="nk-modal">
-    //                                 <h5 class="nk-modal-title text-warning ">Traitement en cours</h5>
-    //                                 <div class="nk-modal-text">
-    //                                     <div class="text-center">
-    //                                         <div class="spinner-border text-warning" role="status"></div>
-    //                                     </div>
-    //                                 </div>
-    //                             </div>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         `;
+    // Précharger le HTML du modal
+    var modalHtml = `
+        <div class="modal fade" id="modalConnexion" tabindex="-1" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-lg align-items-center justify-content-center">
+                <ul class="preview-list g-1">
+                    <li class="preview-item"> 
+                        <a class="btn btn-warning" > 
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
+                            <span>Chargement en cours...</span> 
+                        </a> 
+                    </li>
+                </ul>
+            </div>
+        </div>
+    `;
 
-    // document.body.insertAdjacentHTML('beforeend', modalHtml);
+    // Insérer le modal dans le DOM
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
 
-    // var modal = new bootstrap.Modal(document.getElementById('modalL'));
-    // modal.show();
+    // Initialiser et afficher le modal après insertion
+    var modalElement = document.getElementById('modalConnexion');
+    var modal = new bootstrap.Modal(modalElement);
+    modal.show();
+
 
     this.submit();
 

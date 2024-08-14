@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('marques', function (Blueprint $table) {
+        Schema::create('villes', function (Blueprint $table) {
             $table->id();
-            $table->string('image_nom')->unique();
-            $table->string('image_chemin')->unique();
-            $table->string('marque')->unique();
+            $table->string('nom')->unique();
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('marques');
+        Schema::dropIfExists('villes');
     }
 };

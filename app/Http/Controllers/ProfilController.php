@@ -29,13 +29,21 @@ class ProfilController extends Controller
         $dateMdp = Carbon::parse($user->date_mdp);
         $joursEcoules = $dateMdp->diffInDays(Carbon::now());
 
-        if ($joursEcoules < 60) {
-            $desac = '1';
-        }else{
-            $desac = '0';
-        }
+        if (Auth::user()->update_mdp === 0) {
 
-        return view('profil.index',['desac' => $desac]);
+            $desac = 'oui';
+
+        }else{
+
+            if ((int)$joursEcoules < 60) {
+                $desac = 'non';
+            }else{
+                $desac = 'oui';
+            }
+        }
+        
+
+        return view('profil.index',['desac' => $desac,'joursEcoules' => $joursEcoules]);
     }
 
     public function trait_password_profil(Request $request)

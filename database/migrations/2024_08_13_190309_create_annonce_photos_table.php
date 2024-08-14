@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('annonce_photos', function (Blueprint $table) {
             $table->id();
+            $table->string('image_nom')->unique();
+            $table->string('image_chemin')->unique();
+            $table->unsignedBigInteger('annonce_id');
+            $table->foreign('annonce_id')->references('id')->on('annonces');
             $table->timestamps();
         });
     }

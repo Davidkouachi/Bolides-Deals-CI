@@ -57,8 +57,6 @@ class PasswordresetController extends Controller
                 }
             }            
 
-            
-
             $rest = new Password_reset();
             $rest->email = $request->email;
             $rest->token = $token;
@@ -84,8 +82,6 @@ class PasswordresetController extends Controller
                     $mail->addAddress($request->email);
                     $mail->Subject = 'Lien de reinitialisation du mot de passe !';
                     $mail->Body = $resetLink;
-                        // Envoi de l'email
-                    $mail->send();
 
                     if ($mail->send()) {
                         return redirect()->back()->with('success', 'Le lien de réinitialisation de votre mot de passe a été envoyer par Email');

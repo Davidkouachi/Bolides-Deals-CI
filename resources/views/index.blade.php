@@ -11,7 +11,7 @@
                 <div class="nk-block ">
                     <div class="row g-gs">
                         <div class="col-lg-12">
-                            <div class="card card-preview">
+                            <div class="card card-preview" >
                                 {{-- <div class="card-inner text-center rounded" style="background-image: url('{{ asset('images/logo/arriere/1.jpg') }}');background-repeat: no-repeat; background-position: left; background-position: -50px -240px; background-size: auto;"> --}}
                                     <div class="card-inner text-center rounded">
                                         <img data-bs-toggle="modal" data-bs-target="#imageModal" height="200" width="200" src="{{asset('images/logo/logo.png')}}">

@@ -21,7 +21,7 @@
     </meta>
 </head>
 
-<body class="nk-body ui-rounder has-sidebar ui-light ">
+<body class="nk-body ui-rounder has-sidebar ui-light" >
     <div class="nk-app-root">
         <div class="nk-main ">
 

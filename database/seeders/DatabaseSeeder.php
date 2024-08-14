@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Contact_user;
+use App\Models\Ville;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,6 +26,21 @@ class DatabaseSeeder extends Seeder
         $acheteur = User::create(['name' => 'Acheteur','prenom' => 'acheteur','phone' => '0585782724','lock' => 'non','email' => 'acheteur@gmail.com','date_mdp' => now(),'password' => bcrypt('Acheteur001'),'role_id' => $role_acheteur->id,]);
         
         $vendeur = User::create(['name' => 'Vender','prenom' => 'vendeur','phone' => '0585782725','lock' => 'non','email' => 'vendeur@gmail.com','date_mdp' => now(),'password' => bcrypt('Vendeur001'),'role_id' => $role_vendeur->id,]);
+
+        $villes = [
+            'Abengourou','Abidjan','Aboisso','Adiaké','Adzopé','Agnibilékrou','Akoupé','Arrah','Bangolo','Bassawa','Bettié','Bocanda','Bondoukou','Bonoua','Botro','Bouaké','Bouna','Boundiali','Dabou', 'Daloa','Danané','Daoukro','Dianra','Dimbokro','Divo','Duekoué','Facobly','Ferkessédougou',
+                'Gagnoa','Grand-Bassam','Grand-Lahou','Gouiné','Guiglo','Guitry','Gbon','Issia',
+                'Jacqueville','Katiola','Kong','Korhogo','Kounahiri','Kouassi-Datékro','Kouibly','Lakota',
+                'Lomokankro','Man','Mankono','Marcory','Méagui','Minignan','M’Bahiakro','Nassian',
+                'Niakaramandougou','Odienné','Oumé','Ouellé','San-Pédro','Sakassou','Samoé','Sassandra',
+                'Séguéla','Sikensi','Sinfra','Sipilou','Soubré','Tabou','Tanda','Tiassalé','Tiapoum',
+                'Tiébissou','Tengréla','Toulepleu','Touba','Toumodi','Transua','Vavoua','Yamoussoukro',
+                'Zouan-Hounien','Zoukougbeu',
+        ];
+
+        foreach ($villes as $ville) {
+            Ville::create(['nom' => $ville]);
+        }
 
     }
 }

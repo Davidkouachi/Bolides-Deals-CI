@@ -13,12 +13,13 @@ class Annonce extends Model
         'id',
         'marque_id',
         'user_id',
+        'ville_id',
+        'Quartier',
         'model',
         'transmission',
         'type_carburant',
         'nbre_place',
         'version',
-        'lieu',
         'couleur',
         'annee',
         'cylindre',
@@ -36,5 +37,10 @@ class Annonce extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function ville()
+    {
+        return $this->belongsTo(Ville::class, 'ville_id');
     }
 }

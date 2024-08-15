@@ -18,7 +18,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="col-lg-12">
+                        {{-- <div class="col-lg-12">
                             <div class="form-group bg-primary rounded " style="padding: 15px 10px 0px 10px;">
                                 <marquee behavior="" direction="">
                                     <label class="form-label">
@@ -31,11 +31,11 @@
                                     </label>
                                 </marquee>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
-                <div class="nk-block nk-block-lg bg-light rounded p-4 mt-5">
+                <div class="nk-block nk-block-lg bg-white rounded p-4 mt-5">
                     <div class="nk-block-head">
                         <div class="nk-block-between g-3">
                             <div class="nk-block-head-content">
@@ -48,7 +48,7 @@
                     <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
                         @foreach($marques as $value)
                         <div class="col">
-                            <div class="card">
+                            <div class="" style="height: 180px;">
                                 <div class="card-inner">
                                     <div class="team">
                                         <div class="user-card user-card-s2">
@@ -56,7 +56,7 @@
                                                 <img src="{{asset('storage/images/'.$value->image_nom)}}" alt="{{$value->marque}}" class="thumb">
                                             </div>
                                             <div class="user-info">
-                                                <h6>{{$value->marque}}</h6>
+                                                <h6 class="fs-13px" >{{$value->marque}}</h6>
                                             </div>
                                         </div>
                                     </div>

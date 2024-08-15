@@ -17,6 +17,8 @@ use PHPMailer\PHPMailer\Exception;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Marque;
+use App\Models\Suggestion;
+use App\Models\Suggestion_file;
 
 
 class BordController extends Controller
@@ -54,7 +56,13 @@ class BordController extends Controller
 
     public function index_bord_sugg()
     {
-        return view('bord.suggestion.index');
+
+        $suggs = Suggestion::join('suggestion_files', 'suggestions.id', '=', 'suggestion_files.suggestion_id')
+                        ->select('suggestions.*','suggestion_files.file_nom as file_nom','suggestion_files.file_chemin as file_chemin')
+                        ->orderBy('suggestions.created_at', 'desc') 
+                        ->get();
+
+        return view('bord.suggestion.index',['suggs' => $suggs]);
     }
 
 }

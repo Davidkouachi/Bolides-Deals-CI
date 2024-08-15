@@ -56,13 +56,13 @@
                                         </div>
                                     </div>
                                     <div class="form-group row g-gs">
-                                        <div class="col-lg-6">
+                                        <div class="col-6">
                                             <a href="javascript:void(0);" onclick="history.back()" class="btn btn-md btn-white btn-dim btn-outline-danger btn-block">
                                                 <em class="icon ni ni-arrow-left-circle"></em>
                                                 <span>Retour</span>
                                             </a>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-6">
                                             <button type="submit" class="btn btn-md btn-white btn-dim btn-outline-success btn-block" >
                                                 <span>Connexion</span>
                                                 <em class="icon ni ni-arrow-right-circle"></em>

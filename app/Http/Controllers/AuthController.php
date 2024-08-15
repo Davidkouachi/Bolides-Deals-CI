@@ -52,7 +52,7 @@ class AuthController extends Controller
 
             $role = Role::find($role_id);
             if ($role) {
-                session(['user_role' => $role->nom]);
+                session(['role' => $role]);
             }
 
             return redirect()->route('index_accueil')->with('success', 'Connexion réussi.');
@@ -69,6 +69,7 @@ class AuthController extends Controller
             'prenom' => 'required|string',
             'phone' => 'required|numeric|digits:10',
             'email' => 'required|email',
+            'adresse' => 'required|string',
             'password' => 'required|string',
             'cpassword' => 'required|string|same:password',
         ]);
@@ -82,6 +83,7 @@ class AuthController extends Controller
         $prenom = $request->input('prenom');
         $email = $request->input('email');
         $phone = $request->input('phone');
+        $adresse = $request->input('adresse');
         $password = $request->input('password');
         $cpassword = $request->input('cpassword');
 
@@ -106,6 +108,7 @@ class AuthController extends Controller
         $user->prenom = $prenom;
         $user->phone = $phone;
         $user->email = $email;
+        $user->adresse = $adresse;
         $user->date_mdp = now();
         $user->password = bcrypt($password );
         $user->lock = 'non';

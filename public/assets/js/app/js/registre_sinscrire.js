@@ -5,6 +5,7 @@ document.getElementById("registre_sinscrire").addEventListener("submit", functio
     var prenom = document.getElementById("prenom").value;
     var email = document.getElementById("email").value;
     var phone = document.getElementById("phone").value;
+    var adresse = document.getElementById("adresse").value;
     var password = document.getElementById("password").value;
     var cpassword = document.getElementById("cpassword").value;
 

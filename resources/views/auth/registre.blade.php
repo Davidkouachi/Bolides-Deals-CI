@@ -84,6 +84,14 @@
                                     </div>
                                     <div class="col-12" >
                                         <div class="form-group">
+                                            <label class="form-label">Adresse</label>
+                                            <div class="form-control-wrap">
+                                                <input required name="adresse" type="text" class="form-control form-control-md" id="adresse" placeholder="Entrer votre Adresse" autocomplete="off" value="{{old('adresse')}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" >
+                                        <div class="form-group">
                                             <label class="form-label" for="password">Mot de passe</label>
                                             <div class="form-control-wrap">
                                                 <a href="#" class="form-icon form-icon-right passcode-switch md" data-target="password">

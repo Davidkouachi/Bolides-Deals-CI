@@ -10,6 +10,7 @@ use App\Http\Controllers\LockController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\PasswordresetController;
+use App\Http\Controllers\SuggestionController;
 
 
 Route::get('/', [Controller::class, 'index_accueil'])->name('index_accueil');
@@ -21,17 +22,21 @@ Route::post('/form_login', [AuthController::class, 'trait_login'])->name('trait_
 Route::get('/Registre', [AuthController::class, 'index_registre'])->name('index_registre');
 Route::post('/form_registre', [AuthController::class, 'trait_registre'])->name('trait_registre');
 
-Route::get('Mot de passe oublié', [PasswordresetController::class, 'index_password'])->name('index_password');
-Route::post('traitement password', [PasswordresetController::class, 'trait_password'])->name('trait_password');
-Route::get('Reinitialisation/{token}', [PasswordresetController::class, 'index_new_password'])->name('index_new_password');
-Route::post('traitement password new', [PasswordresetController::class, 'trait_new_password'])->name('trait_new_password');
-Route::get('Succès Réinitialisation', [PasswordresetController::class, 'success_password'])->name('success_password');
+Route::get('/Mot de passe oublié', [PasswordresetController::class, 'index_password'])->name('index_password');
+Route::post('/traitement password', [PasswordresetController::class, 'trait_password'])->name('trait_password');
+Route::get('/Reinitialisation/{token}', [PasswordresetController::class, 'index_new_password'])->name('index_new_password');
+Route::post('/traitement password new', [PasswordresetController::class, 'trait_new_password'])->name('trait_new_password');
+Route::get('/Succès Réinitialisation', [PasswordresetController::class, 'success_password'])->name('success_password');
+
+Route::post('/Suggestion', [SuggestionController::class, 'trait_sugg'])->name('trait_sugg');
+Route::get('/Send suggestion/{id}', [SuggestionController::class, 'send_sugg'])->name('send_sugg');
 
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/Deconnexion', [AuthController::class, 'deconnexion'])->name('deconnexion');
 
     Route::get('/Profil', [ProfilController::class, 'index_profil'])->name('index_profil');
+    Route::post('/Profil_update', [ProfilController::class, 'profil_update'])->name('profil_update');
     Route::post('/form_password_reset', [ProfilController::class, 'trait_password_profil'])->name('trait_password_profil');
 
     Route::get('/Nouvelle Annonces Vente', [AnnonceController::class, 'index_vente'])->name('index_vente');

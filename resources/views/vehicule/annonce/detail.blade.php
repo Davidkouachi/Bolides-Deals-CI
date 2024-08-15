@@ -355,8 +355,10 @@
 
 <!-- Modal -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg align-items-center justify-content-center">
-        <img id="modalImage" src="" class="img-fluid" alt="Large Image" style="width: auto; height: auto;">
+    <div class="modal-dialog modal-dialog-centered modal-lg align-items-center justify-content-center row g-gs">
+        <div class="col-12" >
+            <img id="modalImage" src="" class="img-fluid" alt="Large Image" style="width: auto; height: auto;">
+        </div>
     </div>
 </div>
 

@@ -81,4 +81,48 @@ class ProfilController extends Controller
         }
 
     }
+
+    public function profil_update(Request $request)
+    {
+        // Valider les champs du formulaire manuellement
+        $validator = Validator::make($request->all(), [
+            'nom' => 'required|string',
+            'prenom' => 'required|string',
+            'phone' => 'required|numeric|digits:10',
+            'email' => 'required|email',
+            'adresse' => 'required|string',
+        ]);
+
+        // Si la validation échoue
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->with('error','Veuillez vérifier vos informations personnelles et réessayer la mise à jour.');
+        }
+
+        $nom = $request->input('nom');
+        $prenom = $request->input('prenom');
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $adresse = $request->input('adresse');
+
+        $rech_email = User::where('email', '=', $email)->where('id', '!=', Auth::user()->id)->count();
+        if ($rech_email > 0) {
+            return redirect()->back()->with('error','L\'email existe déjà.');
+        }
+
+        $rech_phone = User::where('phone', '=', $phone)->where('id', '!=', Auth::user()->id)->count();
+        if ($rech_phone > 0) {
+            return redirect()->back()->with('error','Ce contact existe déjà.');
+        }
+
+        $user = User::find(Auth::user()->id);
+        $user->name = $nom;
+        $user->prenom = $prenom;
+        $user->phone = $phone;
+        $user->email = $email;
+        $user->adresse = $adresse;
+
+        if ($user->save()) {
+            return redirect()->back()->with('success','Mise à jour éffectuée');
+        }
+    }
 }

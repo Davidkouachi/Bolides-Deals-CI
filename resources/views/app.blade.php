@@ -246,13 +246,14 @@
                                                     </li>
                                                     <li>
                                                         <a href="">
-                                                            <em class="icon ni ni-plus-circle">
+                                                            <em class="icon ni ni-view-list-fill">
                                                             </em>
                                                             <span>
-                                                                Parc Auto
+                                                                Mes annonces
                                                             </span>
                                                         </a>
                                                     </li>
+                                                    @if(session('role')->nom === 'ADMINISTRATEUR')
                                                     <li>
                                                         <a href="{{route('index_accueil_bord')}}">
                                                             <em class="icon ni ni-setting">
@@ -262,6 +263,7 @@
                                                             </span>
                                                         </a>
                                                     </li>
+                                                    @endif
                                                 </ul>
                                             </div>
                                             <div class="dropdown-inner">
@@ -337,7 +339,7 @@
     </div>
 
     @if(!request()->routeIs('message_lock') )  
-    <ul class="nk-sticky-toolbar">
+    {{-- <ul class="nk-sticky-toolbar">
         @yield('btn_lateral')
         <li class="demo-thumb bg-white">
             <a class="tipinfo" href="" title="Nouvelle Annonce">
@@ -349,7 +351,7 @@
                 <em class="icon ni ni-redo"></em>
             </a>
         </li>
-    </ul>
+    </ul> --}}
     @endif
 
     <a style="z-index: 1;" class="pmo-st pmo-dark active bg-success" data-bs-toggle="modal" data-bs-target="#modalCommentaire" >
@@ -366,15 +368,15 @@
                     <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="#" class="form-validate">
+                    <form method="post" action="{{route('trait_sugg')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label class="form-label" for="default-textarea">Nom</label>
                             <div class="form-control-wrap">
                                 @if(Auth::user())
-                                    <input class="form-control" disabled type="text" placeholder="Entrer votre nom" value="{{Auth::user()->name}}" />
+                                    <input class="form-control" name="nom" readonly type="text" placeholder="Entrer votre nom" value="{{Auth::user()->name}}" />
                                 @else
-                                    <input class="form-control" type="text" placeholder="Entrer votre nom"/>
+                                    <input required name="nom" class="form-control" type="text" placeholder="Entrer votre nom"/>
                                 @endif
                                 
                             </div>
@@ -383,23 +385,23 @@
                             <label class="form-label" for="default-textarea">Email</label>
                             <div class="form-control-wrap">
                                 @if(Auth::user())
-                                    <input class="form-control" disabled type="email" placeholder="Entrer votre email" value="{{Auth::user()->email}}"/>
+                                    <input class="form-control" readonly type="email" placeholder="Entrer votre email" name="email" value="{{Auth::user()->email}}"/>
                                 @else
-                                    <input class="form-control" type="email" placeholder="Entrer votre email"/>
+                                    <input required class="form-control" type="email" placeholder="Entrer votre email" name="email"/>
                                 @endif
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="default-textarea">Suggestion</label>
                             <div class="form-control-wrap">
-                                <textarea name="text" class="form-control no-resize" id="default-textarea" required data-msg="Error message re"></textarea>
+                                <textarea name="message" class="form-control no-resize" id="default-textarea" required></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="customFileLabel">Fichier (facultatif)</label>
                             <div class="form-control-wrap">
                                 <div class="form-file">
-                                    <input type="file" class="form-file-input" id="customFile">
+                                    <input type="file" name="file_pdf" class="form-file-input" id="customFile">
                                     <label class="form-file-label" for="customFile">Choisir un fichier</label>
                                 </div>
                             </div>

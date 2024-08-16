@@ -53,10 +53,6 @@
 			                        	@php
 			                        		if ($user->role === 'ADMINISTRATEUR') {
 			                        			echo 'text-danger';
-			                        		}elseif ($user->role === 'VENDEUR'){
-			                        			echo 'text-warning';
-			                        		}elseif ($user->role === 'ACHETEUR'){
-			                        			echo 'text-success';
 			                        		}
 			                        	@endphp 
 			                        ">
@@ -204,10 +200,6 @@
 				                    	@php
 			                        		if ($user->role === 'ADMINISTRATEUR') {
 			                        			echo 'text-danger';
-			                        		}elseif ($user->role === 'VENDEUR'){
-			                        			echo 'text-warning';
-			                        		}elseif ($user->role === 'ACHETEUR'){
-			                        			echo 'text-success';
 			                        		}
 			                        	@endphp
 				                    " style="font-size: 14px;">

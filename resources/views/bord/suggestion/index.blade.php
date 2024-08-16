@@ -22,9 +22,7 @@
 			            <table class="datatable-init table">
 			                <thead>
 			                    <tr>
-			                        <th style="width: 50px;">
-			                        	N°
-			                        </th>
+			                        <th style="width: 50px;">N°</th>
 			                        <th>Nom</th>
 			                        <th>Email</th>
 			                        <th>lu</th>
@@ -33,50 +31,41 @@
 			                    </tr>
 			                </thead>
 			                <tbody>
-			                	@foreach($suggs as $key => $sugg)
+			                	@foreach($suggs as $key => $value)
 			                    <tr>
-			                        <td class="nk-tb-col " style="width: 50px;">
+			                        <td class="nk-tb-col" style="width: 50px;">
 			                        	{{$key+1}}
 			                        </td>
 			                        <td class="nk-tb-col">
-			                        	{{$sugg->nom}}
+			                        	{{$value->nom}}
+
 			                        </td>
 			                        <td class="nk-tb-col">
-			                        	{{$sugg->email}}
+			                        	{{$value->email}}
 			                        </td>
 			                        <td class="nk-tb-col 
 				                        @php
-				                        	if ($sugg->lu === 'oui') {
-				                        		echo "text-success";
-				                        	} else {
-				                        		echo "text-danger";
-				                        	}
+				                        	echo $value->lu === 'oui' ? 'text-success' : 'text-danger';
 				                        @endphp ">
-			                        	{{$sugg->lu}}
+			                        	{{$value->lu}}
 			                        </td>
 			                        <td class="nk-tb-col">
-			                        	{{ \Carbon\Carbon::parse($sugg->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}
+			                        	{{ \Carbon\Carbon::parse($value->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}
 			                        </td>
-			                        <td class="nk-tb-col d-flex">
+			                        <td class="nk-tb-col">
 			                            <div class="nk-tb-col-tools">
 										    <ul class="nk-tb-actions gx-1 my-n1">
 										        <li class="me-n1">
 										            <div class="dropdown">
-										            	<a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown">
+										            	<a class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown">
 										            		<em class="icon ni ni-more-h"></em>
 										            	</a>
 										                <div class="dropdown-menu dropdown-menu-end">
 										                    <ul class="link-list-opt no-bdr">
 										                        <li>
-										                        	<a data-bs-toggle="modal" data-bs-target="#modalInfo{{$sugg->id}}">
+										                        	<a data-bs-toggle="modal" data-bs-target="#modalDetail{{$value->id}}" href="#" >
 										                        		<em class="icon ni ni-eye"></em>
 										                        		<span>Détail</span>
-										                        	</a>
-										                        </li>
-										                        <li>
-										                        	<a data-bs-toggle="modal" data-bs-target="#modalFil{{$sugg->id}}" >
-										                        		<em class="icon ni ni-file"></em>
-										                        		<span>Ficher</span>
 										                        	</a>
 										                        </li>
 										                    </ul>
@@ -97,13 +86,8 @@
     </div>
 </div>
 
-@section('btn_lateral')
-
-@endsection
-
-
-@foreach ($suggs as $sugg)
-<div class="modal fade zoom" tabindex="-1" id="modalInfo{{ $sugg->id }}">
+@foreach ($suggs as $value)
+<div class="modal fade zoom" id="modalDetail{{$value->id}}" aria-modal="true" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-md" role="document" style="width: 100%;">
         <div class="modal-content">
             <div class="modal-header">
@@ -124,7 +108,7 @@
 				            <div class="col-lg-7 col-md-8 col-6">
 				                <div class="form-group ">
 				                    <span class="fw-normal text-dark" style="font-size: 14px;">
-				                        {{ \Carbon\Carbon::parse($sugg->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}
+				                        {{ \Carbon\Carbon::parse($value->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}
 				                    </span>
 				                </div>
 				            </div>
@@ -140,7 +124,7 @@
 				            <div class="col-lg-7 col-md-8 col-6">
 				                <div class="form-group ">
 				                    <span class="fw-normal text-dark" style="font-size: 14px;">
-				                        {{$sugg->nom}}
+				                        {{$value->nom}}
 				                    </span>
 				                </div>
 				            </div>
@@ -156,7 +140,7 @@
 				            <div class="col-lg-7 col-md-8 col-6">
 				                <div class="form-group ">
 				                    <span class="fw-normal text-dark" style="font-size: 14px;">
-				                        {{$sugg->email}}
+				                        {{$value->email}}
 				                    </span>
 				                </div>
 				            </div>
@@ -173,14 +157,10 @@
 				                <div class="form-group ">
 				                    <span class="fw-normal
 				                    	@php
-			                        		if ($sugg->lu === 'oui') {
-			                        			echo 'text-success';
-			                        		}else{
-			                        			echo 'text-danger';
-			                        		}
+			                        		echo $value->lu === 'oui' ? 'text-success' : 'text-danger';
 			                        	@endphp
 				                    " style="font-size: 14px;">
-				                        {{$sugg->lu}}
+				                        {{$value->lu}}
 				                    </span>
 				                </div>
 				            </div>
@@ -196,50 +176,25 @@
 				            <div class="col-12">
 				                <div class="form-group ">
 				                    <span class="fw-normal text-dark" style="font-size: 14px;">
-				                        {{ $sugg->message }}
+				                        {{ $value->message }}
 				                    </span>
 				                </div>
 				            </div>
 				        </div>
-				        @if($sugg->lu === 'non')
+				        @if($value->lu === 'non')
 				        <div class="col-lg-12 text-center">
-				            <a href="{{route('send_sugg', $sugg->id)}}" class="btn btn-md btn-dim btn-success" >
+				            <a href="{{route('send_sugg', $value->id)}}" class="btn btn-md btn-success" >
                                 <span>Bien lu</span>
                                 <em class="icon ni ni-send"></em>
                             </a>
 				        </div>
 				        @endif
-				    </form>
+				    </div>
 				</div>
             </div>
         </div>
     </div>
 </div>
 @endforeach
-
-@foreach ($suggs as $sugg)
-    <div class="modal fade zoom" tabindex="-1" id="modalFil{{ $sugg->id }}">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content" data-simplebar>
-                @if ($sugg->file_nom != '')
-                    @php
-                        $fileExtension = pathinfo($sugg->file_nom, PATHINFO_EXTENSION);
-                    @endphp
-                    
-                    @if (in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif']))
-                        <img src="{{ asset('storage/pdf/'.$sugg->file_nom) }}" alt="Image" width="100%" height="auto">
-                    @elseif ($fileExtension == 'pdf')
-                        <embed src="{{ asset('storage/pdf/'.$sugg->file_nom) }}" type="application/pdf" width="100%" height="1100px">
-                    @else
-                        <p class="text-center mt-2"> Fichier non supporté </p>
-                    @endif
-                @else
-                    <p class="text-center mt-2"> Aucun fichier </p>
-                @endif
-            </div>
-        </div>
-    </div>
-@endforeach
-
 
 @endsection

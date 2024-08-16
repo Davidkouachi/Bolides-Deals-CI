@@ -152,42 +152,11 @@
                                     </li>
                                     @auth()
                                     <li class="dropdown notification-dropdown">
-                                        <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
+                                        <a href="{{route('index_annonce_new')}}" class="nk-quick-nav-icon">
                                             <div class="icon-status icon-status-info">
                                                 <em class="icon ni ni-plus-circle"></em>
                                             </div>
                                         </a>
-                                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                                            <div class="dropdown-head">
-                                                <span class="sub-title nk-dropdown-title">Nouvelle annonce</span>
-                                            </div>
-                                            <div class="dropdown-body">
-                                                <div class="nk-notification">
-                                                    <a class="nk-notification-item dropdown-inner" href="{{route('index_vente')}}">
-                                                        <div class="nk-notification-icon">
-                                                            <em class="icon icon-circle bg-primary-dim ni ni-truck"></em>
-                                                        </div>
-                                                        <div class="nk-notification-content">
-                                                            <div class="nk-notification-text">
-                                                                Vente de véhicule
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="nk-notification">
-                                                    <a class="nk-notification-item dropdown-inner" href="{{route('index_location')}}">
-                                                        <div class="nk-notification-icon">
-                                                            <em class="icon icon-circle bg-primary-dim ni ni-truck"></em>
-                                                        </div>
-                                                        <div class="nk-notification-content">
-                                                            <div class="nk-notification-text">
-                                                                Location de véhicule
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </li>
                                     <li class="dropdown notification-dropdown"><a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
                                             <div class="icon-status icon-status-info">
@@ -395,15 +364,6 @@
                             <label class="form-label" for="default-textarea">Suggestion</label>
                             <div class="form-control-wrap">
                                 <textarea name="message" class="form-control no-resize" id="default-textarea" required></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="customFileLabel">Fichier (facultatif)</label>
-                            <div class="form-control-wrap">
-                                <div class="form-file">
-                                    <input type="file" name="file_pdf" class="form-file-input" id="customFile">
-                                    <label class="form-file-label" for="customFile">Choisir un fichier</label>
-                                </div>
                             </div>
                         </div>
                         <div class="form-group">

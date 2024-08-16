@@ -38,28 +38,34 @@ class AuthController extends Controller
         // Vérifier si le login est un email ou un numéro de téléphone
         $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
 
+        // Rechercher l'utilisateur par email ou téléphone avant l'authentification
+        $user = User::where($fieldType, $login)->first();
+
+        // Vérifier si l'utilisateur existe et s'il est bloqué
+        if ($user && $user->lock === 'oui') {
+            return redirect()->back()->with('user_locked','Cet compte est temporairement bloqué. Vous ne pouvez pas accéder à votre Profil pour le moment. Veuillez réessayer plus tard ou contacter le support si vous pensez qu\'il s\'agit d\'une erreur.');
+        }
+
         // Essayer de se connecter avec l'email ou le numéro de téléphone
         if (Auth::attempt([$fieldType => $login, 'password' => $password])) {
 
-            if (Auth::user()->lock === 'oui') {
-                return redirect()->route('message_lock');
-            }
-
+            // Effacer l'URL prévue en session pour éviter des redirections indésirables
             Session::forget('url.intended');
-            //Auth::logoutOtherDevices($request->password);
-            
-            $role_id = Auth::user()->role_id;
 
+            // Récupérer le rôle de l'utilisateur et le stocker en session
+            $role_id = Auth::user()->role_id;
             $role = Role::find($role_id);
             if ($role) {
                 session(['role' => $role]);
             }
 
-            return redirect()->route('index_accueil')->with('success', 'Connexion réussi.');
+            return redirect()->route('index_accueil')->with('success', 'Connexion réussie.');
         }
 
-        return redirect()->back()->withInput($request->only('login'))->with('error', 'L\'authentification a échoué. Veuillez vérifier vos informations d\'identification et réessayer.',);
+        return redirect()->back()->withInput($request->only('login'))
+            ->with('error', 'L\'authentification a échoué. Veuillez vérifier vos informations d\'identification et réessayer.');
     }
+
 
     public function trait_registre(Request $request)
     {

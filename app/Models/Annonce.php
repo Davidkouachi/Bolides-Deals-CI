@@ -27,6 +27,7 @@ class Annonce extends Model
         'type_annonce',
         'prix',
         'immatriculation',
+        'description',
     ];
 
     public function marque()

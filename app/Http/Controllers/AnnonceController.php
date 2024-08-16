@@ -30,13 +30,13 @@ class AnnonceController extends Controller
         return view('vehicule.annonce.detail',['imgqr' => $imgqr,'data_qrcode' => $data_qrcode]);
     }
 
-    public function index_vente()
+    public function index_annonce_new()
     {
-        return view('vehicule.annonce.new.vente');
+        $marques = Marque::all();
+        foreach ($marques as $value) {
+            $value->image_url = asset('storage/images/' . $value->image_nom);
+        }
+        return view('vehicule.annonce.new.new',['marques' => $marques]);
     }
 
-    public function index_location()
-    {
-        return view('vehicule.annonce.new.location');
-    }
 }

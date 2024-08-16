@@ -39,9 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/Profil_update', [ProfilController::class, 'profil_update'])->name('profil_update');
     Route::post('/form_password_reset', [ProfilController::class, 'trait_password_profil'])->name('trait_password_profil');
 
-    Route::get('/Nouvelle Annonces Vente', [AnnonceController::class, 'index_vente'])->name('index_vente');
-    Route::get('/Nouvelle Annonces Location', [AnnonceController::class, 'index_location'])->name('index_location');
-
+    Route::get('/Nouvelle Annonces', [AnnonceController::class, 'index_annonce_new'])->name('index_annonce_new');
 });
 
 Route::middleware(['role:ADMINISTRATEUR'])->group(function () {
@@ -61,6 +59,6 @@ Route::middleware(['role:ADMINISTRATEUR'])->group(function () {
     Route::get('/Tableau de Bord/Utilisateurs', [BordController::class, 'index_bord_user'])->name('index_bord_user');
     Route::get('/Tableau de Bord/lock/{id}', [LockController::class, 'lock'])->name('lock');
     Route::get('/Tableau de Bord/unlock/{id}', [LockController::class, 'unlock'])->name('unlock');
-    Route::get('/Compte Vérouillé', [LockController::class, 'message_lock'])->name('message_lock');
+    
 });
 

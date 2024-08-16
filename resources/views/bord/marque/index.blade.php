@@ -49,7 +49,6 @@
 									        </div>
 									    </div>
 									</div>
-
                                     <div class="col-12" >
 					                    <div class="form-group">
 					                        <div class="form-control-wrap">
@@ -128,7 +127,7 @@
 				                        </td>
 				                        <td class="nk-tb-col" style="width: 100px;" >
 	                                        <div class="user-avatar md sq" style="background: transparent;">
-	                                            <img src="{{asset('storage/images/'.$value->image_nom)}}" alt="{{$value->marque}}" class="thumb">
+	                                            <img src="{{asset('storage/images/'.$value->image_nom)}}" alt="{{$value->marque}}" class="thumb" data-bs-toggle="modal" data-bs-target="#modalImage{{$value->id}}">
 	                                        </div>
 				                        </td>
 				                        <td class="nk-tb-col" >
@@ -245,6 +244,14 @@
 				</form>
             </div>
         </div>
+    </div>
+</div>
+@endforeach
+
+@foreach ($marques as $value)
+<div class="modal fade zoom" id="modalImage{{$value->id}}">
+    <div class="modal-dialog modal-dialog-centered modal-lg align-items-center justify-content-center" role="document">
+        <img src="{{ asset('storage/images/'. $value->image_nom) }}" class="img-fluid" style="width: auto; height: auto;">
     </div>
 </div>
 @endforeach

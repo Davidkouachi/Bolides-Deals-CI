@@ -107,6 +107,37 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" id="Compte_lock">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body modal-body-lg text-center">
+                    <div class="nk-modal">
+                        <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-lock bg-danger">
+                        </em>
+                        <h4 class="nk-modal-title">Compte Bloqué!</h4>
+                        <div class="nk-modal-text">
+                            <p class="lead">
+                                {{session('user_locked')}}
+                            </p>
+                        </div>
+                        <div class="nk-modal-action mt-5">
+                            <a onclick="window.location.reload();" class="btn btn-lg btn-mw btn-light" data-bs-dismiss="modal">ok</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (session('user_locked'))
+        <script type="text/javascript">
+            window.onload = function() {
+                $('#Compte_lock').modal('show');
+            }
+        </script>
+        {{ session()->forget('user_locked') }}
+    @endif
+
     <script src="{{asset('assets/js/bundle55a0.js')}}"></script>
     <script src="{{asset('assets/js/scripts55a0.js')}}"></script>
     <script src="{{asset('assets/js/demo-settings55a0.js')}}"></script>

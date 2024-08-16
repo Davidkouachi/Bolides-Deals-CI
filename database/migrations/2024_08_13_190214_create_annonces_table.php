@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('type_annonce');
             $table->string('prix');
             $table->string('immatriculation')->unique();
+            $table->text('description');
             $table->unsignedBigInteger('marque_id');
             $table->foreign('marque_id')->references('id')->on('marques');
             $table->unsignedBigInteger('user_id');

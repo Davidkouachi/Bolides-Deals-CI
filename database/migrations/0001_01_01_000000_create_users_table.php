@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('prenom');
-            $table->string('phone');
+            $table->string('phone')->unique();
             $table->string('email')->unique();
             $table->string('lock');
+            $table->integer('nbre_lock')->default(0);
+            $table->string('date_lock')->nullable();
+            $table->string('date_unlock')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('adresse');

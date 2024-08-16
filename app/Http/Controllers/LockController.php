@@ -23,6 +23,8 @@ class LockController extends Controller
     {
         $user = User::find($id);
         $user->lock = 'oui';
+        $user->increment('nbre_lock');
+        $user->date_lock = now();
         if ($user->save()) {
             return back()->with('success','Utilisateur vérouillé avec succès');
         }else{
@@ -35,15 +37,11 @@ class LockController extends Controller
     {
         $user = User::find($id);
         $user->lock = 'non';
+        $user->date_unlock = now();
         if ($user->save()) {
             return back()->with('success','Utilisateur dévérouillé avec succès');
         }else{
             return back()->with('error', 'La sauvegarde dans la base de données a échoué.');
         }
-    }
-
-    public function message_lock()
-    {
-        return view('bord.user.massage_lock');
     }
 }

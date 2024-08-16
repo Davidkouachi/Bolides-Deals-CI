@@ -15,7 +15,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 use App\Models\Suggestion;
-use App\Models\Suggestion_file;
 
 class SuggestionController extends Controller
 {
@@ -38,24 +37,6 @@ class SuggestionController extends Controller
         $sugg->lu = 'non';
 
         if ($sugg->save()) {
-
-            if ($request->hasFile('file_pdf') && $request->file('file_pdf')->isValid()) {
-
-                $originalFileName = time() . '.' . $request->file('file_pdf')->getClientOriginalName();
-                $pdfPathname = $request->file('file_pdf')->storeAs('public/pdf', $originalFileName);
-
-                $pdfFile = new Suggestion_file();
-                $pdfFile->file_nom = $originalFileName;
-                $pdfFile->file_chemin = $pdfPathname;
-                $pdfFile->suggestion_id = $sugg->id;
-
-                if ($pdfFile->save()) {
-                    return redirect()->back()->with('success','Votre suggestion a bien été envoyée.');
-                }else{
-                    return redirect()->back()->with('warning','Votre suggestion a bien été envoyée, mais le fichier n\'a pas pu être envoyée.');
-                }
-
-            }
 
             return redirect()->back()->with('success','Votre suggestion a bien été envoyée.');
 

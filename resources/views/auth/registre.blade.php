@@ -20,13 +20,13 @@
         <div class="nk-main ">
             <div class="nk-wrap nk-wrap-nosidebar">
                 <div class="nk-content ">
-                    <div class="nk-block nk-block-middle nk-auth-body wide-xs" style="margin-top: -20px;">
+                    <div class="nk-block nk-block-middle nk-auth-body wide-xs" style="margin-top: 0px;">
                         <div class="brand-logo text-center">
                             <a href="#" class="logo-link">
-                                <img height="200px" width="200px" src="{{asset('images/logo/logo.png')}}">
+                                <img height="150px" width="150px" src="{{asset('images/logo/logo.png')}}">
                             </a>
                         </div>
-                        <div class="card" style="margin-top: -30px;">
+                        <div class="card">
                             <div class="card-inner card-inner-lg">
                                 <div class="nk-block-head">
                                     <div class="nk-block-head-content">
@@ -36,8 +36,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form id="registre_sinscrire" class="row g-gs" action="{{route('trait_registre')}}" method="post">
+                                <form id="registre_sinscrire" class="row g-gs" action="{{route('trait_registre')}}" method="post" enctype="multipart/form-data">
                                     @csrf
+                                    <div class="col h-50" >
+                                        <div class="card-inner">
+                                            <div class="team">
+                                                <div class="user-card user-card-s2">
+                                                    <label class="form-label">Photo de Profil</label>
+                                                    <div class="user-avatar xl sq " style="background: transparent;"> 
+                                                        <img height="110px" width="110px" style="object-fit: cover;" class="thumb" id="imagePreview">
+                                                    </div>
+                                                    <div class="user-info">
+                                                        <input name="image" type="file" id="imageInput" style="width:120px;" accept="image/*">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-12" >
                                         <div class="form-group">
                                             <label class="form-label">Nom</label>
@@ -136,13 +151,6 @@
                                     <a href="{{route('index_login')}}"><strong>Se Connecter</strong>
                                     </a>
                                 </div>
-                                {{-- <div class="text-center pt-4 pb-3">
-                                    <h6 class="overline-title overline-title-sap"><span>OR</span></h6>
-                                </div>
-                                <ul class="nav justify-center gx-8">
-                                    <li class="nav-item"><a class="nav-link" href="#">Facebook</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#">Google</a></li>
-                                </ul> --}}
                             </div>
                         </div>
                     </div>
@@ -174,6 +182,7 @@
     <script src="{{asset('assets/js/demo-settings55a0.js')}}"></script>
     <script src="{{asset('assets/js/example-toastr55a0.js') }}"></script>
     <script src="{{asset('assets/js/app/js/registre_sinscrire.js') }}"></script>
+    <script src="{{asset('assets/js/app/js/registre_sinscrire_photo.js') }}"></script>
     <script src="{{asset('assets/js/app/js/ctrlv_ctrlc_register.js') }}"></script>
 
     @if (session('success'))

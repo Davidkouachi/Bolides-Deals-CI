@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -121,8 +122,47 @@ class ProfilController extends Controller
         $user->email = $email;
         $user->adresse = $adresse;
 
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+                // Renommer le fichier avec un nom unique pour éviter les conflits
+                $filename = time() . '.' . $request->file('image')->getClientOriginalName();
+                $pdfPathname = $request->file('image')->storeAs('public/images', $filename);
+
+                $rech = User::where('image_nom', '=', $filename)->first();
+                if(!$rech){
+                    $user->image_nom = $filename;
+                    $user->image_chemin = $pdfPathname;
+                }
+
+            }
+        }
+
         if ($user->save()) {
             return redirect()->back()->with('success','Mise à jour éffectuée');
+        }
+    }
+
+    public function delete_photo($id)
+    {
+        $user = User::find(Auth::user()->id);
+
+        if (!empty($user->image_nom)) {
+            $imagePath = 'public/images/' . $user->image_nom;
+
+            // Supprimer l'image physique si elle existe
+            if (Storage::exists($imagePath)) {
+                Storage::delete($imagePath);
+            }
+        }
+
+        // Réinitialiser les champs de l'image dans la base de données
+        $user->image_nom = null;
+        $user->image_chemin = null;
+
+        if ($user->save()) {
+            return redirect()->back()->with('success', 'Photo de profil supprimée');
+        } else {
+            return redirect()->back()->with('error', 'Échec de la suppression');
         }
     }
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\PasswordresetController;
 use App\Http\Controllers\SuggestionController;
+use App\Http\Controllers\MesannoncesController;
 
 
 Route::get('/', [Controller::class, 'index_accueil'])->name('index_accueil');
@@ -38,8 +39,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/Profil', [ProfilController::class, 'index_profil'])->name('index_profil');
     Route::post('/Profil_update', [ProfilController::class, 'profil_update'])->name('profil_update');
     Route::post('/form_password_reset', [ProfilController::class, 'trait_password_profil'])->name('trait_password_profil');
+    Route::get('/Delete_photo_profil/{id}', [ProfilController::class, 'delete_photo'])->name('delete_photo');
 
     Route::get('/Nouvelle Annonces', [AnnonceController::class, 'index_annonce_new'])->name('index_annonce_new');
+    Route::post('/trait_annonces', [AnnonceController::class, 'trait_annonce'])->name('trait_annonce');
+
+    Route::get('/Mes Annonces', [MesannoncesController::class, 'index_mesannonces'])->name('index_mesannonces');
+    Route::get('/Mes Annonces/Détail', [MesannoncesController::class, 'index_mesannonces_detail'])->name('index_mesannonces_detail');
 });
 
 Route::middleware(['role:ADMINISTRATEUR'])->group(function () {

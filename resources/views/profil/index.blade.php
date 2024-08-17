@@ -40,12 +40,21 @@
                                     <div class="card-inner">
                                         <div class="team">
                                             <div class="user-card user-card-s2">
-                                                <div class="user-avatar lg bg-primary"> 
+                                                @if(Auth::user()->image_nom)
+                                                <div class="user-avatar xl sq " style="background: transparent;"> 
+                                                    <span class="tb-product">
+                                                            <img height="110px" width="110px" style="object-fit: cover;" class="thumb" src="{{asset('storage/images/'.Auth::user()->image_nom)}}">
+                                                        </span>
+                                                    <div class="status dot dot-lg dot-success"></div>
+                                                </div>
+                                                @else
+                                                <div class="user-avatar xl sq bg-primary"> 
                                                     <span>
                                                         {{ ucfirst(substr(Auth::user()->name, 0, 1)).ucfirst(substr(Auth::user()->prenom, 0, 1)) }}
                                                     </span>
                                                     <div class="status dot dot-lg dot-success"></div>
                                                 </div>
+                                                @endif
                                                 <div class="user-info">
                                                     <h6>
                                                         {{Auth::user()->name}} 
@@ -56,6 +65,13 @@
                                                         <span>Mise à jour</span>
                                                         <em class="icon ni ni-edit"></em>
                                                     </a>
+                                                    @if(Auth::user()->image_nom)
+                                                    <br>
+                                                    <a class="btn btn-white btn-outline-danger btn-dim btn-sm mt-1" href="{{route('delete_photo', Auth::user()->id)}}">
+                                                        <span>Supprimer la photo de profil</span>
+                                                        <em class="icon ni ni-edit"></em>
+                                                    </a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -240,6 +256,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="nk-block-actions data-col data-col-end">
+                                                    <a class="btn btn-outline-light">
+                                                        <span>Bientôt Disponible</span>
+                                                    </a>
+                                                </div>
+                                                {{-- <div class="nk-block-actions data-col data-col-end">
                                                     <ul class="align-center gx-3">
                                                         <li class="order-md-last">
                                                             <div class="custom-control custom-switch me-n2">
@@ -250,7 +271,7 @@
                                                             </div>
                                                         </li>
                                                     </ul>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                             <div class="data-item">
                                                 <div class="data-col">
@@ -301,8 +322,33 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="personal">
-                        <form class="row gy-4" action="{{route('profil_update')}}" method="post" id="form_update">
+                        <form class="row gy-4" action="{{route('profil_update')}}" method="post" id="form_update" enctype="multipart/form-data">
                             @csrf
+                            <div class="col-12 h-50">
+                                <div class="card-inner">
+                                    <div class="team">
+                                        <div class="user-card user-card-s2">
+                                            <label class="form-label">Photo de Profil</label>
+                                            @if(Auth::user()->image_nom)
+                                                <div class="user-avatar xl sq " style="background: transparent;"> 
+                                                    <span class="tb-product">
+                                                        <img height="110px" width="110px" style="object-fit: cover;" class="thumb" src="{{asset('storage/images/'.Auth::user()->image_nom)}}" id="imagePreview">
+                                                    </span>
+                                                </div>
+                                            @else
+                                                <div class="user-avatar xl sq bg-light"> 
+                                                    <span>
+                                                        <img height="110px" width="110px" id="imagePreview" style="object-fit: cover;" class="thumb" >
+                                                    </span>
+                                                </div>
+                                            @endif
+                                            <div class="user-info">
+                                                <input name="image" type="file" id="imageInput" style="width:120px;" accept="image/*">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-label">Nom</label>
@@ -451,6 +497,7 @@
 </div>
 
 <script src="{{asset('assets/js/app/js/form_update_profil.js') }}"></script>
+<script src="{{asset('assets/js/app/js/form_update_profil_photo.js') }}"></script>
 <script src="{{asset('assets/js/app/js/form_password_reset_profil.js') }}"></script>
 
 @endsection

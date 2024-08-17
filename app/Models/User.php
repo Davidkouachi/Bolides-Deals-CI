@@ -30,6 +30,8 @@ class User extends Authenticatable
         'adresse',
         'update_mdp',
         'date_mdp',
+        'image_nom',
+        'image_chemin',
     ];
 
     /**

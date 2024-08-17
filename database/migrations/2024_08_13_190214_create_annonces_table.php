@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('annonces', function (Blueprint $table) {
             $table->id();
-            $table->string('Quartier');
+            $table->string('localisation');
             $table->string('model');
             $table->string('transmission');
             $table->string('type_carburant');
@@ -25,7 +25,14 @@ return new class extends Migration
             $table->string('cylindre');
             $table->string('type_annonce');
             $table->string('prix');
-            $table->string('immatriculation')->unique();
+            $table->integer('nbre_refresh')->default(0);
+            $table->string('date_refresh');
+            $table->string('nbre_reduc');
+            $table->string('troc');
+            $table->string('deplace');
+            $table->string('whatsapp')->nullable();
+            $table->string('appel');
+            $table->string('sms')->nullable();
             $table->text('description');
             $table->unsignedBigInteger('marque_id');
             $table->foreign('marque_id')->references('id')->on('marques');
@@ -33,6 +40,8 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('ville_id');
             $table->foreign('ville_id')->references('id')->on('villes');
+            $table->unsignedBigInteger('type_marque_id');
+            $table->foreign('type_marque_id')->references('id')->on('type_marques');
             $table->timestamps();
         });
     }

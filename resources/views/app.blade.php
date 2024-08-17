@@ -158,7 +158,7 @@
                                             </div>
                                         </a>
                                     </li>
-                                    <li class="dropdown notification-dropdown"><a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
+                                    {{-- <li class="dropdown notification-dropdown"><a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
                                             <div class="icon-status icon-status-info">
                                                 <em class="icon ni ni-bell"></em>
                                             </div>
@@ -186,18 +186,33 @@
                                                 <a href="#">Voir plus</a>
                                             </div>
                                         </div>
-                                    </li>
+                                    </li> --}}
                                     @endauth
                                     <li class="dropdown user-dropdown">
                                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#">
                                             <div class="user-toggle">
-                                                <div class="user-avatar sm bg-primary">
+                                                @if(Auth::user())
+                                                    @if(Auth::user()->image_nom)
+                                                        <div class="user-avatar sm sq " style="background: transparent;"> 
+                                                            <span>
+                                                                <img height="33px" width="33px" style="object-fit: cover;" class="thumb" src="{{asset('storage/images/'.Auth::user()->image_nom)}}">
+                                                            </span>
+                                                            <div class="status dot dot-lg dot-success"></div>
+                                                        </div>
+                                                    @else
+                                                        <div class="user-avatar sm sq bg-primary"> 
+                                                            <span>
+                                                                {{ ucfirst(substr(Auth::user()->name, 0, 1)).ucfirst(substr(Auth::user()->prenom, 0, 1)) }}
+                                                            </span>
+                                                            <div class="status dot dot-lg dot-success"></div>
+                                                        </div>
+                                                    @endif
+                                                @else
+                                                <div class="user-avatar sq sm bg-primary">
                                                     <em class="icon ni ni-user-alt">
                                                     </em>
-                                                    @auth
-                                                    <div class="status dot dot-lg dot-success"></div>
-                                                    @endauth
                                                 </div>
+                                                @endif
                                             </div>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-end">
@@ -214,11 +229,20 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="">
+                                                        <a href="{{route('index_mesannonces')}}">
                                                             <em class="icon ni ni-view-list-fill">
                                                             </em>
                                                             <span>
                                                                 Mes annonces
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="">
+                                                            <em class="icon ni ni-bell">
+                                                            </em>
+                                                            <span>
+                                                                Notification
                                                             </span>
                                                         </a>
                                                     </li>
@@ -287,7 +311,7 @@
                         <div class="nk-footer-wrap">
                             <div class="nk-footer-copyright">
                                 <span class="w-20" >
-                                    ©<script>
+                                    Copyright © <script>
                                     document.write(new Date().getFullYear())
                                     </script> Bolides Deals.
                                 </span>

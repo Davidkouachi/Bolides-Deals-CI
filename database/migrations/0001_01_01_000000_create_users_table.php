@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('adresse');
             $table->integer('update_mdp')->default(0);
             $table->string('date_mdp')->nullable();
+            $table->string('image_nom')->unique()->nullable();
+            $table->string('image_chemin')->unique()->nullable();
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
             $table->rememberToken();

@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 filledCount++;
             }
         });
-        fileCountDisplay.textContent = ` ${filledCount} / ${fileInputs.length - 1}`;
+        fileCountDisplay.textContent = ` ${filledCount} / ${fileInputs.length }`;
     }
 
     fileInputs.forEach((input, index) => {

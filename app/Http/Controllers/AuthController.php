@@ -92,6 +92,7 @@ class AuthController extends Controller
         $adresse = $request->input('adresse');
         $password = $request->input('password');
         $cpassword = $request->input('cpassword');
+        $role_acheteur = Role::where('nom', '=', 'UTILISATEUR')->first();
 
         $rech_email = User::where('email', '=', $email)->count();
         if ($rech_email > 0) {
@@ -107,8 +108,6 @@ class AuthController extends Controller
             return redirect()->back()->withInput($request->only('nom','prenom','phone','email'))->with('error','Mot de passe incorrect.');
         }
 
-        $role_acheteur = Role::where('nom', '=', 'ACHETEUR')->first();
-
         $user = new User();
         $user->name = $nom;
         $user->prenom = $prenom;
@@ -119,6 +118,21 @@ class AuthController extends Controller
         $user->password = bcrypt($password );
         $user->lock = 'non';
         $user->role_id =  $role_acheteur->id;
+
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+                // Renommer le fichier avec un nom unique pour éviter les conflits
+                $filename = time() . '.' . $request->file('image')->getClientOriginalName();
+                $pdfPathname = $request->file('image')->storeAs('public/images', $filename);
+
+                $rech = User::where('image_nom', '=', $filename)->first();
+                if(!$rech){
+                    $user->image_nom = $filename;
+                    $user->image_chemin = $pdfPathname;
+                }
+
+            }
+        }
 
         if ($user->save()) {
             return redirect()->route('index_login')->with('success','Compte créer avec succès. Veuillez vous connectez maintenant');

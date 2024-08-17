@@ -14,7 +14,8 @@ class Annonce extends Model
         'marque_id',
         'user_id',
         'ville_id',
-        'Quartier',
+        'type_marque_id',
+        'localisation',
         'model',
         'transmission',
         'type_carburant',
@@ -26,8 +27,15 @@ class Annonce extends Model
         'puiss_fiscal',
         'type_annonce',
         'prix',
-        'immatriculation',
         'description',
+        'nbre_refresh',
+        'date_refresh',
+        'nbre_reduc',
+        'troc',
+        'deplace',
+        'whatsapp',
+        'appel',
+        'sms',
     ];
 
     public function marque()
@@ -43,5 +51,10 @@ class Annonce extends Model
     public function ville()
     {
         return $this->belongsTo(Ville::class, 'ville_id');
+    }
+
+    public function type_marque()
+    {
+        return $this->belongsTo(Type_marque::class, 'type_marque_id');
     }
 }

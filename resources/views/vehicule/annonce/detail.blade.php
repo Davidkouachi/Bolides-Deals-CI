@@ -32,7 +32,26 @@
                 <div class="card">
                     <div class="card-inner">
                         <div class="row pb-5">
-                            <div class="col-lg-12 ">
+                            <div class="col-lg-12">
+                                <div class="card-inner">
+                                        <div class="team">
+                                            <div class="user-card user-card-s2">
+                                                <div class="user-avatar xl sq " style="background: transparent;"> 
+                                                    <span class="tb-product">
+                                                        <img height="110px" width="110px" style="object-fit: cover;" class="thumb" src="{{asset('storage/images/changan.webp')}}">
+                                                    </span>
+                                                </div>
+                                                <h5>
+                                                    Product details of Comfy cushions
+                                                </h5>
+                                                <h5 class="product-price text-warning">
+                                                    999.999.999 Fcfa
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="col-lg-12">
                                 <div class="slider-init row product-slider mb-3" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 1, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 1}} ]}'>
                                     <div class="col">
                                         <div class="card h-100" style=" display: flex;justify-content: center;align-items: center;">
@@ -75,47 +94,59 @@
                                         </div>
                                     </div>
                                 </div>
-                                <h5 class="product-price text-warning">
-                                    999.999.999 Fcfa
-                                </h5>
-                                <h5 class="product-title">
-                                    Classy Modern Smart watch
-                                </h5>
                             </div>
                             <div class="col-lg-12 mt-2">
                                 <div class="product-details entry me-xxl-3">
-                                    <h3>
-                                        Product details of Comfy cushions
-                                    </h3>
-                                    <p>
-                                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Neque porro quisquam est, qui dolorem consectetur, adipisci velit.Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-                                    </p>
-                                    <ul class="list list-sm list-checked">
+                                    <h5 class="mb-2" >
+                                        Caractéristiques
+                                    </h5>
+                                    <ul class="list list-sm list-checked mb-3">
                                         <li>
-                                            Meets and/or exceeds performance standards.
+                                            <b>Marque</b> : exceeds performance standards.
                                         </li>
                                         <li>
-                                            Liumbar support.
+                                            <b>Model</b> : exceeds performance standards.
                                         </li>
                                         <li>
-                                            Made of bonded teather and poiyurethane.
+                                            <b>Version</b> : exceeds performance standards.
                                         </li>
                                         <li>
-                                            Metal frame.
+                                            <b>Année</b> : exceeds performance standards.
                                         </li>
                                         <li>
-                                            Anatomically shaped cork-latex
+                                            <b>Kilométrage</b> : exceeds performance standards.
                                         </li>
                                         <li>
-                                            As attractively priced as you look attractive in one
+                                            <b>Transmission</b> : exceeds performance standards.
+                                        </li>
+                                        <li>
+                                            <b>Type de carburant</b> : exceeds performance standards.
+                                        </li>
+                                        <li>
+                                            <b>Puissance fiscale</b> : exceeds performance standards.
+                                        </li>
+                                        <li>
+                                            <b>Cylindré</b> : exceeds performance standards.
+                                        </li>
+                                        <li>
+                                            <b>Couleur</b> : exceeds performance standards.
+                                        </li>
+                                        <li>
+                                            <b>Hors taxe</b> : exceeds performance standards.
+                                        </li>
+                                        <li>
+                                            <b>Neuf</b> : exceeds performance standards.
+                                        </li>
+                                        <li>
+                                            <b>Troc possible</b> : exceeds performance standards.
+                                        </li>
+                                        <li>
+                                            <b>Je me déplace</b> : exceeds performance standards.
                                         </li>
                                     </ul>
-                                    <p>
-                                        Unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae.
-                                    </p>
-                                    <h3>
-                                        The best seats in the house
-                                    </h3>
+                                    <h4>
+                                        Descriptions / Conditions
+                                    </h4>
                                     <p>
                                         I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings. Unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae.
                                     </p>

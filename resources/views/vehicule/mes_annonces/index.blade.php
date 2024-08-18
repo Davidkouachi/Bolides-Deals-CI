@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('titre', 'Annonces')
+@section('titre', 'Mes Annonces')
 
 @section('content')
 
@@ -8,59 +8,6 @@
     <div class="container-xl wide-xl">
         <div class="nk-content-body">
             <div class="nk-block nk-block-lg">
-                <div class="nk-block">
-                    <div class="row g-gs">
-                        <div class="col-lg-12">
-                            <div class="card card-preview">
-                                {{-- <div class="card-inner text-center rounded" style="background-image: url('{{ asset('images/logo/arriere/1.jpg') }}');background-repeat: no-repeat; background-position: left; background-position: -50px -240px; background-size: auto;"> --}}
-                                    <div class="card-inner text-center rounded row g-gs">
-                                        <div class="col-12" >
-                                            <h3>Mes Annonces</h3>
-                                        </div>
-                                        <div class="col-12" >
-                                            <form action="#" class="form-validate row g-gs">
-                                        <div class="col-lg-4 col-md-6" >
-                                            <div class="form-group">
-                                                <div class="form-control-wrap">
-                                                    <input placeholder="Model, marque" type="text" class="form-control text-center">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-6" >
-                                            <div class="form-group">
-                                                <div class="form-control-wrap">
-                                                    <input placeholder="Kilométrage" type="text" class="form-control text-center">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-6" id="div_livraison">
-                                            <div class="form-group">
-                                                <div class="form-control-wrap">
-                                                    <select class="form-select js-select2" data-placeholder="Statuts">
-                                                        <option value=""></option>
-                                                        <option value="vendu">Vendu</option>
-                                                        <option value="en ligne">En ligne</option>
-                                                        <option value="hors ligne">Hors ligne</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 text-center" >
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-white btn-lg btn-dim btn-outline-success ">
-                                                    <em class="ni ni-search" ></em>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="nk-block">
                     <ul class="filter-button-group mb-4 pb-1">
                         <li>
@@ -70,22 +17,22 @@
                         </li>
                         <li>
                             <button class="filter-button" data-filter=".categorie-1" type="button">
-                                Berline 
+                                Berline
                             </button>
                         </li>
                         <li>
                             <button class="filter-button" data-filter=".categorie-2" type="button">
-                                Hatchback 
+                                Hatchback
                             </button>
                         </li>
                         <li>
                             <button class="filter-button" data-filter=".categorie-3" type="button">
-                                SUV 
+                                SUV
                             </button>
                         </li>
                         <li>
                             <button class="filter-button" data-filter=".categorie-4" type="button">
-                                Coupé 
+                                Coupé
                             </button>
                         </li>
                         <li>
@@ -95,17 +42,16 @@
                         </li>
                         <li>
                             <button class="filter-button" data-filter=".categorie-5" type="button">
-                                Camion 
+                                Camion
                             </button>
                         </li>
                         <li>
                             <button class="filter-button" data-filter=".categorie-5" type="button">
-                                Moto  
+                                Moto
                             </button>
                         </li>
                     </ul>
                     <div class="row g-gs filter-container" data-animation="true">
-
                         <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6 filter-item categorie-1" data-category="categorie-1">
                             <div class="card ">
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
@@ -235,11 +181,9 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
-                <div class="nk-block" >
+                <div class="nk-block">
                     <div>
                         <ul class="pagination">
                             <li class="page-item"><a class="page-link" href="">Prev</a></li>
@@ -252,10 +196,9 @@
                         </ul>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
+</div>
 
 @endsection

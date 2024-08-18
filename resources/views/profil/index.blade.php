@@ -198,6 +198,22 @@
                                                         </span>
                                                     </div> --}}
                                                 </div>
+                                                <div class="data-item">
+                                                    <div class="data-col">
+                                                        <span class="data-label">
+                                                            Nombre d'annonces postées
+                                                        </span>
+                                                        <span class="data-value">
+                                                            {{ $nbre_annonce }}
+                                                        </span>
+                                                    </div>
+                                                    {{-- <div class="data-col data-col-end">
+                                                        <span class="data-more disable">
+                                                            <em class="icon ni ni-lock-alt">
+                                                            </em>
+                                                        </span>
+                                                    </div> --}}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

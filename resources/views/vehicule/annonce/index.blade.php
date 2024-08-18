@@ -2,63 +2,71 @@
 
 @section('titre', 'Annonces')
 
+@section('menu_haut')
+
+<li class="dropdown notification-dropdown">
+    <a class=" nk-quick-nav-icon" data-bs-toggle="modal" data-bs-target="#modalSearch">
+        <em class="icon ni ni-search"></em>
+        <span class="fs-15px"></span>
+    </a>
+</li>
+
+@endsection
+
 @section('content')
 
 <div class="nk-content nk-content-fluid">
     <div class="container-xl wide-xl">
         <div class="nk-content-body">
             <div class="nk-block nk-block-lg">
-                <div class="nk-block">
+                <div class="nk-block" hidden>
                     <div class="row g-gs">
                         <div class="col-lg-12">
                             <div class="card card-preview">
-                                {{-- <div class="card-inner text-center rounded" style="background-image: url('{{ asset('images/logo/arriere/1.jpg') }}');background-repeat: no-repeat; background-position: left; background-position: -50px -240px; background-size: auto;"> --}}
-                                    <div class="card-inner text-center rounded row g-gs">
-                                        <div class="col-12" >
-                                            <h4>Annonces</h4>
-                                        </div>
-                                        <div class="col-12" >
-                                            <form action="#" class="row g-gs">
-                                                <div class="col-lg-4 col-md-6" >
-                                                    <div class="form-group">
-                                                        <div class="form-control-wrap">
-                                                            <input placeholder="Model, marque" type="text" class="form-control form-control-sm">
+                                <div class="card-inner text-center rounded row g-gs">
+                                    <div class="col-12">
+                                        <h4>Annonces</h4>
+                                    </div>
+                                    <div class="col-12">
+                                        <form action="#" class="row g-gs">
+                                            <div class="col-lg-4 col-md-6">
+                                                <div class="form-group">
+                                                    <div class="form-control-wrap">
+                                                        <input placeholder="Model, marque" type="text" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6">
+                                                <div class="form-group">
+                                                    <div class="form-control-wrap">
+                                                        <input placeholder="Kilométrage" type="text" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6">
+                                                <div class="form-group">
+                                                    <div class="form-control-wrap">
+                                                        <div class="input-group">
+                                                            <input id="min-price" placeholder="prix min" type="tel" class="form-control form-control-sm">
+                                                            <input id="max-price" placeholder="prix max" type="tel" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 col-md-6" >
-                                                    <div class="form-group">
-                                                        <div class="form-control-wrap">
-                                                            <input placeholder="Kilométrage" type="text" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                            <div class="col-lg-12 text-center">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-white btn-md btn-dim btn-outline-success ">
+                                                        <em class="ni ni-search"></em>
+                                                    </button>
                                                 </div>
-                                                <div class="col-lg-4 col-md-6" >
-                                                    <div class="form-group">
-                                                        <div class="form-control-wrap">    
-                                                            <div class="input-group">       
-                                                                <input id="min-price" placeholder="prix min" type="tel" class="form-control form-control-sm">
-                                                                <input id="max-price" placeholder="prix max" type="tel" class="form-control form-control-sm">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12 text-center" >
-                                                    <div class="form-group">
-                                                        <button type="submit" class="btn btn-white btn-md btn-dim btn-outline-success ">
-                                                            <em class="ni ni-search" ></em>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="nk-block">
                     <ul class="filter-button-group mb-4 pb-1">
                         <li>
@@ -193,7 +201,6 @@
 
                     </div>
                 </div>
-
                 <div class="nk-block" >
                     <div>
                         <ul class="pagination">
@@ -207,10 +214,106 @@
                         </ul>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
+</div>
 
+<div class="modal fade zoom" tabindex="-1" id="modalSearch">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body ">
+                <form action="#" class="row g-gs">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="form-label" for="fv-topics1">
+                                Marque
+                            </label>
+                            <div class="form-control-wrap ">
+                                <select class="form-select js-select2" data-placeholder="Selectionner">
+                                    <option value=""></option>
+                                    @foreach($marques as $value)
+                                    <option value="{{$value->id}}">{{$value->marque}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="form-label" for="fv-topics2">
+                                Model
+                            </label>
+                            <div class="form-control-wrap">
+                                <input placeholder="Entrer le model" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group" id="rech_autre">
+                            <label class="form-label" for="fv-topic3">
+                                Type
+                            </label>
+                            <div class="form-control-wrap ">
+                                <select class="form-select js-select2" data-placeholder="Selectionner">
+                                    <option value=""></option>
+                                    @foreach($types as $value)
+                                    <option value="{{$value->id}}">{{$value->nom}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" id="rech_annee">
+                        <div class="form-group">
+                            <label class="form-label" for="cp1-team-size">Année</label>
+                            <div class="form-control-wrap">
+                                <select class="form-select js-select2" id="annee" data-placeholder="selectionner">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" id="rech_km">
+                        <div class="form-group">
+                            <label class="form-label" for="fv-topic3">
+                                Kilométrage
+                            </label>
+                            <div class="form-control-wrap">
+                                <div class="input-group">
+                                    <input id="min-km" placeholder="min" type="tel" class="form-control" maxlength="7">
+                                    <input id="max-km" placeholder="max" type="tel" class="form-control" maxlength="7">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="form-label" for="fv-topic3">
+                                Prix ( Fcfa )
+                            </label>
+                            <div class="form-control-wrap">
+                                <div class="input-group">
+                                    <input id="min-prix" placeholder="min" type="tel" class="form-control">
+                                    <input id="max-prix" placeholder="max" type="tel" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-white btn-md btn-dim btn-outline-success ">
+                                <span>Recherche</span>
+                                <em class="icon ni ni-search"></em>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{asset('assets/js/app/js/annonce/search.js') }}"></script>
 
 @endsection

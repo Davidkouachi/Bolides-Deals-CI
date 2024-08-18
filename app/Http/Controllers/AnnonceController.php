@@ -16,7 +16,10 @@ class AnnonceController extends Controller
 {
     public function index_annonce()
     {
-        return view('vehicule.annonce.index');
+        $marques = Marque::all();
+        $types = Type_marque::all();
+
+        return view('vehicule.annonce.index',['marques' => $marques,'types' => $types]);
     }
 
     public function index_detail()

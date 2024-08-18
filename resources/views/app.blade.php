@@ -130,7 +130,6 @@
                             </div>
                             @endif
                             
-
                             <div class="nk-header-brand ">
                                 <a class="logo-link" href="">
                                     <img height="50" width="50" src="{{asset('images/logo/logo.png')}}" /></img>
@@ -150,6 +149,7 @@
                                             <span class="fs-15px"></span>
                                         </a>
                                     </li>
+
                                     @auth()
                                     <li class="dropdown notification-dropdown">
                                         <a href="{{route('index_annonce_new')}}" class="nk-quick-nav-icon">
@@ -188,6 +188,9 @@
                                         </div>
                                     </li> --}}
                                     @endauth
+
+                                    @yield('menu_haut')
+
                                     <li class="dropdown user-dropdown">
                                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#">
                                             <div class="user-toggle">
@@ -198,6 +201,14 @@
                                                                 <img height="33px" width="33px" style="object-fit: cover;" class="thumb" src="{{asset('storage/images/'.Auth::user()->image_nom)}}">
                                                             </span>
                                                             <div class="status dot dot-lg dot-success"></div>
+                                                        </div>
+                                                        <div class="user-info d-none d-md-block">
+                                                            <span class="lead-text">
+                                                                {{ ucfirst(explode(' ', Auth::user()->name)[0]) . ' ' . ucfirst(explode(' ', Auth::user()->prenom)[0]) }}
+                                                            </span>
+                                                            <div class="user-name dropdown-indicator">
+                                                                {{Auth::user()->email}}
+                                                            </div>
                                                         </div>
                                                     @else
                                                         <div class="user-avatar sm sq bg-primary"> 

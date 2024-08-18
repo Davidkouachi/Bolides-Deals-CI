@@ -18,9 +18,8 @@ use PHPMailer\PHPMailer\Exception;
 
 use App\Models\User;
 use App\Models\Role;
-use App\Models\Password_reset;
-use App\Models\Delai_password_reset;
 use App\Models\Phpmailer_error;
+use App\Models\Annonce;
 
 class ProfilController extends Controller
 {
@@ -42,9 +41,11 @@ class ProfilController extends Controller
                 $desac = 'oui';
             }
         }
+
+        $nbre_annonce = Annonce::where('user_id', '=', Auth::user()->id)->count();
         
 
-        return view('profil.index',['desac' => $desac,'joursEcoules' => $joursEcoules]);
+        return view('profil.index',['desac' => $desac,'joursEcoules' => $joursEcoules,'nbre_annonce' => $nbre_annonce]);
     }
 
     public function trait_password_profil(Request $request)

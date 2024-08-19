@@ -15,8 +15,9 @@ use App\Http\Controllers\MesannoncesController;
 
 
 Route::get('/', [Controller::class, 'index_accueil'])->name('index_accueil');
+
 Route::get('/Annonces', [AnnonceController::class, 'index_annonce'])->name('index_annonce');
-Route::get('/Détail Annonces', [AnnonceController::class, 'index_detail'])->name('index_detail');
+Route::get('/Detail Annonces/{uuid}', [AnnonceController::class, 'index_detail'])->name('index_detail');
 
 Route::get('/Login', [AuthController::class, 'index_login'])->name('index_login');
 Route::post('/form_login', [AuthController::class, 'trait_login'])->name('trait_login');

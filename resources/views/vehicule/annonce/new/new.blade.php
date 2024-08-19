@@ -8,7 +8,7 @@
     <div class="container-xl wide-xl">
         <div class="nk-content-body">
             <div class="nk-block nk-block-lg">
-                <form class="nk-block" id="registre" action="{{route('trait_annonce')}}" method="post">
+                <form class="nk-block" id="registre" action="{{route('trait_annonce')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row g-gs" >
                         <div class="col-12">
@@ -39,8 +39,8 @@
                                                             <div class="card-inner">
                                                                 <div class="team">
                                                                     <div class="user-card user-card-s2">
-                                                                        <label class="form-label text-center" >Marque</label>
-                                                                        <div class="user-avatar xl sq " style="background: transparent;">
+                                                                        <label class="form-label text-center" > Photo de la marque</label>
+                                                                        <div class="user-avatar xl sq border p-1" style="background: transparent;">
                                                                             <img class="thumb" id="marqueImage">
                                                                         </div>
                                                                     </div>
@@ -48,9 +48,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4 col-md-6 mt-n3" >
-                                                        <div class="form-group ">
-                                                            <div class="form-control-wrap">
+                                                </div>
+                                                <div class="col-lg-4 col-md-6" id="div_type_vehicule">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="type-vehicule">
+                                                            Marque
+                                                        </label>
+                                                        <div class="form-control-wrap">
                                                                 <select required id="marqueSelect" class="form-select js-select2" data-placeholder="Selectionner" name="marque_id">
                                                                     <option value=""></option>
                                                                     @foreach($marques as $value)
@@ -60,25 +64,8 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 col-md-6" id="div_type_vehicule">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="type-vehicule">Type de Véhicule</label>
-                                                        <div class="form-control-wrap">
-                                                            <select required class="form-select js-select2" data-placeholder="Sélectionner" name="type_vehicule">
-                                                                <option value=""></option>
-                                                                @foreach($types as $value)
-                                                                <option value="{{$value->id}}">
-                                                                    {{$value->nom}}
-                                                                </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
                                                 <div class="col-lg-4 col-md-6" id="div_model">
                                                    <div class="form-group">
                                                         <label class="form-label">Model</label>
@@ -93,6 +80,21 @@
                                                         <div class="form-control-wrap">
                                                             <select required id="anneeSelect" name="annee" class="form-select js-select2" data-placeholder="selectionner">
                                                                 <option value=""></option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6" id="div_type_vehicule">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="type-vehicule">Type de Véhicule</label>
+                                                        <div class="form-control-wrap">
+                                                            <select required class="form-select js-select2" data-placeholder="Sélectionner" name="type_marque_id">
+                                                                <option value=""></option>
+                                                                @foreach($types as $value)
+                                                                <option value="{{$value->id}}">
+                                                                    {{$value->nom}}
+                                                                </option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
@@ -126,9 +128,10 @@
                                                         <div class="form-control-wrap">
                                                             <select required class="form-select js-select2" data-placeholder="selectionner" name="type_carburant">
                                                                 <option value=""></option>
-                                                                <option value="essence">Essence</option>
                                                                 <option value="diesel">Diesel</option>
                                                                 <option value="electrique">Electrique</option>
+                                                                <option value="essence">Essence</option>
+                                                                <option value="gas-oil">Gas-oil</option>
                                                                 <option value="hybride">Hybride</option>
                                                             </select>
                                                         </div>
@@ -175,7 +178,7 @@
                                                             <div class="form-text-hint">
                                                                 <span class="overline-title">CV</span>
                                                             </div>
-                                                            <input required name="puissance_fiscal" type="tel" class="form-control form-control-md" id="puiss" placeholder="Entrer le nombre de Chevaux" maxlength="3">
+                                                            <input required name="puiss_fiscal" type="tel" class="form-control form-control-md" id="puiss" placeholder="Entrer le nombre de Chevaux" maxlength="3">
                                                             <script>
                                                                 var inputElement = document.getElementById('puiss');
                                                                 inputElement.addEventListener('input', function() {
@@ -308,8 +311,8 @@
                                                         <label class="form-label" for="cp1-team-size">Troc Possible</label>
                                                         <div class="form-control-wrap">
                                                             <select required class="form-select js-select2" data-placeholder="selectionner" name="troc">
-                                                                <option selected value="oui">Oui</option>
-                                                                <option value="non">Non</option>
+                                                                <option value="oui">Oui</option>
+                                                                <option selected value="non">Non</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -319,7 +322,7 @@
                                                         <label class="form-label" for="cp1-team-size">Reduction a partir de</label>
                                                         <div class="form-control-wrap">
                                                             <select required class="form-select js-select2" data-placeholder="selectionner" name="nbre_reduc">
-                                                                <option selected value="1 semaine">1 Semaine</option>
+                                                                <option value="1 semaine">1 Semaine</option>
                                                                 <option value="2 semaines">2 Semaines</option>
                                                                 <option value="3 semaines">3 Semaines</option>
                                                                 <option value="1 mois">1 Mois</option>

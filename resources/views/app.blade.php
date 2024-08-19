@@ -196,28 +196,28 @@
                                             <div class="user-toggle">
                                                 @if(Auth::user())
                                                     @if(Auth::user()->image_nom)
-                                                        <div class="user-avatar sm sq " style="background: transparent;"> 
-                                                            <span>
-                                                                <img height="33px" width="33px" style="object-fit: cover;" class="thumb" src="{{asset('storage/images/'.Auth::user()->image_nom)}}">
-                                                            </span>
-                                                            <div class="status dot dot-lg dot-success"></div>
-                                                        </div>
-                                                        <div class="user-info d-none d-md-block">
-                                                            <span class="lead-text">
-                                                                {{ ucfirst(explode(' ', Auth::user()->name)[0]) . ' ' . ucfirst(explode(' ', Auth::user()->prenom)[0]) }}
-                                                            </span>
-                                                            <div class="user-name dropdown-indicator">
-                                                                {{Auth::user()->email}}
-                                                            </div>
-                                                        </div>
+                                                    <div class="user-avatar sm sq " style="background: transparent;">
+                                                        <span>
+                                                            <img height="33px" width="33px" style="object-fit: cover;" class="thumb" src="{{asset('storage/images/'.Auth::user()->image_nom)}}">
+                                                        </span>
+                                                        <div class="status dot dot-lg dot-success"></div>
+                                                    </div>
                                                     @else
-                                                        <div class="user-avatar sm sq bg-primary"> 
-                                                            <span>
-                                                                {{ ucfirst(substr(Auth::user()->name, 0, 1)).ucfirst(substr(Auth::user()->prenom, 0, 1)) }}
-                                                            </span>
-                                                            <div class="status dot dot-lg dot-success"></div>
-                                                        </div>
+                                                    <div class="user-avatar sm sq ">
+                                                        <span>
+                                                            {{ ucfirst(substr(Auth::user()->name, 0, 1)).ucfirst(substr(Auth::user()->prenom, 0, 1)) }}
+                                                        </span>
+                                                        <div class="status dot dot-lg dot-success"></div>
+                                                    </div>
                                                     @endif
+                                                <div class="user-info d-none d-md-block">
+                                                    <span class="lead-text">
+                                                        {{ ucfirst(explode(' ', Auth::user()->name)[0]) . ' ' . ucfirst(explode(' ', Auth::user()->prenom)[0]) }}
+                                                    </span>
+                                                    <div class="user-name dropdown-indicator">
+                                                        {{Auth::user()->email}}
+                                                    </div>
+                                                </div>
                                                 @else
                                                 <div class="user-avatar sq sm bg-primary">
                                                     <em class="icon ni ni-user-alt">

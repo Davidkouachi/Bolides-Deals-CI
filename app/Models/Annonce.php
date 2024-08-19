@@ -18,8 +18,11 @@ class Annonce extends Model
         'localisation',
         'model',
         'transmission',
+        'kilometrage',
         'type_carburant',
         'nbre_place',
+        'neuf',
+        'hors_taxe',
         'version',
         'couleur',
         'annee',
@@ -36,6 +39,7 @@ class Annonce extends Model
         'whatsapp',
         'appel',
         'sms',
+        'uuid',
     ];
 
     public function marque()

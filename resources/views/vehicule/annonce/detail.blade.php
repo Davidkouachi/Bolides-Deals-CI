@@ -41,8 +41,8 @@
                                                 <span>{{ ucfirst($ann->type_annonce) }}</span>
                                             </span>
                                             <div class="user-avatar xl sq mt-2" style="background: transparent;">
-                                                <span class="tb-product">
-                                                    <img height="110px" width="110px" style="object-fit: cover;" class="thumb" src="{{ Storage::url($ann->marque_photo) }}">
+                                                <span>
+                                                    <img style="object-fit: cover;" class="thumb" src="{{ Storage::url($ann->marque_photo) }}">
                                                 </span>
                                             </div>
                                             <h5 class="mt-3" >
@@ -158,7 +158,7 @@
                                             @if($ann->photo_user)
                                             <div class="user-avatar xl sq " style="background: transparent;">
                                                 <span>
-                                                    <img height="110px" width="110px" style="object-fit: cover;" class="thumb" src="{{asset('storage/images/1723922093.01370637-4125-40ff-a3e0-94f8942b6bd4.png')}}">
+                                                    <img height="110px" width="110px" style="object-fit: cover;" class="thumb" src="{{ Storage::url($ann->photo_user) }}">
                                                 </span>
                                             </div>
                                             @else

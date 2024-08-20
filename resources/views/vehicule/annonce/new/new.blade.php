@@ -8,7 +8,7 @@
     <div class="container-xl wide-xl">
         <div class="nk-content-body">
             <div class="nk-block nk-block-lg">
-                <form class="nk-block" id="registre" action="{{route('trait_annonce')}}" method="post" enctype="multipart/form-data">
+                <form class="nk-block" id="form_annonce_new" action="{{route('trait_annonce')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row g-gs" >
                         <div class="col-12">
@@ -554,6 +554,7 @@
 </div>
 
 <script src="{{asset('assets/js/app/js/annonce/new/vente/download_image.js') }}"></script>
+<script src="{{asset('assets/js/app/js/annonce/new/form_annonce_new.js') }}"></script>
 
 
     <script>

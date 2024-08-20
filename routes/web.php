@@ -46,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/trait_annonces', [AnnonceController::class, 'trait_annonce'])->name('trait_annonce');
 
     Route::get('/Mes Annonces', [MesannoncesController::class, 'index_mesannonces'])->name('index_mesannonces');
-    Route::get('/Mes Annonces/Détail', [MesannoncesController::class, 'index_mesannonces_detail'])->name('index_mesannonces_detail');
+    Route::get('/Mes Annonces/Détail/{id}/{uuid}', [MesannoncesController::class, 'index_mesannonces_detail'])->name('index_mesannonces_detail');
 });
 
 Route::middleware(['role:ADMINISTRATEUR'])->group(function () {

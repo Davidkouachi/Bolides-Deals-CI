@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('nbre_reduc')->nullable();
             $table->string('troc');
             $table->string('deplace');
+            $table->string('statut');
             $table->string('whatsapp')->nullable();
             $table->string('appel');
             $table->string('sms')->nullable();

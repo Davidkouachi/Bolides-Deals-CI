@@ -124,19 +124,62 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="nk-block" >
+                <div class="nk-block">
                     <div>
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="">Prev</a></li>
-                            <li class="page-item"><a class="page-link" href="">1</a></li>
-                            <li class="page-item"><a class="page-link" href="">2</a></li>
-                            <li class="page-item"><span class="page-link"><em class="icon ni ni-more-h"></em></span></li>
-                            <li class="page-item"><a class="page-link" href="">6</a></li>
-                            <li class="page-item"><a class="page-link" href="">7</a></li>
-                            <li class="page-item"><a class="page-link" href="">Next</a></li>
-                        </ul>
+                        @if ($anns->hasPages())
+                            <ul class="pagination">
+                                {{-- Previous Page Link --}}
+                                @if ($anns->onFirstPage())
+                                    <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
+                                        <span class="page-link" aria-hidden="true">Prev</span>
+                                    </li>
+                                @else
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $anns->previousPageUrl() }}" rel="prev" aria-label="@lang('pagination.previous')">Prev</a>
+                                    </li>
+                                @endif
+
+                                {{-- Pagination Elements --}}
+                                @foreach ($anns->links()->elements as $element)
+                                    @if (is_string($element))
+                                        {{-- "Three Dots" Separator --}}
+                                        <li class="page-item disabled" aria-disabled="true"><span class="page-link">{{ $element }}</span></li>
+                                    @endif
+
+                                    @if (is_array($element))
+                                        @foreach ($element as $page => $url)
+                                            @if ($anns->lastPage() > 10)
+                                                @if ($page == $anns->currentPage())
+                                                    <li class="page-item active" aria-current="page"><span class="page-link">{{ $page }}</span></li>
+                                                @elseif ($page <= 3 || $page > $anns->lastPage() - 3 || abs($page - $anns->currentPage()) <= 1)
+                                                    <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
+                                                @elseif ($page == 4 || $page == $anns->lastPage() - 3)
+                                                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                                                @endif
+                                            @else
+                                                <li class="page-item {{ $page == $anns->currentPage() ? 'active' : '' }}">
+                                                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                @endforeach
+
+                                {{-- Next Page Link --}}
+                                @if ($anns->hasMorePages())
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $anns->nextPageUrl() }}" rel="next" aria-label="@lang('pagination.next')">Next</a>
+                                    </li>
+                                @else
+                                    <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
+                                        <span class="page-link" aria-hidden="true">Next</span>
+                                    </li>
+                                @endif
+                            </ul>
+                        @endif
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -146,17 +189,43 @@
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-body ">
-                <form action="#" class="row g-gs">
+                <form action="{{ route('index_annonce') }}" class="row g-gs" method="get">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="form-label" for="fv-topics1">
+                                Type d'annonces
+                            </label>
+                            <div class="form-control-wrap">
+                                <select name="type_annonce" class="form-select js-select2" data-placeholder="Selectionner">
+                                    <option value=""></option>
+                                    <option selected value="tout" {{ $filterTypeAnnonce == 'tout' ? 'selected' : '' }} >
+                                        Tout
+                                    </option>
+                                    <option value="vente" {{ $filterTypeAnnonce == 'vente' ? 'selected' : '' }}>
+                                        Vente
+                                    </option>
+                                    <option value="location" {{ $filterTypeAnnonce == 'location' ? 'selected' : '' }}>
+                                        Location
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label class="form-label" for="fv-topics1">
                                 Marque
                             </label>
-                            <div class="form-control-wrap ">
-                                <select class="form-select js-select2" data-placeholder="Selectionner">
+                            <div class="form-control-wrap">
+                                <select name="marque" class="form-select js-select2" data-placeholder="Selectionner">
                                     <option value=""></option>
+                                    <option selected value="tout" {{ $filterMarqueId == 'tout' ? 'selected' : '' }} >
+                                        Tout
+                                    </option>
                                     @foreach($marques as $value)
-                                    <option value="{{$value->id}}">{{$value->marque}}</option>
+                                    <option value="{{ $value->id }}" {{ $value->id == $filterMarqueId ? 'selected' : '' }}>
+                                        {{ $value->marque }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -168,22 +237,7 @@
                                 Model
                             </label>
                             <div class="form-control-wrap">
-                                <input placeholder="Entrer le model" type="text" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="form-group" id="rech_autre">
-                            <label class="form-label" for="fv-topic3">
-                                Type
-                            </label>
-                            <div class="form-control-wrap ">
-                                <select class="form-select js-select2" data-placeholder="Selectionner">
-                                    <option value=""></option>
-                                    @foreach($types as $value)
-                                    <option value="{{$value->id}}">{{$value->nom}}</option>
-                                    @endforeach
-                                </select>
+                                <input name="model" placeholder="Entrer le model" type="text" class="form-control" value="{{ old('model', $filterModel) }}">
                             </div>
                         </div>
                     </div>
@@ -191,8 +245,17 @@
                         <div class="form-group">
                             <label class="form-label" for="cp1-team-size">Année</label>
                             <div class="form-control-wrap">
-                                <select class="form-select js-select2" id="annee" data-placeholder="selectionner">
+                                <select name="annee" class="form-select js-select2" data-placeholder="selectionner">
                                     <option value=""></option>
+                                    <!-- Ajoutez les années disponibles ici, en marquant la valeur sélectionnée -->
+                                    <option selected value="tout" {{ $filterAnnee == 'tout' ? 'selected' : '' }} >
+                                        Tout
+                                    </option>
+                                    @foreach(range(date('Y'), 2000) as $year)
+                                    <option value="{{ $year }}" {{ $year == $filterAnnee ? 'selected' : '' }}>
+                                        {{ $year }}
+                                    </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -204,8 +267,8 @@
                             </label>
                             <div class="form-control-wrap">
                                 <div class="input-group">
-                                    <input id="min-km" placeholder="min" type="tel" class="form-control" maxlength="7">
-                                    <input id="max-km" placeholder="max" type="tel" class="form-control" maxlength="7">
+                                    <input name="km_min" id="min-km" placeholder="min" type="tel" class="form-control" maxlength="7" value="{{ old('km_min', $filterKmMin) }}">
+                                    <input name="km_max" id="max-km" placeholder="max" type="tel" class="form-control" maxlength="7" value="{{ old('km_max', $filterKmMax) }}">
                                 </div>
                             </div>
                         </div>
@@ -213,12 +276,12 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label class="form-label" for="fv-topic3">
-                                Prix ( Fcfa )
+                                Prix (Fcfa)
                             </label>
                             <div class="form-control-wrap">
                                 <div class="input-group">
-                                    <input id="min-prix" placeholder="min" type="tel" class="form-control">
-                                    <input id="max-prix" placeholder="max" type="tel" class="form-control">
+                                    <input name="prix_min" id="min-prix" placeholder="min" type="tel" class="form-control" value="{{ old('prix_min', $filterPrixMin) }}">
+                                    <input name="prix_max" id="max-prix" placeholder="max" type="tel" class="form-control" value="{{ old('prix_max', $filterPrixMax) }}">
                                 </div>
                             </div>
                         </div>
@@ -236,6 +299,7 @@
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>

@@ -26,26 +26,107 @@ use Illuminate\Support\Facades\Session;
 
 class AnnonceController extends Controller
 {
-    public function index_annonce()
+    public function index_annonce(Request $request)
     {
         $marques = Marque::all();
         $types = Type_marque::all();
 
+        // Récupérez les valeurs des filtres
+        $filterMarqueId = $request->input('marque');
+        $filterModel = $request->input('model');
+        $filterAnnee = $request->input('annee');
+        $filterKmMin = $request->input('km_min');
+        $filterKmMax = $request->input('km_max');
+        $filterPrixMin = $request->input('prix_min');
+        $filterPrixMax = $request->input('prix_max');
+        $filterTypeAnnonce = $request->input('type_annonce');
+
+        // Créez la requête de base
         $anns = Annonce::join('villes','villes.id','=','annonces.ville_id')
-                        ->join('marques','marques.id','=','annonces.marque_id')
-                        ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
-                        ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'type_marques.nom as type_marque')
-                        ->get();
-        foreach ($anns as $value) {
-            $firstPhoto = Annonce_photo::where('annonce_id', '=', $value->id)
-                                        ->orderBy('created_at', 'asc') // Adjust the ordering as needed
-                                        ->first();
-            // Set the photo property
-            $value->photo = $firstPhoto->image_chemin;
+            ->join('marques','marques.id','=','annonces.marque_id')
+            ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
+            ->where('annonces.statut','=','en ligne')
+            ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'type_marques.nom as type_marque');
+
+        // Appliquez les filtres
+
+        // Filtrer par type d'annonce
+        if (!empty($filterTypeAnnonce)) {
+            if ($filterTypeAnnonce == 'tout') {
+            // Pas de filtre spécifique, inclure toutes les annonces
+            } else {
+                // Filtrer par type spécifique
+                $anns->where('annonces.type_annonce', '=', $filterTypeAnnonce);
+            }
+        }
+        // Filtrer par marque (insensible à la casse)
+        if (!empty($filterMarqueId)) {
+            if ($filterMarqueId == 'tout') {
+            // Pas de filtre spécifique, inclure toutes les annonces
+            } else {
+                // Filtrer par type spécifique
+                $anns->where('marques.id', '=', $request->input('marque'));
+            }
         }
 
-        return view('vehicule.annonce.index',['marques'=>$marques, 'types'=>$types, 'anns'=>$anns]);
+        // Filtrer par modèle (type_marque) (insensible à la casse)
+        if (!empty($filterModel)) {
+            $anns->whereRaw('LOWER(annonces.model) LIKE ?', ['%' . strtolower($filterModel) . '%']);
+        }
+
+        // Filtrer par année
+        if (!empty($filterAnnee)) {
+            if ($filterAnnee == 'tout') {
+            // Pas de filtre spécifique, inclure toutes les annonces
+            } else {
+                // Filtrer par type spécifique
+                $anns->where('annonces.annee', '=', $request->input('annee'));
+            }
+        }
+
+        // Filtrer par kilométrage (min et max)
+        if (!empty($filterKmMin)) {
+            $anns->where('annonces.kilometrage', '>=', $request->input('km_min'));
+        }
+        if (!empty($filterKmMax)) {
+            $anns->where('annonces.kilometrage', '<=', $request->input('km_max'));
+        }
+
+        // Filtrer par prix (min et max)
+        if (!empty($filterPrixMin)) {
+            $anns->where('annonces.prix', '>=', $request->input('prix_min'));
+        }
+        if (!empty($filterPrixMax)) {
+            $anns->where('annonces.prix', '<=', $request->input('prix_max'));
+        }
+
+        // Paginer les résultats après avoir appliqué les filtres
+        $anns = $anns->paginate(30);
+
+        // Ajouter la première photo à chaque annonce
+        foreach ($anns as $value) {
+            $firstPhoto = Annonce_photo::where('annonce_id', '=', $value->id)
+                ->orderBy('created_at', 'asc')
+                ->first();
+
+            $value->photo = $firstPhoto ? $firstPhoto->image_chemin : null;
+        }
+
+        return view('vehicule.annonce.index', [
+            'marques' => $marques, 
+            'types' => $types, 
+            'anns' => $anns,
+            'filterMarqueId' => $filterMarqueId,
+            'filterModel' => $filterModel,
+            'filterAnnee' => $filterAnnee,
+            'filterKmMin' => $filterKmMin,
+            'filterKmMax' => $filterKmMax,
+            'filterPrixMin' => $filterPrixMin,
+            'filterPrixMax' => $filterPrixMax,
+            'filterTypeAnnonce' => $filterTypeAnnonce,
+        ]);
     }
+
 
     public function index_detail($uuid)
     {
@@ -105,6 +186,7 @@ class AnnonceController extends Controller
         $ann->whatsapp = $request->whatsapp;
         $ann->appel = $request->appel;
         $ann->sms = $request->sms;
+        $ann->statut = 'en ligne';
         $ann->localisation = $request->localisation;
         $ann->ville_id = $request->ville_id;
         $ann->uuid = (string) Str::uuid();

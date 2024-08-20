@@ -342,21 +342,19 @@
         </div>
     </div>
 
-    @if(!request()->routeIs('message_lock') )  
-    {{-- <ul class="nk-sticky-toolbar">
+    <ul class="nk-sticky-toolbar">
         @yield('btn_lateral')
         <li class="demo-thumb bg-white">
-            <a class="tipinfo" href="" title="Nouvelle Annonce">
-                <em class="icon ni ni-plus-circle"></em>
+            <a class="tipinfo text-primary" target="_bank" href="https://www.facebook.com/profile.php?id=61564901360088&mibextid=LQQJ4d" title="facebook">
+                <em class="icon ni ni-facebook-f"></em>
             </a>
         </li>
-        <li class="demo-purchase bg-white">
-            <a class="tipinfo" href="" title="Actualiser" onclick="window.location.reload();">
-                <em class="icon ni ni-redo"></em>
+        <li class="demo-thumb bg-white">
+            <a class="tipinfo text-primary" target="_bank" href="https://web.facebook.com/profile.php?id=61564901360088" title="instagram">
+                <em class="icon ni ni-instagram"></em>
             </a>
         </li>
-    </ul> --}}
-    @endif
+    </ul>
 
     <a style="z-index: 1;" class="pmo-st pmo-dark active bg-success" data-bs-toggle="modal" data-bs-target="#modalCommentaire" >
         <div class="pmo-st-img">

@@ -40,6 +40,7 @@ class Annonce extends Model
         'appel',
         'sms',
         'uuid',
+        'statut',
     ];
 
     public function marque()

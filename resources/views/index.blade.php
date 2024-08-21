@@ -18,21 +18,19 @@
                                     </div>
                             </div>
                         </div>
-                        {{-- <div class="col-lg-12">
-                            <div class="form-group bg-primary rounded " style="padding: 15px 10px 0px 10px;">
-                                <marquee behavior="" direction="">
-                                    <label class="form-label">
-                                        <span class="text-white">
-                                            Conseils de sécurité :
-                                        </span>
-                                        <span class="text-white">
-                                            1- N'envoyer pas de paiement sans avoir vérifié la produit ou l'identité du vendeur, 2- N'utilisez pas de myens de transfert d'argent, de virement bancaire ou tout autre moyen pour envoyer de l'argent au vendeur, 3- Rencontrer de préference le vendeur dans un lieu public fréquenté.
-                                        </span>
-                                    </label>
-                                </marquee>
-                            </div>
-                        </div> --}}
                     </div>
+                </div>
+
+                <div class="nk-block">
+                    <ul class="filter-button-group mb-4 pb-1">
+                        @foreach($types as $value)
+                        <li>
+                            <a class="filter-button w-100px text-center" type="button">
+                                {{$value->nom}} 
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
                 </div>
 
                 <div class="nk-block nk-block-lg bg-white rounded p-4 mt-5">
@@ -51,14 +49,14 @@
                             <div class="" style="height: 180px;">
                                 <div class="card-inner">
                                     <div class="team">
-                                        <div class="user-card user-card-s2">
+                                        <a class="user-card user-card-s2" href="{{route('index_annonce','marque='.$value->id)}}" >
                                             <div class="user-avatar lg sq" style="background: transparent;">
-                                                <img src="{{asset('storage/images/'.$value->image_nom)}}" alt="{{$value->marque}}" class="thumb">
+                                                <img src="{{ Storage::url($value->image_chemin) }}" alt="{{$value->marque}}" class="thumb">
                                             </div>
                                             <div class="user-info">
                                                 <h6 class="fs-13px" >{{$value->marque}}</h6>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -78,13 +76,12 @@
                         </div>
                     </div>
                     <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
-                        @foreach($anns as $ann)
-                        @if($ann->type_annonce === 'vente')
+                        @foreach($vanns as $value)
                         <div class="col ">
                             <div class="card ">
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
-                                    <a href="{{route('index_detail',$ann->uuid)}}">
-                                        <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($ann->photo) }}" />
+                                    <a href="{{route('index_detail',$value->uuid)}}">
+                                        <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />
                                     </a>
                                 </div>
                                 <div class="card-inner pt-0 pb-2" style="height:105px;padding-left: 5px;padding-right: 5px;">
@@ -92,30 +89,29 @@
                                         <li>
                                             <a class="fs-13px">
                                                 <em class="icon ni ni-map-pin-fill"></em>
-                                                <span>{{$ann->ville}}</span>
+                                                <span>{{$value->ville}}</span>
                                             </a>
                                         </li>
                                     </ul>
                                     <p class="product-title text-dark fs-12px" style="margin-top: -5px;">
-                                        <a href="{{route('index_detail',$ann->uuid)}}">
-                                            {{$ann->marque}}
-                                            {{$ann->model}}
-                                            {{$ann->annee}}
+                                        <a href="{{route('index_detail',$value->uuid)}}">
+                                            {{$value->marque}}
+                                            {{$value->model}}
+                                            {{$value->annee}}
                                         </a>
                                     </p>
                                     <div class="h6 fs-13px text-warning" style="margin-top: -13px;">
-                                        {{$ann->prix.' Fcfa'}}
+                                        {{$value->prix.' Fcfa'}}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @endif
                         @endforeach
                     </div>
                     <div class="nk-block-head mt-2">
                         <div class="nk-block-between g-3">
                             <div class="nk-block-head-content">
-                                <a class="btn btn-outline-primary btn-white btn-wider btn-dim btn-sm" href="{{route('index_annonce')}}">
+                                <a class="btn btn-outline-primary btn-white btn-wider btn-dim btn-sm" href="{{route('index_annonce', 'type_annonce=vente')}}">
                                     <span>Voir plus</span>
                                     <em class="icon ni ni-arrow-right"></em>
                                 </a>
@@ -135,13 +131,12 @@
                         </div>
                     </div>
                     <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
-                        @foreach($anns as $ann)
-                        @if($ann->type_annonce === 'location')
+                        @foreach($lanns as $value)
                         <div class="col ">
                             <div class="card ">
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
-                                    <a href="{{route('index_detail',$ann->uuid)}}">
-                                        <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($ann->photo) }}" />
+                                    <a href="{{route('index_detail',$value->uuid)}}">
+                                        <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />
                                     </a>
                                 </div>
                                 <div class="card-inner pt-0 pb-2" style="height:105px;padding-left: 5px;padding-right: 5px;">
@@ -149,30 +144,29 @@
                                         <li>
                                             <a class="fs-13px">
                                                 <em class="icon ni ni-map-pin-fill"></em>
-                                                <span>{{$ann->ville}}</span>
+                                                <span>{{$value->ville}}</span>
                                             </a>
                                         </li>
                                     </ul>
                                     <p class="product-title text-dark fs-12px" style="margin-top: -5px;">
-                                        <a href="{{route('index_detail',$ann->uuid)}}">
-                                            {{$ann->marque}}
-                                            {{$ann->model}}
-                                            {{$ann->annee}}
+                                        <a href="{{route('index_detail',$value->uuid)}}">
+                                            {{$value->marque}}
+                                            {{$value->model}}
+                                            {{$value->annee}}
                                         </a>
                                     </p>
                                     <div class="h6 fs-13px text-warning" style="margin-top: -13px;">
-                                        {{$ann->prix.' Fcfa / 24h'}}
+                                        {{$value->prix.' Fcfa / 24h'}}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @endif
                         @endforeach
                     </div>
                     <div class="nk-block-head mt-2">
                         <div class="nk-block-between g-3">
                             <div class="nk-block-head-content">
-                                <a class="btn btn-outline-primary btn-white btn-wider btn-dim btn-sm" href="{{route('index_annonce')}}">
+                                <a class="btn btn-outline-primary btn-white btn-wider btn-dim btn-sm" href="{{route('index_annonce', 'type_annonce=location')}}">
                                     <span>Voir plus</span>
                                     <em class="icon ni ni-arrow-right"></em>
                                 </a>

@@ -57,6 +57,13 @@
                                                     {{$ann->prix.' Fcfa / 24h'}}
                                                 @endif
                                             </h5>
+                                            <h4 class="product-price {{ $ann->negociable === 'oui' ? 'text-success' : 'text-danger' }}">
+                                                @if($ann->negociable === 'oui')
+                                                    Négociable
+                                                @else
+                                                    Non-négociable
+                                                @endif
+                                            </h4>
                                         </div>
                                     </div>
                                 </div>
@@ -72,53 +79,337 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="col-lg-12 mt-2">
+                            <div class="col-lg-12 mt-5">
                                 <div class="product-details entry me-xxl-3">
-                                    <h5 class="mb-2" >
-                                        Caractéristiques :
-                                    </h5>
-                                    <ul class="list list-sm list-checked mb-3">
-                                        <li>
-                                            <b>Marque</b> : {{$ann->marque}}.
-                                        </li>
-                                        <li>
-                                            <b>Model</b> : {{$ann->model}}.
-                                        </li>
-                                        <li>
-                                            <b>Version</b> : {{$ann->version}}.
-                                        </li>
-                                        <li>
-                                            <b>Année</b> : {{$ann->annee}}.
-                                        </li>
-                                        <li>
-                                            <b>Kilométrage</b> : {{$ann->kilometrage.' KM'}}.
-                                        </li>
-                                        <li>
-                                            <b>Transmission</b> : {{$ann->transmission}}.
-                                        </li>
-                                        <li>
-                                            <b>Type de carburant</b> : {{$ann->type_carburant}}.
-                                        </li>
-                                        <li>
-                                            <b>Puissance fiscale</b> : {{$ann->puiss_fiscal.' CV'}}.
-                                        </li>
-                                        <li>
-                                            <b>Cylindré</b> : {{$ann->cylindre}}.
-                                        </li>
-                                        <li>
-                                            <b>Couleur</b> : {{$ann->couleur}}.
-                                        </li>
-                                        <li>
-                                            <b>Hors taxe</b> : {{$ann->hors_taxe}}.
-                                        </li>
-                                        <li>
-                                            <b>Neuf</b> : {{$ann->neuf}}.
-                                        </li>
-                                    </ul>
-                                    <h5 class="mb-2" >
-                                        Nb :
-                                    </h5>
-                                    <ul class="list list-sm list-checked mb-3">
+                                    <h4 class="mb-2 text-center" >
+                                        <ins>Caractéristiques Principales</ins>
+                                    </h4>
+                                    <div class="nk-block mb-5">
+                                        <ul class="filter-button-group mb-4 align-items-center justify-content-center">
+                                            <li>
+                                                <div class=" w-199px">
+                                                    <div class="card-inner">
+                                                        <div class="team">
+                                                            <div class="user-card user-card-s2">
+                                                                <div class="user-avatar md bg-white sq">
+                                                                    <span>
+                                                                       <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/weight.jpg') }}"> 
+                                                                    </span>
+                                                                </div>
+                                                                <div class="user-info"> 
+                                                                    <h4 class="sub-text" >{{$ann->cylindre.' C'}}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class=" w-199px">
+                                                    <div class="card-inner">
+                                                        <div class="team">
+                                                            <div class="user-card user-card-s2">
+                                                                <div class="user-avatar md bg-white sq">
+                                                                    <span>
+                                                                       <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/eingne.webp') }}"> 
+                                                                    </span>
+                                                                </div>
+                                                                <div class="user-info"> 
+                                                                    <h4 class="sub-text" >{{$ann->puiss_fiscal.' CV'}}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class=" w-199px">
+                                                    <div class="card-inner">
+                                                        <div class="team">
+                                                            <div class="user-card user-card-s2">
+                                                                <div class="user-avatar md bg-white sq">
+                                                                    <span>
+                                                                       <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/compteur.jpg') }}"> 
+                                                                    </span>
+                                                                </div>
+                                                                <div class="user-info"> 
+                                                                    <h4 class="sub-text" >{{$ann->kilometrage.' KM'}}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class=" w-199px">
+                                                    <div class="card-inner">
+                                                        <div class="team">
+                                                            <div class="user-card user-card-s2">
+                                                                <div class="user-avatar md bg-white sq">
+                                                                    <span>
+                                                                       <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/fuel.jpg') }}"> 
+                                                                    </span>
+                                                                </div>
+                                                                <div class="user-info"> 
+                                                                    <h4 class="sub-text" >{{$ann->type_carburant}}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class=" w-199px">
+                                                    <div class="card-inner">
+                                                        <div class="team">
+                                                            <div class="user-card user-card-s2">
+                                                                <div class="user-avatar md bg-white sq">
+                                                                    <span>
+                                                                       <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/transmission.jpg') }}"> 
+                                                                    </span>
+                                                                </div>
+                                                                <div class="user-info"> 
+                                                                    <h4 class="sub-text" >{{$ann->transmission}}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class=" w-199px">
+                                                    <div class="card-inner">
+                                                        <div class="team">
+                                                            <div class="user-card user-card-s2">
+                                                                <div class="user-avatar md bg-white sq">
+                                                                    <span>
+                                                                       <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/place.png') }}"> 
+                                                                    </span>
+                                                                </div>
+                                                                <div class="user-info"> 
+                                                                    <h4 class="sub-text" >{{$ann->nbre_place.' places'}}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class=" w-199px">
+                                                    <div class="card-inner">
+                                                        <div class="team">
+                                                            <div class="user-card user-card-s2">
+                                                                <div class="user-avatar md bg-white sq">
+                                                                    <span>
+                                                                       <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/key car.webp') }}"> 
+                                                                    </span>
+                                                                </div>
+                                                                <div class="user-info"> 
+                                                                    <h4 class="sub-text" >{{$ann->nbre_cle.' Clé(s)'}}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class=" w-199px">
+                                                    <div class="card-inner">
+                                                        <div class="team">
+                                                            <div class="user-card user-card-s2">
+                                                                <div class="user-avatar md bg-white sq">
+                                                                    <span>
+                                                                       <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/date.jpg') }}"> 
+                                                                    </span>
+                                                                </div>
+                                                                <div class="user-info"> 
+                                                                    <h4 class="sub-text" >{{$ann->annee}}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <h4 class="mb-2 text-center" >
+                                        <ins>Caractéristiques Secondaires</ins>
+                                    </h4>
+                                    <div class="nk-block mt-5 mb-5">
+                                        <ul class="filter-button-group mb-4 align-items-center justify-content-center">
+                                            <li>
+                                                <div class="card bg-light " style="width: 400px;">
+                                                    <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
+                                                        <div class="team pt-0">
+                                                            <div class="user-card user-card-s2 pt-0">
+                                                                <div class="user-info">
+                                                                    <h6>
+                                                                        <b>Type de véhicule</b> : {{$ann->type_marque}}
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="card bg-light " style="width: 400px;">
+                                                    <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
+                                                        <div class="team pt-0">
+                                                            <div class="user-card user-card-s2 pt-0">
+                                                                <div class="user-info"> 
+                                                                    <h6>
+                                                                        <b>Marque</b> : {{$ann->marque}}
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="card bg-light " style="width: 400px;">
+                                                    <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
+                                                        <div class="team pt-0">
+                                                            <div class="user-card user-card-s2 pt-0">
+                                                                <div class="user-info"> 
+                                                                    <h6>
+                                                                        <b>Model</b> : {{$ann->model}}
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="card bg-light " style="width: 400px;">
+                                                    <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
+                                                        <div class="team pt-0">
+                                                            <div class="user-card user-card-s2 pt-0">
+                                                                <div class="user-info"> 
+                                                                    <h6>
+                                                                        <b>Version</b> : {{$ann->version}}
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="card bg-light " style="width: 400px;">
+                                                    <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
+                                                        <div class="team pt-0">
+                                                            <div class="user-card user-card-s2 pt-0">
+                                                                <div class="user-info"> 
+                                                                    <h6>
+                                                                        <b>Couleur</b> : {{$ann->couleur}}
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="card bg-light " style="width: 400px;">
+                                                    <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
+                                                        <div class="team pt-0">
+                                                            <div class="user-card user-card-s2 pt-0">
+                                                                <div class="user-info"> 
+                                                                    <h6>
+                                                                        <b>Portes</b> : {{$ann->nbre_porte}}
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="card bg-light " style="width: 400px;">
+                                                    <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
+                                                        <div class="team pt-0">
+                                                            <div class="user-card user-card-s2 pt-0">
+                                                                <div class="user-info"> 
+                                                                    <h6>
+                                                                        <b>Hors taxe</b> : {{$ann->hors_taxe}}
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="card bg-light " style="width: 400px;">
+                                                    <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
+                                                        <div class="team pt-0">
+                                                            <div class="user-card user-card-s2 pt-0">
+                                                                <div class="user-info"> 
+                                                                    <h6>
+                                                                        <b>Neuf</b> : {{$ann->neuf}}
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="card bg-light " style="width: 400px;">
+                                                    <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
+                                                        <div class="team pt-0">
+                                                            <div class="user-card user-card-s2 pt-0">
+                                                                <div class="user-info"> 
+                                                                    <h6>
+                                                                        <b>Papiers à jour</b> : {{$ann->papier}}
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            @if($ann->papier === 'oui')
+                                            <li>
+                                                <div class="card bg-light " style="width: 400px;">
+                                                    <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
+                                                        <div class="team pt-0">
+                                                            <div class="user-card user-card-s2 pt-0">
+                                                                <div class="user-info"> 
+                                                                    <h6>
+                                                                        <b>Fin assurance</b> : {{ \Carbon\Carbon::parse($ann->assurance)->translatedFormat('j F Y ') }}
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="card bg-light " style="width: 400px;">
+                                                    <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
+                                                        <div class="team pt-0">
+                                                            <div class="user-card user-card-s2 pt-0">
+                                                                <div class="user-info"> 
+                                                                    <h6>
+                                                                        <b>Fin visite technique</b> : {{ \Carbon\Carbon::parse($ann->visite_techn)->translatedFormat('j F Y ') }}
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    <h4 class="mb-2 text-center" >
+                                        <ins>Informations importantes</ins>
+                                    </h4>
+                                    <ul class="mt-5 mb-5 text-center">
                                         <li>
                                             @if($ann->type_annonce === 'vente')
                                                 <b>Troc possible</b> : {{$ann->troc}}.
@@ -130,13 +421,13 @@
                                             <b>le véhicule se déplace</b> : {{$ann->deplace}}.
                                         </li>
                                     </ul>
-                                    <h4>
-                                        Descriptions / Conditions :
+                                    <h4 class="mb-2 text-center" >
+                                        <ins>Descriptions / Conditions</ins>
                                     </h4>
-                                    <p>
+                                    <p class="text-center" >
                                         {{$ann->description}}
                                     </p>
-                                    <div class="alert alert-fill alert-warning alert-icon" role="alert">    
+                                    <div class="alert alert-warning alert-icon" role="alert">    
                                         <em class="icon ni ni-alert-fill"></em>     
                                         <strong> Conseils de sécurité !!! </strong>
                                         <br> 
@@ -173,7 +464,6 @@
                                                     {{$ann->nom_user}}
                                                     {{$ann->prenom_user}}
                                                 </h6>
-                                                <span class="sub-text">{{$ann->email_user}}</span>
                                                 @if($ann->appel)
                                                 <a class="btn btn-outline-warning btn-dim btn-sm me-1 mt-1" href="tel:+225{{$ann->appel}}" target="_blank">
                                                     <em class="icon ni ni-call"></em>
@@ -181,7 +471,7 @@
                                                 </a>
                                                 @endif
                                                 @if($ann->whatsapp)
-                                                <a class="btn btn-outline-success btn-dim btn-sm me-1 mt-1" href="https://wa.me/+225{{$ann->whatsapp}}" target="_blank">
+                                                <a class="btn btn-outline-success btn-dim btn-sm me-1 mt-1" href="https://wa.me/{{$ann->whatsapp}}" target="_blank">
                                                     <em class="icon ni ni-whatsapp"></em>
                                                     <span> {{'(+225) '.$ann->whatsapp}} </span>
                                                 </a>
@@ -199,12 +489,12 @@
                                                 </div>
                                                 <div class="col-12 mt-2">
                                                     <a class="btn btn-white btn-outline-light btn-dim btn-sm mt-1 me-1" data-bs-toggle="modal" data-bs-target="#modalPartager">
-                                                        <span>Partager le lien</span>
+                                                        <span>Partager l'annonce </span>
                                                         <em class="icon ni ni-share"></em>
                                                     </a>
                                                     <a class="btn btn-white btn-outline-danger btn-dim btn-sm mt-1 me-1" data-bs-toggle="modal" data-bs-target="#modalSignal">
                                                         <em class="icon ni ni-thumbs-down"></em>
-                                                        <span>Signaler le vendeur</span>
+                                                        <span>Signaler l'annonce</span>
                                                     </a>
                                                 </div>
                                             </div>
@@ -227,49 +517,37 @@
                     </div>
                 </div>
                 <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
-                    <div class="col ">
+                    @foreach($sims as $value)
+                        <div class="col ">
                             <div class="card ">
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
-                                    <a href="">
-                                        <img class="rounded" style="object-fit: cover;height: 160px; width:auto;" src="{{asset('images/logo/selects/car.jpg')}}" />
+                                    <a href="{{route('index_detail',$value->uuid)}}">
+                                        <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />
                                     </a>
-                                    <ul class="product-badges">
-                                        <li>
-                                            <span class="badge bg-danger">
-                                                <em class="icon ni ni-hot"></em>
-                                                <span>Pro</span>
-                                            </span>
-                                        </li>
-                                    </ul>
                                 </div>
                                 <div class="card-inner pt-0 pb-2" style="height:105px;padding-left: 5px;padding-right: 5px;">
                                     <ul class="product-tags">
                                         <li>
                                             <a class="fs-13px">
                                                 <em class="icon ni ni-map-pin-fill"></em>
-                                                <span>Abidjan</span>
+                                                <span>{{$value->ville}}</span>
                                             </a>
                                         </li>
                                     </ul>
                                     <p class="product-title text-dark fs-12px" style="margin-top: -5px;">
-                                        <a href="">
-                                            Classy Modern Smart watch Classy Modern Smart watch
-                                            {{-- <div class="nk-ibx-context-group">
-                                                <div class="nk-ibx-context">
-                                                    <span class="nk-ibx-context-text">
-                                                        <span class="heading">
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </div> --}}
+                                        <a href="{{route('index_detail',$value->uuid)}}">
+                                            {{$value->marque}}
+                                            {{$value->model}}
+                                            {{$value->annee}}
                                         </a>
                                     </p>
                                     <div class="h6 fs-13px text-warning" style="margin-top: -13px;">
-                                        90.000.000 fcfa
+                                        {{$value->prix.' Fcfa'}}
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -335,10 +613,11 @@
                 <div class="card-inner text-center" >
                     <ul class="row g-gs text-center">
                         <li class="col-lg-12">
-                            <a class="btn btn-outline-success btn-dim btn-block" href="https://wa.me/?text={{ urlencode($data_qrcode) }}" target="_blank">
+                            <a class="btn btn-outline-success btn-dim btn-block" href="https://wa.me/?text={{ urlencode($ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce) }}%0A%0A{{'- Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{'- Version : '.$ann->version}}%0A%0A{{'- Kilométrage : '.$ann->kilometrage.' KM'}}%0A%0A{{'- Transmission : '.$ann->transmission}}%0A%0A{{'- Type de carburant : '.$ann->type_carburant}}%0A%0A{{'- Puissance fiscale : '.$ann->puiss_fiscal. ' CV'}}%0A%0A{{'- Cylindré : '.$ann->cylindre.' C'}}%0A%0A{{'- Couleur : '.$ann->couleur}}%0A%0A{{'- Neuf : '.$ann->neuf}}%0A%0A{{'- Descriptions / Conditions : '.$ann->description}}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}" target="_blank">
                                 <em class="icon ni ni-whatsapp"></em>
                                 <span>WhatsApp</span>
                             </a>
+
                         </li>
                         <li class="col-lg-12">
                             <a class="btn btn-outline-primary btn-dim btn-block" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($data_qrcode) }}" target="_blank">
@@ -353,13 +632,13 @@
                             </a>
                         </li>
                         <li class="col-lg-12">
-                            <a class="btn btn-outline-info btn-dim btn-block" href="https://twitter.com/intent/tweet?text={{ urlencode($data_qrcode) }}" target="_blank">
+                            <a class="btn btn-outline-info btn-dim btn-block" href="https://twitter.com/intent/tweet?text={{ urlencode($ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce) }}%0A%0A{{'- Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{'- Kilométrage : '.$ann->kilometrage.' KM'}}%0A%0A{{'- Transmission : '.$ann->transmission}}%0A%0A{{'- Type de carburant : '.$ann->type_carburant}}%0A%0A{{'- Puissance fiscale : '.$ann->puiss_fiscal. ' CV'}}%0A%0A{{'- Cylindré : '.$ann->cylindre.' C'}}%0A%0A{{'- Couleur : '.$ann->couleur}}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}" target="_blank">
                                 <em class="icon ni ni-twitter"></em>
                                 <span>Twitter</span>
                             </a>
                         </li>
                         <li class="col-lg-12">
-                            <a class="btn btn-outline-primary btn-dim btn-block" href="https://www.linkedin.com/shareArticle?mini=true&url={{ urlencode($data_qrcode) }}" target="_blank">
+                            <a class="btn btn-outline-primary btn-dim btn-block" href="https://www.linkedin.com/shareArticle?mini=true&url={{ urlencode($ann->marque . ' ' . $ann->model . ' ' . $ann->annee . ' en ' . $ann->type_annonce) }}&title={{ urlencode('- Prix : ' . $ann->prix . ' Fcfa' . '%0A' . '- Kilométrage : ' . $ann->kilometrage . ' KM' . '%0A' . '- Transmission : ' . $ann->transmission . '%0A' . '- Type de carburant : ' . $ann->type_carburant . '%0A' . '- Puissance fiscale : ' . $ann->puiss_fiscal . ' CV' . '%0A' . '- Cylindré : ' . $ann->cylindre . ' C' . '%0A' . '- Couleur : ' . $ann->couleur . '%0A' . 'Lien : ' . $data_qrcode) }}" target="_blank">
                                 <em class="icon ni ni-linkedin"></em>
                                 <span>LinkedIn</span>
                             </a>
@@ -425,8 +704,8 @@
 <!-- Modal -->
 @foreach($photos as $value)
 <div class="modal fade" id="imageModal{{$value->id}}" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg align-items-center justify-content-center row g-gs">
-        <div class="col-12" >
+    <div class="modal-dialog modal-dialog-centered modal-lg align-items-center justify-content-center row g-gs align-items-center justify-content-center">
+        <div class="col-12 align-items-center justify-content-center" >
             <img src="{{ Storage::url($value->image_chemin) }}" class="img-fluid" alt="Large Image" style="width: auto; height: auto;">
         </div>
     </div>

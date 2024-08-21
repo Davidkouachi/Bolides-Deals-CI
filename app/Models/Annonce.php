@@ -41,6 +41,12 @@ class Annonce extends Model
         'sms',
         'uuid',
         'statut',
+        'nbre_porte',
+        'negociable',
+        'nbre_cle',
+        'visite_techn',
+        'assurance',
+        'papier',
     ];
 
     public function marque()

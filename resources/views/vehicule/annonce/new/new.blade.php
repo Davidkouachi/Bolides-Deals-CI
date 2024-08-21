@@ -204,11 +204,23 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-4 col-md-6" id="div_porte">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="cp1-team-size">Nombre de Portes</label>
+                                                        <div class="form-control-wrap">
+                                                            <select required class="form-select js-select2" data-placeholder="selectionner" name="nbre_porte">
+                                                                <option value=""></option>
+                                                                <option value="3">3</option>
+                                                                <option value="5">5</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="col-lg-4 col-md-6" id="div_hors_taxe">
                                                     <div class="form-group">
                                                         <label class="form-label" for="cp1-team-size">Hors taxe</label>
                                                         <div class="form-control-wrap">
-                                                            <select required class="form-select js-select2" data-placeholder="selectionner" name="hors_taxe">
+                                                            <select id="hors_taxe" required class="form-select js-select2" data-placeholder="selectionner" name="hors_taxe">
                                                                 <option value=""></option>
                                                                 <option value="oui">Oui</option>
                                                                 <option value="non">Non</option>
@@ -216,6 +228,32 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function() {
+                                                        var prixUniteElement = document.getElementById('prixUnite');
+                                                        var div_troc = document.getElementById('div_troc');
+                                                        var div_reduc = document.getElementById('div_reduc');
+                                                        var div_cle = document.getElementById('div_cle');
+                                                        $('#hors_taxe').on('change', function() {
+                                                            var selectedValue = $(this).val();
+
+                                                            if (selectedValue == 'oui') {
+                                                                document.getElementById('div_papier').style.display='none';
+                                                                document.getElementById('div_type_annonce').style.display='none';
+                                                                document.getElementById('div_type_vente').style.display='block';
+                                                                prixUniteElement.textContent = 'Fcfa';
+                                                                div_reduc.style.display = 'none';
+                                                                div_troc.style.display = 'block';
+                                                                div_cle.style.display = 'block';
+
+                                                            } else {
+                                                                document.getElementById('div_papier').style.display='block';
+                                                                document.getElementById('div_type_annonce').style.display='block';
+                                                                document.getElementById('div_type_vente').style.display='none';
+                                                            }
+                                                        });
+                                                    });
+                                                </script>
                                                 <div class="col-lg-4 col-md-6" id="div_neuf">
                                                     <div class="form-group">
                                                         <label class="form-label" for="cp1-team-size">Neuf</label>
@@ -225,6 +263,49 @@
                                                                 <option value="oui">Oui</option>
                                                                 <option value="non">Non</option>
                                                             </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6" id="div_papier" style="display: none;">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="cp1-team-size">Papiers à jour</label>
+                                                        <div class="form-control-wrap">
+                                                            <select id="papier" required class="form-select js-select2" data-placeholder="selectionner" name="papier">
+                                                                <option value=""></option>
+                                                                <option value="oui">Oui</option>
+                                                                <option selected value="non">Non</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function() {
+                                                        $('#papier').on('change', function() {
+                                                            var selectedValue = $(this).val();
+
+                                                            if (selectedValue == 'oui') {
+                                                                document.getElementById('div_assurance').style.display='block';
+                                                                document.getElementById('div_visite_techn').style.display='block';
+                                                            } else {
+                                                                document.getElementById('div_assurance').style.display='none';
+                                                                document.getElementById('div_visite_techn').style.display='none';
+                                                            }
+                                                        });
+                                                    });
+                                                </script>
+                                                <div class="col-lg-4 col-md-6" id="div_assurance" style="display: none;">
+                                                   <div class="form-group">
+                                                        <label class="form-label">Assurance</label>
+                                                        <div class="form-control-wrap">
+                                                            <input name="assurance" type="date" class="form-control form-control-md" min="{{ \Carbon\Carbon::now()->toDateString() }}" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6" id="div_visite_techn" style="display: none;">
+                                                   <div class="form-group">
+                                                        <label class="form-label">Visite technique</label>
+                                                        <div class="form-control-wrap">
+                                                            <input name="visite_techn" type="date" class="form-control form-control-md" min="{{ \Carbon\Carbon::now()->toDateString() }}" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -254,8 +335,18 @@
                                                         <div class="form-control-wrap">
                                                             <select required class="form-select js-select2" data-placeholder="selectionner" id="typeAnnonce" name="type_annonce">
                                                                 <option value=""></option>
+                                                                <option selected value="vente">Vente</option>
                                                                 <option value="location">Location</option>
-                                                                <option value="vente">Vente</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6" id="div_type_vente" style="display: none;">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="cp1-team-size">Type d'annonce</label>
+                                                        <div class="form-control-wrap">
+                                                            <select class="form-select js-select2" name="type_annonce_vente">
+                                                                <option selected value="vente">Vente</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -268,6 +359,18 @@
                                                                 <span id="prixUnite" class="overline-title">Fcfa</span>
                                                             </div>
                                                             <input required type="tel" class="form-control" id="prix" placeholder="Prix de l'annonce" name="prix">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6" id="div_porte">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="cp1-team-size">Prix négociable</label>
+                                                        <div class="form-control-wrap">
+                                                            <select required class="form-select js-select2" data-placeholder="selectionner" name="negociable">
+                                                                <option value=""></option>
+                                                                <option value="oui">Oui</option>
+                                                                <option selected value="non">Non</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -306,23 +409,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 col-md-6" id="div_troc">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="cp1-team-size">Troc Possible</label>
-                                                        <div class="form-control-wrap">
-                                                            <select required class="form-select js-select2" data-placeholder="selectionner" name="troc">
-                                                                <option value="oui">Oui</option>
-                                                                <option selected value="non">Non</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="col-lg-4 col-md-6" id="div_reduc" style="display: none;">
                                                     <div class="form-group">
                                                         <label class="form-label" for="cp1-team-size">Reduction a partir de</label>
                                                         <div class="form-control-wrap">
                                                             <select required class="form-select js-select2" data-placeholder="selectionner" name="nbre_reduc">
-                                                                <option value="1 semaine">1 Semaine</option>
+                                                                <option selected value="1 semaine">1 Semaine</option>
                                                                 <option value="2 semaines">2 Semaines</option>
                                                                 <option value="3 semaines">3 Semaines</option>
                                                                 <option value="1 mois">1 Mois</option>
@@ -330,6 +422,32 @@
                                                                 <option value="3 mois">3 Mois</option>
                                                                 <option value="4 mois">4 Mois</option>
                                                                 <option value="5 mois">5 Mois</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6" id="div_cle">
+                                                   <div class="form-group">
+                                                        <label class="form-label">Nombre de clés</label>
+                                                        <div class="form-control-wrap">
+                                                            <input id="cle" name="nbre_cle" type="tel" class="form-control form-control-md" maxlength="2" placeholder="Entrer le nombre de clés" >
+                                                            <script>
+                                                                var inputElement = document.getElementById('cle');
+                                                                inputElement.addEventListener('input', function() {
+                                                                    // Supprimer tout sauf les chiffres
+                                                                    this.value = this.value.replace(/[^0-9]/g, '');
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6" id="div_troc">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="cp1-team-size">Troc Possible</label>
+                                                        <div class="form-control-wrap">
+                                                            <select required class="form-select js-select2" data-placeholder="selectionner" name="troc">
+                                                                <option value="oui">Oui</option>
+                                                                <option selected value="non">Non</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -657,6 +775,7 @@
             var prixUniteElement = document.getElementById('prixUnite');
             var div_troc = document.getElementById('div_troc');
             var div_reduc = document.getElementById('div_reduc');
+            var div_cle = document.getElementById('div_cle');
 
             $('#typeAnnonce').on('change', function() {
                 var selectedType = $(this).val();
@@ -665,10 +784,12 @@
                     prixUniteElement.textContent = 'Fcfa / 24h';
                     div_reduc.style.display = 'block';
                     div_troc.style.display = 'none';
+                    div_cle.style.display = 'none';
                 } else {
                     prixUniteElement.textContent = 'Fcfa';
                     div_reduc.style.display = 'none';
                     div_troc.style.display = 'block';
+                    div_cle.style.display = 'block';
                 }
             });
         });

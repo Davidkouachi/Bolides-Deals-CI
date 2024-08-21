@@ -130,6 +130,8 @@ class AnnonceController extends Controller
 
     public function index_detail($uuid)
     {
+        $types = Type_marque::all();
+
         $data_qrcode = url()->current();
         $qrCode = new QrCode($data_qrcode);
         $writer = new PngWriter();
@@ -141,12 +143,32 @@ class AnnonceController extends Controller
                         ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
                         ->join('users','users.id','=','annonces.user_id')
                         ->where('uuid', $uuid)
-                        ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque', 'users.name as nom_user', 'users.prenom as prenom_user', 'users.email as email_user', 'users.image_chemin as photo_user')
+                        ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.id as marque_id', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque', 'type_marques.id as type_marque_id', 'users.name as nom_user', 'users.prenom as prenom_user', 'users.email as email_user', 'users.image_chemin as photo_user')
                         ->first();
-
         $photos = Annonce_photo::where('annonce_id', '=', $ann->id)->get();
+        $firstPhoto = Annonce_photo::where('annonce_id', '=', $ann->id)->orderBy('created_at', 'asc')->first();
+        $ann->image_url = $firstPhoto ? $firstPhoto->image_chemin : null;
 
-        return view('vehicule.annonce.detail',['imgqr'=>$imgqr, 'data_qrcode'=>$data_qrcode, 'ann'=>$ann, 'photos'=>$photos]);
+
+        $sims = Annonce::join('villes','villes.id','=','annonces.ville_id')
+            ->join('marques','marques.id','=','annonces.marque_id')
+            ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
+            ->where('annonces.statut','=','en ligne')
+            ->where('annonces.type_marque_id','=', $ann->type_marque_id)
+            ->where('annonces.marque_id','=', $ann->marque_id)
+            ->where('annonces.annee','=', $ann->annee)
+            ->where('annonces.id','!=', $ann->id)
+            ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'type_marques.nom as type_marque')
+            ->latest() // Order by the latest created_at
+            ->take(10)
+            ->get();
+        foreach ($sims as $value) {
+            $firstPhoto = Annonce_photo::where('annonce_id', '=', $value->id)->orderBy('created_at', 'asc')->first();
+            $value->photo = $firstPhoto ? $firstPhoto->image_chemin : null;
+        }
+
+
+        return view('vehicule.annonce.detail',['imgqr'=>$imgqr, 'data_qrcode'=>$data_qrcode, 'ann'=>$ann, 'photos'=>$photos, 'sims'=>$sims, 'types'=>$types]);
     }
 
     public function index_annonce_new()
@@ -177,7 +199,6 @@ class AnnonceController extends Controller
         $ann->neuf = $request->neuf;
         $ann->hors_taxe = $request->hors_taxe;
         $ann->kilometrage = $request->kilometrage;
-        $ann->type_annonce = $request->type_annonce;
         $ann->prix = $request->prix;
         $ann->description = $request->description;
         $ann->nbre_reduc = $request->nbre_reduc;
@@ -186,6 +207,19 @@ class AnnonceController extends Controller
         $ann->whatsapp = $request->whatsapp;
         $ann->appel = $request->appel;
         $ann->sms = $request->sms;
+        $ann->nbre_porte = $request->nbre_porte;
+        $ann->negociable = $request->negociable;
+        $ann->nbre_cle = $request->nbre_cle;
+        $ann->papier = $request->papier;
+        if ($request->hors_taxe === 'oui') {
+            $ann->type_annonce = 'vente';
+        }else{
+           $ann->type_annonce = $request->type_annonce; 
+        }
+        if($request->papier === 'oui') {
+            $ann->visite_techn = $request->visite_techn;
+            $ann->assurance = $request->assurance;
+        }
         $ann->statut = 'en ligne';
         $ann->localisation = $request->localisation;
         $ann->ville_id = $request->ville_id;

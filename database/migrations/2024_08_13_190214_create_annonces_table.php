@@ -31,7 +31,13 @@ return new class extends Migration
             $table->integer('nbre_refresh')->default(0);
             $table->string('date_refresh')->nullable();
             $table->string('nbre_reduc')->nullable();
+            $table->string('nbre_cle');
+            $table->string('visite_techn')->nullable();
+            $table->string('assurance')->nullable();
+            $table->string('papier');
             $table->string('troc');
+            $table->string('nbre_porte');
+            $table->string('negociable');
             $table->string('deplace');
             $table->string('statut');
             $table->string('whatsapp')->nullable();

@@ -76,15 +76,15 @@
                         </li>
                         @foreach($types as $value)
                         <li>
-                            <button class="filter-button" data-filter=".{{$value->nom}}" type="button">
-                                {{$value->nom}} 
+                            <button class="filter-button" data-filter=".{{ $value->nom }}" type="button">
+                                {{ $value->nom }}
                             </button>
                         </li>
                         @endforeach
                     </ul>
                     <div class="row g-gs filter-container" data-animation="true">
                         @foreach($anns as $ann)
-                        <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6 filter-item {{$ann->type_marque}}" data-category="{{$ann->type_marque}}">
+                        <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6 filter-item  {{$ann->type_marque}}" data-category="{{$ann->type_marque}}">
                             <div class="card ">
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                     <a href="{{route('index_detail',$ann->uuid)}}">

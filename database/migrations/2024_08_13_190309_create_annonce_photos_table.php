@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('image_chemin')->unique();
             $table->unsignedBigInteger('annonce_id');
             $table->foreign('annonce_id')->references('id')->on('annonces');
+            $table->integer('image_nbre');
             $table->timestamps();
         });
     }

@@ -46,7 +46,8 @@ class AnnonceController extends Controller
             ->join('marques','marques.id','=','annonces.marque_id')
             ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
             ->where('annonces.statut','=','en ligne')
-            ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'type_marques.nom as type_marque');
+            ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque')
+            ->orderBy('annonces.created_at', 'desc');
 
         // Appliquez les filtres
 
@@ -149,6 +150,8 @@ class AnnonceController extends Controller
         $firstPhoto = Annonce_photo::where('annonce_id', '=', $ann->id)->orderBy('created_at', 'asc')->first();
         $ann->image_url = $firstPhoto ? $firstPhoto->image_chemin : null;
 
+        $ann->increment('views');
+
 
         $sims = Annonce::join('villes','villes.id','=','annonces.ville_id')
             ->join('marques','marques.id','=','annonces.marque_id')
@@ -158,7 +161,7 @@ class AnnonceController extends Controller
             ->where('annonces.marque_id','=', $ann->marque_id)
             ->where('annonces.annee','=', $ann->annee)
             ->where('annonces.id','!=', $ann->id)
-            ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'type_marques.nom as type_marque')
+            ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque')
             ->latest() // Order by the latest created_at
             ->take(10)
             ->get();
@@ -259,6 +262,7 @@ class AnnonceController extends Controller
                     $photo->annonce_id = $ann->id;
                     $photo->image_nom = $filename;
                     $photo->image_chemin = $path;
+                    $photo->image_nbre = $key + 1;
                     if (!$photo->save()) {
                         $this->rollbackAnnonce($ann->id); // Supprimer l'annonce et les images si l'enregistrement échoue
                         Annonce_error::create(['motif' => 'Échec de l\'enregistrement des images.','user_id' => Auth::user()->id]);

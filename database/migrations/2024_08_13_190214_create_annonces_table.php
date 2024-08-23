@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('annonces', function (Blueprint $table) {
             $table->id();
+            $table->integer('views')->default(0);
             $table->string('localisation');
             $table->string('model');
             $table->string('transmission');

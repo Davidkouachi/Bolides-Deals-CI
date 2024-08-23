@@ -97,7 +97,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="user-info"> 
-                                                                    <h4 class="sub-text" >{{$ann->cylindre.' C'}}</h4>
+                                                                    <h4 class="sub-text text-black" >{{$ann->cylindre.' C'}}</h4>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -115,7 +115,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="user-info"> 
-                                                                    <h4 class="sub-text" >{{$ann->puiss_fiscal.' CV'}}</h4>
+                                                                    <h4 class="sub-text text-black" >{{$ann->puiss_fiscal.' CV'}}</h4>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -133,7 +133,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="user-info"> 
-                                                                    <h4 class="sub-text" >{{$ann->kilometrage.' KM'}}</h4>
+                                                                    <h4 class="sub-text text-black" >{{$ann->kilometrage.' KM'}}</h4>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -151,7 +151,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="user-info"> 
-                                                                    <h4 class="sub-text" >{{$ann->type_carburant}}</h4>
+                                                                    <h4 class="sub-text text-black" >{{$ann->type_carburant}}</h4>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -169,7 +169,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="user-info"> 
-                                                                    <h4 class="sub-text" >{{$ann->transmission}}</h4>
+                                                                    <h4 class="sub-text text-black" >{{$ann->transmission}}</h4>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -187,7 +187,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="user-info"> 
-                                                                    <h4 class="sub-text" >{{$ann->nbre_place.' places'}}</h4>
+                                                                    <h4 class="sub-text text-black" >{{$ann->nbre_place.' places'}}</h4>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -205,7 +205,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="user-info"> 
-                                                                    <h4 class="sub-text" >{{$ann->nbre_cle.' Clé(s)'}}</h4>
+                                                                    <h4 class="sub-text text-black" >{{$ann->nbre_cle.' Clé(s)'}}</h4>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -223,7 +223,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="user-info"> 
-                                                                    <h4 class="sub-text" >{{$ann->annee}}</h4>
+                                                                    <h4 class="sub-text text-black" >{{$ann->annee}}</h4>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -238,7 +238,7 @@
                                     <div class="nk-block mt-5 mb-5">
                                         <ul class="filter-button-group mb-4 align-items-center justify-content-center">
                                             <li>
-                                                <div class="card bg-light " style="width: 400px;">
+                                                <div class="bg-light " style="width: 300px;">
                                                     <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
                                                         <div class="team pt-0">
                                                             <div class="user-card user-card-s2 pt-0">
@@ -253,7 +253,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="card bg-light " style="width: 400px;">
+                                                <div class="bg-light " style="width: 300px;">
                                                     <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
                                                         <div class="team pt-0">
                                                             <div class="user-card user-card-s2 pt-0">
@@ -268,7 +268,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="card bg-light " style="width: 400px;">
+                                                <div class="bg-light " style="width: 300px;">
                                                     <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
                                                         <div class="team pt-0">
                                                             <div class="user-card user-card-s2 pt-0">
@@ -283,7 +283,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="card bg-light " style="width: 400px;">
+                                                <div class="bg-light " style="width: 300px;">
                                                     <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
                                                         <div class="team pt-0">
                                                             <div class="user-card user-card-s2 pt-0">
@@ -298,7 +298,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="card bg-light " style="width: 400px;">
+                                                <div class="bg-light " style="width: 300px;">
                                                     <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
                                                         <div class="team pt-0">
                                                             <div class="user-card user-card-s2 pt-0">
@@ -313,7 +313,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="card bg-light " style="width: 400px;">
+                                                <div class="bg-light " style="width: 300px;">
                                                     <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
                                                         <div class="team pt-0">
                                                             <div class="user-card user-card-s2 pt-0">
@@ -328,7 +328,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="card bg-light " style="width: 400px;">
+                                                <div class="bg-light " style="width: 300px;">
                                                     <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
                                                         <div class="team pt-0">
                                                             <div class="user-card user-card-s2 pt-0">
@@ -343,7 +343,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="card bg-light " style="width: 400px;">
+                                                <div class="bg-light " style="width: 300px;">
                                                     <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
                                                         <div class="team pt-0">
                                                             <div class="user-card user-card-s2 pt-0">
@@ -358,7 +358,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="card bg-light " style="width: 400px;">
+                                                <div class="bg-light " style="width: 300px;">
                                                     <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
                                                         <div class="team pt-0">
                                                             <div class="user-card user-card-s2 pt-0">
@@ -374,13 +374,13 @@
                                             </li>
                                             @if($ann->papier === 'oui')
                                             <li>
-                                                <div class="card bg-light " style="width: 400px;">
+                                                <div class="bg-light " style="width: 300px;">
                                                     <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
                                                         <div class="team pt-0">
                                                             <div class="user-card user-card-s2 pt-0">
                                                                 <div class="user-info"> 
                                                                     <h6>
-                                                                        <b>Fin assurance</b> : {{ \Carbon\Carbon::parse($ann->assurance)->translatedFormat('j F Y ') }}
+                                                                        <b>Assurance</b> : {{ \Carbon\Carbon::parse($ann->assurance)->translatedFormat('d/m/Y') }}
                                                                     </h6>
                                                                 </div>
                                                             </div>
@@ -389,13 +389,14 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="card bg-light " style="width: 400px;">
+                                                <div class="bg-light " style="width: 300px;">
                                                     <div class="card-inner" style="padding-bottom: 5px; padding-top: 0px;">
                                                         <div class="team pt-0">
                                                             <div class="user-card user-card-s2 pt-0">
                                                                 <div class="user-info"> 
                                                                     <h6>
-                                                                        <b>Fin visite technique</b> : {{ \Carbon\Carbon::parse($ann->visite_techn)->translatedFormat('j F Y ') }}
+                                                                        <b>Visite technique</b> : {{ \Carbon\Carbon::parse($ann->visite_techn)->format('d/m/Y') }}
+
                                                                     </h6>
                                                                 </div>
                                                             </div>
@@ -410,14 +411,14 @@
                                         <ins>Informations importantes</ins>
                                     </h4>
                                     <ul class="mt-5 mb-5 text-center">
-                                        <li>
+                                        <li class="fs-20px title h5" >
                                             @if($ann->type_annonce === 'vente')
                                                 <b>Troc possible</b> : {{$ann->troc}}.
                                             @else
                                                 <b>Réduction à partir de </b> : {{$ann->nbre_reduc}}.
                                             @endif
                                         </li>
-                                        <li>
+                                        <li class="fs-20px title h5" >
                                             <b>le véhicule se déplace</b> : {{$ann->deplace}}.
                                         </li>
                                     </ul>
@@ -517,37 +518,54 @@
                     </div>
                 </div>
                 <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
-                    @foreach($sims as $value)
-                        <div class="col ">
-                            <div class="card ">
-                                <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
-                                    <a href="{{route('index_detail',$value->uuid)}}">
-                                        <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />
-                                    </a>
-                                </div>
-                                <div class="card-inner pt-0 pb-2" style="height:105px;padding-left: 5px;padding-right: 5px;">
-                                    <ul class="product-tags">
-                                        <li>
-                                            <a class="fs-13px">
-                                                <em class="icon ni ni-map-pin-fill"></em>
-                                                <span>{{$value->ville}}</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <p class="product-title text-dark fs-12px" style="margin-top: -5px;">
+                    @if($sims->isNotEmpty())
+                        @foreach($sims as $value)
+                            <div class="col ">
+                                <div class="card ">
+                                    <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                         <a href="{{route('index_detail',$value->uuid)}}">
-                                            {{$value->marque}}
-                                            {{$value->model}}
-                                            {{$value->annee}}
+                                            <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />
                                         </a>
-                                    </p>
-                                    <div class="h6 fs-13px text-warning" style="margin-top: -13px;">
-                                        {{$value->prix.' Fcfa'}}
+                                    </div>
+                                    <div class="card-inner pt-0 pb-2 text-center" style="height:145px;padding-left: 5px;padding-right: 5px;">
+                                        <div class="user-card d-flex" style="margin-top: -32px;margin-left: 10px;">
+                                            <div class="user-avatar md sq p-2 border bg-white rounded-circle ">
+                                                <img src="{{ Storage::url($value->marque_photo) }}" style="object-fit: cover;background: transparent;">
+                                            </div>
+                                            {{-- <div class="user-avatar sm sq" style="background: transparent;margin-left: 0px;">
+                                                <img src="{{asset('images/logo/certificat/certification-logo-2.png')}}" style="object-fit: cover;background: transparent;">
+                                            </div> --}}
+                                        </div>
+                                        <ul class="product-tags">
+                                            <li>
+                                                <a class="fs-13px">
+                                                    <em class="icon ni ni-map-pin-fill"></em>
+                                                    <span>{{$value->ville}}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <p class="product-title text-dark fs-12px text-center" style="margin-top: -5px;">
+                                            <a href="{{route('index_detail',$value->uuid)}}">
+                                                {{$value->marque}}
+                                                {{$value->model}}
+                                                {{$value->annee}}
+                                            </a>
+                                        </p>
+                                        <div class="h6 fs-13px text-warning text-center" style="margin-top: -13px;">
+                                            {{$value->prix.' Fcfa'}}
+                                        </div>
+                                        <span class="text-soft text-center"> 
+                                            {{\Carbon\Carbon::parse($value->created_at)->diffForHumans() }}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
+                        @endforeach
+                    @else
+                        <div class="col-12 text-center">
+                            <p class="text-muted">Aucune annonce disponible pour le moment.</p>
                         </div>
-                    @endforeach
+                    @endif
                 </div>
             </div>
         </div>

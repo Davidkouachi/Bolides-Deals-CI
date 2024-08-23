@@ -19,15 +19,15 @@
     <div class="container-xl wide-xl">
         <div class="nk-content-body">
             <div class="nk-block nk-block-lg">
-                <div class="nk-block" hidden>
+                <div class="nk-block" >
                     <div class="row g-gs">
                         <div class="col-lg-12">
                             <div class="card card-preview">
                                 <div class="card-inner text-center rounded row g-gs">
                                     <div class="col-12">
-                                        <h4>Annonces</h4>
+                                        <h4>Mes Annonces</h4>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-12" hidden>
                                         <form action="#" class="row g-gs">
                                             <div class="col-lg-4 col-md-6">
                                                 <div class="form-group">
@@ -83,71 +83,95 @@
                         @endforeach
                     </ul>
                     <div class="row g-gs filter-container" data-animation="true">
-                        @foreach($anns as $ann)
-                        <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6 filter-item {{$ann->type_marque}}" data-category="{{$ann->type_marque}}">
-                            <div class="card ">
-                                <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
-                                    <a href="{{route('index_mesannonces_detail',['id' => Auth::user()->id, 'uuid' => $ann->uuid])}}">
-                                        <img style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($ann->photo) }}" />
-                                    </a>
-                                    <ul class="product-badges">
-                                        <li>
-                                            <span class="badge bg-light">
-                                                <em class="icon ni ni-cc-alt2"></em>
-                                                <span>{{$ann->type_annonce}}</span>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="badge 
-                                                @php
-                                                    if ($ann->statut === 'en ligne') {
-                                                        echo 'bg-warning';
-                                                    } elseif($ann->statut === 'hors ligne') {
-                                                        echo 'bg-danger';
-                                                    } else {
-                                                        echo 'bg-success';
-                                                    }
-                                                @endphp
-                                            ">
-                                                <em class="icon ni 
+                        @if($anns->isNotEmpty())
+                            @foreach($anns as $ann)
+                            {{-- <div class="filter-item  {{$ann->type_marque}}" data-category="{{$ann->type_marque}}" style="width: 195px;"> filter-button-group --}}
+                            <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6 filter-item {{$ann->type_marque}}" data-category="{{$ann->type_marque}}">
+                                <div class="card product-card">
+                                    <div class="product-thumb card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
+                                        <a href="{{route('index_mesannonces_detail',['id' => Auth::user()->id, 'uuid' => $ann->uuid])}}">
+                                            <img style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($ann->photo) }}" />
+                                        </a>
+                                        <ul class="product-badges">
+                                            <li>
+                                                <span class="badge @php echo $ann->type_annonce === 'vente' ? 'bg-info' : 'bg-warning'; @endphp">
+                                                    <em class="icon ni ni-cc-alt2"></em>
+                                                    <span>{{$ann->type_annonce}}</span>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="badge 
                                                     @php
                                                         if ($ann->statut === 'en ligne') {
-                                                            echo 'ni-eye';
-                                                        } elseif($ann->statut === 'hors ligne') {
-                                                            echo 'ni-cross-circle';
+                                                            echo 'bg-success';
+                                                        } elseif($ann->statut === 'hors ligne' || $ann->statut === 'indisponible') {
+                                                            echo 'bg-danger';
                                                         } else {
-                                                            echo 'ni-check-circle';
+                                                            echo 'bg-success';
                                                         }
                                                     @endphp
-                                                "></em>
-                                                <span>{{$ann->statut}}</span>
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="card-inner pt-0 pb-2" style="height:105px;padding-left: 5px;padding-right: 5px;">
-                                    <ul class="product-tags">
-                                        <li>
-                                            <a class="fs-13px">
-                                                <em class="icon ni ni-map-pin-fill"></em>
-                                                <span>{{$ann->ville}}</span>
+                                                ">
+                                                    <em class="icon ni 
+                                                        @php
+                                                            if ($ann->statut === 'en ligne') {
+                                                                echo 'ni-cloud';
+                                                            } elseif($ann->statut === 'hors ligne' || $ann->statut === 'indisponible') {
+                                                                echo 'ni-cross-circle';
+                                                            } else {
+                                                                echo 'ni-check-circle';
+                                                            }
+                                                        @endphp
+                                                    "></em>
+                                                    <span>{{$ann->statut}}</span>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="badge bg-secondary">
+                                                    <em class="icon ni ni-eye"></em>
+                                                    <span>{{$ann->views.' vue(s)'}}</span>
+                                                </span>
+                                            </li>
+                                        </ul> 
+                                    </div>
+                                    <div class="card-inner pt-0 pb-2 text-center" style="height:145px;padding-left: 5px;padding-right: 5px;">
+                                        <div class="user-card d-flex" style="margin-top: -32px;margin-left: 10px;">
+                                            <div class="user-avatar md sq p-2 border bg-white rounded-circle ">
+                                                <img src="{{ Storage::url($ann->marque_photo) }}" style="object-fit: cover;background: transparent;">
+                                            </div>
+                                            {{-- <div class="user-avatar sm sq" style="background: transparent;margin-left: 0px;">
+                                                <img src="{{asset('images/logo/certificat/certification-logo-2.png')}}" style="object-fit: cover;background: transparent;">
+                                            </div> --}}
+                                        </div>
+                                        <ul class="product-tags">
+                                            <li>
+                                                <a class="fs-13px">
+                                                    <em class="icon ni ni-map-pin-fill"></em>
+                                                    <span>{{$ann->ville}}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <p class="product-title text-dark fs-12px text-center" style="margin-top: -5px;">
+                                            <a href="{{route('index_mesannonces_detail',['id' => Auth::user()->id, 'uuid' => $ann->uuid])}}">
+                                                {{$ann->marque}}
+                                                {{$ann->model}}
+                                                {{$ann->annee}}
                                             </a>
-                                        </li>
-                                    </ul>
-                                    <p class="product-title text-dark fs-12px" style="margin-top: -5px;">
-                                        <a href="{{route('index_mesannonces_detail',['id' => Auth::user()->id, 'uuid' => $ann->uuid])}}">
-                                            {{$ann->marque}}
-                                            {{$ann->model}}
-                                            {{$ann->annee}}
-                                        </a>
-                                    </p>
-                                    <div class="h6 fs-13px text-warning" style="margin-top: -13px;">
-                                        {{$ann->prix.' Fcfa'}}
+                                        </p>
+                                        <div class="h6 fs-13px text-warning text-center" style="margin-top: -13px;">
+                                            {{$ann->prix.' Fcfa'}}
+                                        </div>
+                                        <span class="text-soft text-center">
+                                            {{\Carbon\Carbon::parse($ann->created_at)->diffForHumans() }}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        @endforeach
+                            @endforeach
+                        @else
+                            <div class="col-12 text-center">
+                                <p class="text-muted">Aucune annonce disponible pour le moment.</p>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="nk-block">
@@ -356,5 +380,14 @@
 </div>
 
 <script src="{{asset('assets/js/app/js/annonce/search.js') }}"></script>
+
+@if (session('suppr'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire("Succés!", "{{session('suppr')}}", "success");
+        });
+    </script>
+    @php session()->forget('suppr'); @endphp
+@endif
 
 @endsection

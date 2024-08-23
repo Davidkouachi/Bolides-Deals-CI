@@ -47,6 +47,7 @@ class Annonce extends Model
         'visite_techn',
         'assurance',
         'papier',
+        'views',
     ];
 
     public function marque()

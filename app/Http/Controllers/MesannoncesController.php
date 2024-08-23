@@ -8,6 +8,7 @@ use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
@@ -47,7 +48,8 @@ class MesannoncesController extends Controller
             ->join('marques','marques.id','=','annonces.marque_id')
             ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
             ->where('annonces.user_id','=', Auth::user()->id)
-            ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'type_marques.nom as type_marque');
+            ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque')
+            ->orderBy('annonces.created_at', 'desc');
 
         // Appliquez les filtres
 
@@ -160,4 +162,87 @@ class MesannoncesController extends Controller
 
         return view('vehicule.mes_annonces.detail',['imgqr'=>$imgqr, 'data_qrcode'=>$data_qrcode, 'ann'=>$ann, 'photos'=>$photos]);
     }
+
+    public function trait_dispo($uuid)
+    {
+        $verf = Annonce::where('uuid', '=', $uuid)->first();
+
+        if ($verf) {
+            $verf->statut = 'en ligne';
+
+            if ($verf->save()) {
+                return redirect()->back()->with('car', 'Véhicule Disponible');
+            }else{
+                return redirect()->back()->with('error', 'une erreur est survenu, veuillez réssayer plutard');
+            }
+
+        }else{
+            return redirect()->back()->with('error', 'une erreur est survenu, veuillez réssayer plutard');
+        }
+    }
+
+    public function trait_indispo($uuid)
+    {
+        $verf = Annonce::where('uuid', '=', $uuid)->first();
+
+        if ($verf) {
+            $verf->statut = 'indisponible';
+
+            if ($verf->save()) {
+                return redirect()->back()->with('car', 'Véhicule Indisponible');
+            }else{
+                return redirect()->back()->with('error', 'une erreur est survenu, veuillez réssayer plutard');
+            }
+
+        }else{
+            return redirect()->back()->with('error', 'une erreur est survenu, veuillez réssayer plutard');
+        }
+    }
+
+    public function delete_ann($uuid)
+    {
+        // Démarrer une transaction
+        DB::beginTransaction();
+
+        try {
+            // Rechercher l'annonce par son UUID
+            $annonce = Annonce::where('uuid', $uuid)->firstOrFail();
+
+            // Supprimer les images associées
+            $photos = Annonce_photo::where('annonce_id', $annonce->id)->get();
+            foreach ($photos as $photo) {
+                // Supprimer le fichier image du stockage
+                if (Storage::exists($photo->image_chemin)) {
+                    if (!Storage::delete($photo->image_chemin)) {
+                        // Si la suppression échoue, lever une exception
+                        throw new \Exception('Erreur lors de la suppression de l\'image : ' . $photo->image_chemin);
+                    }
+                }
+
+                // Supprimer l'enregistrement de la photo dans la base de données
+                if (!$photo->delete()) {
+                    // Si la suppression échoue, lever une exception
+                    throw new \Exception('Erreur lors de la suppression de l\'enregistrement de l\'image');
+                }
+            }
+
+            // Supprimer l'annonce
+            if (!$annonce->delete()) {
+                // Si la suppression de l'annonce échoue, lever une exception
+                throw new \Exception('Erreur lors de la suppression de l\'annonce');
+            }
+
+            // Si tout se passe bien, valider la transaction
+            DB::commit();
+
+            return redirect()->route('index_mesannonces')->with('suppr', 'Annonce supprimée avec succès');
+        } catch (\Exception $e) {
+            // En cas d'erreur, annuler la transaction
+            DB::rollBack();
+            // Retourner un message d'erreur avec l'exception capturée
+            return redirect()->route('index_mesannonces')->with('error', 'Échec de la suppression de l\'annonce : ' . $e->getMessage());
+        }
+    }
+
+
 }

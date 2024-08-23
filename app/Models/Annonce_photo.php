@@ -14,6 +14,7 @@ class Annonce_photo extends Model
         'annonce_id',
         'image_nom',
         'image_chemin',
+        'image_nbre',
     ];
 
     public function annonce()

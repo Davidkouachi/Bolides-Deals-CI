@@ -24,11 +24,13 @@
                 <div class="nk-block">
                     <ul class="filter-button-group mb-4 pb-1">
                         @foreach($types as $value)
-                        <li>
-                            <a class="filter-button w-100px text-center" type="button">
-                                {{$value->nom}} 
-                            </a>
-                        </li>
+                            @if($value->nom !== 'autre')
+                            <li>
+                                <a class="filter-button w-100px text-center" type="button">
+                                    {{$value->nom}} 
+                                </a>
+                            </li>
+                            @endif
                         @endforeach
                     </ul>
                 </div>
@@ -38,7 +40,7 @@
                         <div class="nk-block-between g-3">
                             <div class="nk-block-head-content">
                                 <h5 class="nk-block-title">
-                                    Marques de Véhicules
+                                    Marques
                                 </h5>
                             </div>
                         </div>
@@ -65,11 +67,11 @@
                     </div>
                 </div>
 
-                <div class="nk-block nk-block-lg bg-light rounded p-4 mt-5">
+                <div class="nk-block nk-block-lg bg-azure rounded p-4 mt-5">
                     <div class="nk-block-head">
                         <div class="nk-block-between g-3">
                             <div class="nk-block-head-content">
-                                <h5 class="nk-block-title">
+                                <h5 class="nk-block-title text-white">
                                     <span>Dernières annonces : Ventes</span>
                                 </h5>
                             </div>
@@ -84,7 +86,15 @@
                                         <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />
                                     </a>
                                 </div>
-                                <div class="card-inner pt-0 pb-2" style="height:105px;padding-left: 5px;padding-right: 5px;">
+                                <div class="card-inner pt-0 pb-2 text-center" style="height:145px;padding-left: 5px;padding-right: 5px;">
+                                    <div class="user-card d-flex" style="margin-top: -32px;margin-left: 10px;">
+                                        <div class="user-avatar md sq p-2 border bg-white rounded-circle ">
+                                            <img src="{{ Storage::url($value->marque_photo) }}" style="object-fit: cover;background: transparent;">
+                                        </div>
+                                        {{-- <div class="user-avatar sm sq" style="background: transparent;margin-left: 0px;">
+                                            <img src="{{asset('images/logo/certificat/certification-logo-2.png')}}" style="object-fit: cover;background: transparent;">
+                                        </div> --}}
+                                    </div>
                                     <ul class="product-tags">
                                         <li>
                                             <a class="fs-13px">
@@ -93,16 +103,19 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <p class="product-title text-dark fs-12px" style="margin-top: -5px;">
+                                    <p class="product-title text-dark fs-12px text-center" style="margin-top: -5px;">
                                         <a href="{{route('index_detail',$value->uuid)}}">
                                             {{$value->marque}}
                                             {{$value->model}}
                                             {{$value->annee}}
                                         </a>
                                     </p>
-                                    <div class="h6 fs-13px text-warning" style="margin-top: -13px;">
+                                    <div class="h6 fs-13px text-warning text-center" style="margin-top: -13px;">
                                         {{$value->prix.' Fcfa'}}
                                     </div>
+                                    <span class="text-soft text-center"> 
+                                        {{\Carbon\Carbon::parse($value->created_at)->diffForHumans() }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +124,7 @@
                     <div class="nk-block-head mt-2">
                         <div class="nk-block-between g-3">
                             <div class="nk-block-head-content">
-                                <a class="btn btn-outline-primary btn-white btn-wider btn-dim btn-sm" href="{{route('index_annonce', 'type_annonce=vente')}}">
+                                <a class="btn btn-outline-gray btn-white btn-wider btn-dim btn-sm" href="{{route('index_annonce', 'type_annonce=vente')}}">
                                     <span>Voir plus</span>
                                     <em class="icon ni ni-arrow-right"></em>
                                 </a>
@@ -120,11 +133,11 @@
                     </div>
                 </div>
 
-                <div class="nk-block nk-block-lg bg-light rounded p-4 mt-5">
+                <div class="nk-block nk-block-lg bg-orange rounded p-4 mt-5">
                     <div class="nk-block-head">
                         <div class="nk-block-between g-3">
                             <div class="nk-block-head-content">
-                                <h5 class="nk-block-title">
+                                <h5 class="nk-block-title text-white">
                                     <span>Dernières annonces : Locations</span>
                                 </h5>
                             </div>
@@ -139,7 +152,15 @@
                                         <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />
                                     </a>
                                 </div>
-                                <div class="card-inner pt-0 pb-2" style="height:105px;padding-left: 5px;padding-right: 5px;">
+                                <div class="card-inner pt-0 pb-2 text-center" style="height:145px;padding-left: 5px;padding-right: 5px;">
+                                    <div class="user-card d-flex" style="margin-top: -32px;margin-left: 10px;">
+                                        <div class="user-avatar md sq p-2 border bg-white rounded-circle ">
+                                            <img src="{{ Storage::url($value->marque_photo) }}" style="object-fit: cover;background: transparent;">
+                                        </div>
+                                        {{-- <div class="user-avatar sm sq" style="background: transparent;margin-left: 0px;">
+                                            <img src="{{asset('images/logo/certificat/certification-logo-2.png')}}" style="object-fit: cover;background: transparent;">
+                                        </div> --}}
+                                    </div>
                                     <ul class="product-tags">
                                         <li>
                                             <a class="fs-13px">
@@ -148,16 +169,19 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <p class="product-title text-dark fs-12px" style="margin-top: -5px;">
+                                    <p class="product-title text-dark fs-12px text-center" style="margin-top: -5px;">
                                         <a href="{{route('index_detail',$value->uuid)}}">
                                             {{$value->marque}}
                                             {{$value->model}}
                                             {{$value->annee}}
                                         </a>
                                     </p>
-                                    <div class="h6 fs-13px text-warning" style="margin-top: -13px;">
-                                        {{$value->prix.' Fcfa / 24h'}}
+                                    <div class="h6 fs-13px text-warning text-center" style="margin-top: -13px;">
+                                        {{$value->prix.' Fcfa'}}
                                     </div>
+                                    <span class="text-soft text-center"> 
+                                        {{\Carbon\Carbon::parse($value->created_at)->diffForHumans() }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +190,7 @@
                     <div class="nk-block-head mt-2">
                         <div class="nk-block-between g-3">
                             <div class="nk-block-head-content">
-                                <a class="btn btn-outline-primary btn-white btn-wider btn-dim btn-sm" href="{{route('index_annonce', 'type_annonce=location')}}">
+                                <a class="btn btn-outline-gray btn-white btn-wider btn-dim btn-sm" href="{{route('index_annonce', 'type_annonce=location')}}">
                                     <span>Voir plus</span>
                                     <em class="icon ni ni-arrow-right"></em>
                                 </a>

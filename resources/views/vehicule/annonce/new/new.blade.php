@@ -526,7 +526,7 @@
                                                 </div>
                                                 <div class="nk-block-des">
                                                     <p>
-                                                        Vous devez télécharger obligatoirement 6 photos pour l'annonce.
+                                                        Vous devez télécharger obligatoirement 6 photos pour l'annonce. Chaque photo doit être inférieure à 2 Mo.
                                                     </p>
                                                 </div>
                                             </div>
@@ -552,6 +552,7 @@
                                                             </div>
                                                             <div class="card-inner pt-2 pb-2"> 
                                                                 <input type="file" required id="image1" name="image1" style="width:120px; margin-left: -13px;" accept="image/*">
+                                                                <p id="image_size1" style="display: none;" ></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -571,6 +572,7 @@
                                                             </div>
                                                             <div class="card-inner text-center pt-2 pb-2">
                                                                 <input type="file" required id="image2" style="width:120px; margin-left: -13px;" accept="image/*" name="image2">
+                                                                <p id="image_size2" style="display: none;" ></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -590,6 +592,7 @@
                                                             </div>
                                                             <div class="card-inner text-center pt-2 pb-2">
                                                                 <input type="file" required id="image3" style="width:120px; margin-left: -13px;" accept="image/*" name="image3">
+                                                                <p id="image_size3" style="display: none;" ></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -609,6 +612,7 @@
                                                             </div>
                                                             <div class="card-inner text-center pt-2 pb-2">
                                                                 <input type="file" required id="image4" style="width:120px; margin-left: -13px;" accept="image/*" name="image4">
+                                                                <p id="image_size4" style="display: none;" ></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -628,6 +632,7 @@
                                                             </div>
                                                             <div class="card-inner text-center pt-2 pb-2">
                                                                 <input type="file" required id="image5" style="width:120px; margin-left: -13px;" accept="image/*" name="image5">
+                                                                <p id="image_size5" style="display: none;" ></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -647,6 +652,7 @@
                                                             </div>
                                                             <div class="card-inner text-center pt-2 pb-2">
                                                                 <input type="file" required id="image6" style="width:120px; margin-left: -13px;" accept="image/*" name="image6">
+                                                                <p id="image_size6" style="display: none;" ></p>
                                                             </div>
                                                         </div>
                                                     </div>

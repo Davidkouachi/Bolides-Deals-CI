@@ -21,7 +21,7 @@ class Controller
         $vanns = Annonce::join('villes','villes.id','=','annonces.ville_id')
                         ->join('marques','marques.id','=','annonces.marque_id')
                         ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
-                        ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'type_marques.nom as type_marque')
+                        ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque')
                         ->where('annonces.statut', '=', 'en ligne')
                         ->where('annonces.type_annonce', '=', 'vente')
                         ->latest() // Order by the latest created_at
@@ -38,7 +38,7 @@ class Controller
         $lanns = Annonce::join('villes','villes.id','=','annonces.ville_id')
                         ->join('marques','marques.id','=','annonces.marque_id')
                         ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
-                        ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'type_marques.nom as type_marque')
+                        ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque')
                         ->where('annonces.statut', '=', 'en ligne')
                         ->where('annonces.type_annonce', '=', 'location')
                         ->latest() // Order by the latest created_at

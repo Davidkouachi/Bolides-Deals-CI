@@ -6,6 +6,8 @@
     <meta content="Softnio" name="author">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <meta content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers." name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.cinetpay.com/seamless/main.js"></script>
     <link href="{{asset('images/logo/icon/logo.ico')}}" rel="shortcut icon">
     <title>
         @yield('titre') | BOLIDES DEALS CI
@@ -21,7 +23,7 @@
     </meta>
 </head>
 
-<body class="nk-body ui-rounder has-sidebar ui-light" >
+<body class="nk-body ui-rounder has-sidebar ui-light " >
     <div class="nk-app-root">
         <div class="nk-main ">
 
@@ -143,12 +145,20 @@
                                             <span class="fs-15px"></span>
                                         </a>
                                     </li>
+                                    <li class="dropdown notification-dropdown" hidden>
+                                        <a class=" nk-quick-nav-icon" href="{{route('index_paye')}}">
+                                            <em class="icon ni ni-money"></em>
+                                            <span class="fs-15px"></span>
+                                        </a>
+                                    </li>
+                                    @if(!request()->routeIs('index_annonce') )
                                     <li class="dropdown notification-dropdown">
                                         <a class=" nk-quick-nav-icon" href="{{route('index_annonce')}}">
                                             <em class="icon ni ni-box-view-fill"></em>
                                             <span class="fs-15px"></span>
                                         </a>
                                     </li>
+                                    @endif
 
                                     @auth()
                                     <li class="dropdown notification-dropdown">
@@ -324,7 +334,7 @@
                                 <span class="w-20" >
                                     Copyright © <script>
                                     document.write(new Date().getFullYear())
-                                    </script> Bolides Deals.
+                                    </script> Bolides Deals CI Dévéloppé par DAVID Kouachi.
                                 </span>
                                 <marquee  behavior="" direction="">
                                     <span class="text-danger" >
@@ -365,9 +375,11 @@
     <div class="modal fade" tabindex="-1" id="modalCommentaire">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-success text-white">
                     <h5 class="modal-title">Nouvelle suggestion</h5>
-                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
+                    <a class="text-white fs-20px" data-bs-dismiss="modal" aria-label="Close">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
                 </div>
                 <div class="modal-body">
                     <form method="post" action="{{route('trait_sugg')}}" enctype="multipart/form-data">

@@ -12,9 +12,13 @@ use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\PasswordresetController;
 use App\Http\Controllers\SuggestionController;
 use App\Http\Controllers\MesannoncesController;
+use App\Http\Controllers\PaiementController;
 
 
 Route::get('/', [Controller::class, 'index_accueil'])->name('index_accueil');
+
+Route::get('/paiement', [PaiementController::class, 'index_paye'])->name('index_paye');
+Route::post('/initiatePayment', [PaiementController::class, 'initiatePayment'])->name('initiatePayment');
 
 Route::get('/Annonces', [AnnonceController::class, 'index_annonce'])->name('index_annonce');
 Route::get('/Detail Annonces/{uuid}', [AnnonceController::class, 'index_detail'])->name('index_detail');
@@ -47,6 +51,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/Mes Annonces', [MesannoncesController::class, 'index_mesannonces'])->name('index_mesannonces');
     Route::get('/Mes Annonces/Détail/{id}/{uuid}', [MesannoncesController::class, 'index_mesannonces_detail'])->name('index_mesannonces_detail');
+    Route::get('/Mes Annonces/Véhicule disponible/{uuid}', [MesannoncesController::class, 'trait_dispo'])->name('trait_dispo');
+    Route::get('/Mes Annonces/Véhicule indisponible/{uuid}', [MesannoncesController::class, 'trait_indispo'])->name('trait_indispo');
+    Route::get('/Mes Annonces/Supprimer annonce/{uuid}', [MesannoncesController::class, 'delete_ann'])->name('delete_ann');
+
 });
 
 Route::middleware(['role:ADMINISTRATEUR'])->group(function () {

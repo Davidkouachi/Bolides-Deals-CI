@@ -19,6 +19,37 @@
                             </div>
                         </div>
                         <div class="col-12">
+                                <div class="alert alert-warning alert-dismissible fade show mb-4 rounded-6" role="alert">
+                                    <ul>
+                                        <li>
+                                            <p class="small mb-0 fs-14px">
+                                                - Les annonces ont une durée de <strong>30 jours maximum.</strong> Passé ce délai, elles ne seront plus en ligne.
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p class="small mb-0 fs-14px">
+                                                - Si aucun renouvellement n'est effectué dans <strong>les 5 jours</strong> suivant la désactivation, l'annonce sera <strong>supprimée définitivement</strong>.
+                                            </p>
+                                        </li>
+                                        <li>
+                                           <p class="small mb-0 fs-14px">
+                                                - Si l'annonce n'est plus disponible, veuillez marquer son <strong>statut comme "indisponible"</strong>. Dans ce cas, l'annonce ne sera pas supprimée définitivement mais sera <strong>retirée de la liste des annonces disponible</strong>.
+                                            </p> 
+                                        </li>
+                                        <li>
+                                            <p class="small mb-0 fs-14px">
+                                                - Veuillez noter que vous ne pouvez <strong>renouveler une annonce que 2 fois</strong>.
+                                            </p>
+                                        </li>
+                                    </ul>
+                                    <div class="d-inline-flex position-absolute end-0 top-50 translate-middle-y me-2">
+                                        <button type="button" class="btn btn-xs btn-icon btn-warning rounded-pill" data-bs-dismiss="alert">
+                                            <em class="icon ni ni-cross"></em>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="col-12">
                             <div class="card">
                                 <div class="card-inner card-inner-lg">
                                         <div id="contenu">
@@ -297,7 +328,7 @@
                                                    <div class="form-group">
                                                         <label class="form-label">Assurance</label>
                                                         <div class="form-control-wrap">
-                                                            <input name="assurance" type="date" class="form-control form-control-md" min="{{ \Carbon\Carbon::now()->toDateString() }}" >
+                                                            <input required name="assurance" type="date" class="form-control form-control-md" min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ \Carbon\Carbon::now()->toDateString() }}" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -305,7 +336,7 @@
                                                    <div class="form-group">
                                                         <label class="form-label">Visite technique</label>
                                                         <div class="form-control-wrap">
-                                                            <input name="visite_techn" type="date" class="form-control form-control-md" min="{{ \Carbon\Carbon::now()->toDateString() }}" >
+                                                            <input required name="visite_techn" type="date" class="form-control form-control-md" min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ \Carbon\Carbon::now()->toDateString() }}" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -430,7 +461,7 @@
                                                    <div class="form-group">
                                                         <label class="form-label">Nombre de clés</label>
                                                         <div class="form-control-wrap">
-                                                            <input id="cle" name="nbre_cle" type="tel" class="form-control form-control-md" maxlength="2" placeholder="Entrer le nombre de clés" >
+                                                            <input id="cle" required name="nbre_cle" type="tel" class="form-control form-control-md" maxlength="2" placeholder="Entrer le nombre de clés" value="1" >
                                                             <script>
                                                                 var inputElement = document.getElementById('cle');
                                                                 inputElement.addEventListener('input', function() {
@@ -526,7 +557,7 @@
                                                 </div>
                                                 <div class="nk-block-des">
                                                     <p>
-                                                        Vous devez télécharger obligatoirement 6 photos pour l'annonce. Chaque photo doit être inférieure à 2 Mo.
+                                                        Vous devez télécharger obligatoirement 6 photos pour l'annonce. <strong>Chaque photo doit être inférieure à 2 Mo</strong>.
                                                     </p>
                                                 </div>
                                             </div>
@@ -800,5 +831,48 @@
             });
         });
     </script>
+
+    @if (session('success_ann'))
+        <div class="modal fade" tabindex="-1" id="modalSuccess_ann" aria-modal="true" role="dialog">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content bg-white">
+                    <div class="modal-body">
+                        <div class="team" style="margin-top: -60px;">
+                            <div class="user-card user-card-s2">
+                                <div class="row g-gs user-info">
+                                    <div class="col-12" >
+                                        <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-check bg-success"></em>
+                                        <h4 class="nk-modal-title">
+                                            Félicitations votre annonce a bien été publié
+                                        </h4>
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <img height="100px" width="100px" src="{{ session('imgqr') }}" alt="Code QR">
+                                        <p>{{ session('data_qrcode') }}</p>
+                                    </div>
+                                    <div class="col-12 mt-4">
+                                        <a class="btn btn-white btn-outline-light btn-dim btn-sm mt-1 me-1" href="{{route('index_detail', session('uuid'))}}">
+                                            <em class="icon ni ni-eye"></em>
+                                            <span>Voir l'annonce</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var myModal = new bootstrap.Modal(document.getElementById('modalSuccess_ann'));
+                myModal.show();
+            });
+        </script>
+        @php session()->forget('success_ann'); @endphp
+    @endif
+
+
 
 @endsection

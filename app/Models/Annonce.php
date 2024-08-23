@@ -48,6 +48,7 @@ class Annonce extends Model
         'assurance',
         'papier',
         'views',
+        'date_hors_ligne',
     ];
 
     public function marque()

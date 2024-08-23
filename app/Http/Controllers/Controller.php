@@ -16,7 +16,13 @@ class Controller
     public function index_accueil()
     {
         $marques = Marque::orderBy('marque', 'asc')->get();
-        $types = Type_marque::orderBy('nom', 'asc')->get();;
+        foreach ($marques as $value) {
+            $value->nbre_ann = Annonce::where('marque_id', '=', $value->id)
+                                    ->where('statut', '=', 'en ligne')
+                                    ->count();
+        }
+
+        $types = Type_marque::orderBy('nom', 'asc')->get();
 
         $vanns = Annonce::join('villes','villes.id','=','annonces.ville_id')
                         ->join('marques','marques.id','=','annonces.marque_id')

@@ -507,11 +507,11 @@
                     </div>
                 </div>
             </div>
-            <div class="nk-block nk-block-lg">
+            <div class="nk-block nk-block-lg bg-gray mt-3 p-2 rounded">
                 <div class="nk-block-head">
                     <div class="nk-block-between g-3">
                         <div class="nk-block-head-content">
-                            <h5 class="nk-block-title">
+                            <h5 class="nk-block-title text-white">
                                 Annonces similaires
                             </h5>
                         </div>
@@ -562,8 +562,8 @@
                             </div>
                         @endforeach
                     @else
-                        <div class="col-12 text-center">
-                            <p class="text-muted">Aucune annonce disponible pour le moment.</p>
+                        <div class="col-12 text-center ">
+                            <p class="text-white">Aucune annonce similaire pour le moment.</p>
                         </div>
                     @endif
                 </div>
@@ -729,7 +729,6 @@
     </div>
 </div>
 @endforeach
-
 
 @endsection
 

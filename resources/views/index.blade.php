@@ -26,7 +26,7 @@
                         @foreach($types as $value)
                             @if($value->nom !== 'autre')
                             <li>
-                                <a class="filter-button w-100px text-center" type="button">
+                                <a class="filter-button text-center" type="button" style="width: 120px;">
                                     {{$value->nom}} 
                                 </a>
                             </li>
@@ -51,19 +51,35 @@
                             <div class="" style="height: 180px;">
                                 <div class="card-inner">
                                     <div class="team">
-                                        <a class="user-card user-card-s2" href="{{route('index_annonce','marque='.$value->id)}}" >
-                                            <div class="user-avatar lg sq" style="background: transparent;">
-                                                <img src="{{ Storage::url($value->image_chemin) }}" alt="{{$value->marque}}" class="thumb">
-                                            </div>
-                                            <div class="user-info">
-                                                <h6 class="fs-13px" >{{$value->marque}}</h6>
-                                            </div>
-                                        </a>
+                                        @if($value->nbre_ann > 0)
+                                            <a class="user-card user-card-s2" href="{{ route('index_annonce', 'marque='.$value->id) }}">
+                                                <div class="user-avatar lg sq" style="background: transparent;">
+                                                    <img src="{{ Storage::url($value->image_chemin) }}" alt="{{ $value->marque }}" class="thumb">
+                                                </div>
+                                                <div class="user-info">
+                                                    <h6 class="fs-13px">{{ $value->marque }}</h6>
+                                                </div>
+                                            </a>
+                                        @else
+                                            <a class="user-card user-card-s2" href="javascript:void(0);" onclick="showNoAnnoncesAlert('{{ $value->marque }}')">
+                                                <div class="user-avatar lg sq" style="background: transparent;">
+                                                    <img src="{{ Storage::url($value->image_chemin) }}" alt="{{ $value->marque }}" class="thumb">
+                                                </div>
+                                                <div class="user-info">
+                                                    <h6 class="fs-13px">{{ $value->marque }}</h6>
+                                                </div>
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
                         @endforeach
+                        <script>
+                            function showNoAnnoncesAlert(marque) {
+                                Swal.fire("Information", "Il n'y a pas d'annonces disponibles pour la marque " + marque, "info");
+                            }
+                        </script>
                     </div>
                 </div>
 

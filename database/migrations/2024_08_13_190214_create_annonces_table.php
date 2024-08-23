@@ -41,6 +41,7 @@ return new class extends Migration
             $table->string('negociable');
             $table->string('deplace');
             $table->string('statut');
+            $table->string('date_hors_ligne')->nullable();
             $table->string('whatsapp')->nullable();
             $table->string('appel');
             $table->string('sms')->nullable();

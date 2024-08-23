@@ -270,7 +270,14 @@ class AnnonceController extends Controller
                     }
                 }
 
-                return back()->with('success', 'Annonce et images enregistrées avec succès.');
+                $data_qrcode = route('index_detail', $ann->uuid);
+                $qrCode = new QrCode($data_qrcode);
+                $writer = new PngWriter();
+                $result = $writer->write($qrCode);
+                $imgqr = $result->getDataUri();
+
+                return back()->with(['success_ann'=>'Annonce publiée avec succès.','imgqr'=>$imgqr, 'data_qrcode'=>$data_qrcode,'uuid'=>$ann->uuid,]);
+
             } else {
                 $this->rollbackAnnonce($ann->id); // Supprimer l'annonce si les fichiers requis ne sont pas fournis
                 Annonce_error::create(['motif' => 'Veuillez sélectionner toutes les images requises.','user_id' => Auth::user()->id]);

@@ -27,7 +27,7 @@
     <div class="nk-app-root">
         <div class="nk-main ">
 
-            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role','index_bord_user','index_bord_sugg') )
+            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role','index_bord_user','index_bord_sugg','index_bord_parametrage') )
             <div class="nk-sidebar is-light nk-sidebar-fixed " data-content="sidebarMenu">
                 <div class="nk-sidebar-element nk-sidebar-head">
                     <div class="nk-sidebar-brand">
@@ -90,13 +90,13 @@
                                     </a>
                                 </li>
                                 <li class="nk-menu-item">
-                                    <a class="nk-menu-link" href="#">
+                                    <a class="nk-menu-link" href="{{route('index_bord_parametrage')}}">
                                         <span class="nk-menu-icon">
-                                            <em class="icon ni ni-building">
+                                            <em class="icon ni ni-setting">
                                             </em>
                                         </span>
                                         <span class="nk-menu-text">
-                                            Parcs Automobiles
+                                            Paramétrage
                                         </span>
                                     </a>
                                 </li>
@@ -123,7 +123,7 @@
                     <div class="container-xl wide-xl">
                         <div class="nk-header-wrap">
 
-                            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role','index_bord_user','index_bord_sugg') )
+                            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role','index_bord_user','index_bord_sugg','index_bord_parametrage') )
                             <div class="nk-menu-trigger d-xl-none ms-n1 me-3">
                                 <a class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu" href="#">
                                     <em class="icon ni ni-menu">
@@ -162,7 +162,7 @@
 
                                     @auth()
                                     <li class="dropdown notification-dropdown">
-                                        <a href="{{route('index_annonce_new')}}" class="nk-quick-nav-icon">
+                                        <a  {{-- href="{{route('index_annonce_new')}}" --}} class="nk-quick-nav-icon" data-bs-toggle="modal" data-bs-target="#modalAnnonceNew">
                                             <div class="icon-status icon-status-info">
                                                 <em class="icon ni ni-plus-circle"></em>
                                             </div>
@@ -327,6 +327,72 @@
 
                 @yield('content')
 
+                @if(Auth::check())
+                    {{-- @if (session('session_time_remaining'))
+                        <div class="alert alert-info">
+                            Temps restant avant l'expiration de la session : 
+                            <span id="countdown">{{ gmdate('H:i:s', session('session_time_remaining')) }}</span>
+                        </div>
+                    @endif --}}
+
+                    <div class="modal fade" tabindex="-1" id="sessionExpiredModal" aria-modal="true" role="dialog" style="position: fixed;" data-bs-backdrop="static" data-bs-keyboard="false">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content bg-white">
+                                <div class="modal-body modal-body-lg text-center">
+                                    <div class="nk-modal"><em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger"></em>
+                                        <h4 class="nk-modal-title">Session Expiré</h4>
+                                        <div class="nk-modal-text">
+                                            <div class="caption-text">
+                                                <span>
+                                                    Vous serez rédiriger vers la page d'accueil
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="nk-modal-action">
+                                            <button class="btn btn-lg btn-mw btn-outline-light btn-dim btn-white me-2" {{-- onclick="window.location.href='{{ route('index_accueil') }}'" --}} onclick="window.location.reload();">
+                                                Ok
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            // Temps restant en secondes
+                            let timeRemaining = {{ session('session_time_remaining') }};
+                            
+                            // Fonction pour mettre à jour le compte à rebours chaque seconde
+                            function updateCountdown() {
+                                if (timeRemaining > 0) {
+                                    timeRemaining--;
+
+                                    // Convertir les secondes restantes en format HH:MM:SS
+                                    let hours = Math.floor(timeRemaining / 3600);
+                                    let minutes = Math.floor((timeRemaining % 3600) / 60);
+                                    let seconds = timeRemaining % 60;
+
+                                    // Ajouter un zéro devant les chiffres uniques
+                                    hours = hours < 10 ? '0' + hours : hours;
+                                    minutes = minutes < 10 ? '0' + minutes : minutes;
+                                    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                                    // Mettre à jour l'affichage du compte à rebours
+                                    document.getElementById('countdown').textContent = hours + ':' + minutes + ':' + seconds;
+                                } else {
+                                    // Afficher le modal lorsque le temps est écoulé
+                                    $('#sessionExpiredModal').modal('show');
+                                }
+                            }
+
+                            // Appeler la fonction updateCountdown toutes les secondes
+                            setInterval(updateCountdown, 1000);
+                        });
+                    </script>
+                @endif
+
                 <div class="nk-footer">
                     <div class="container-xl wide-xl">
                         <div class="nk-footer-wrap">
@@ -371,6 +437,8 @@
             <em class="icon ni ni-chat" style="font-size: 25px;"></em>
         </div>
     </a>
+
+    
 
     <div class="modal fade" tabindex="-1" id="modalCommentaire">
         <div class="modal-dialog modal-md" role="document">
@@ -421,6 +489,34 @@
                 </div>
                 <div class="modal-footer bg-light">
                     <span class="sub-text">Suggestion</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade zoom" tabindex="-1" id="modalAnnonceNew">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content bg-white">
+                <div class="modal-body">
+                    <div class="row g-gs align-items-center justify-content-center" >
+                        <div class="col-12" >
+                            <h4 class="mb-2 text-center" >
+                                <ins>Type d'annonce</ins>
+                            </h4>
+                        </div>
+                        <div class="col-6" >
+                            <a href="{{route('index_annonce_new_vente')}}" class="btn btn-white btn-dim btn-outline-info btn-block" >
+                                <em class="icon ni ni-cc-alt2" ></em>
+                                <span> Vente </span>
+                            </a>
+                        </div>
+                        <div class="col-6" >
+                            <a href="{{route('index_annonce_new_location')}}" class="btn btn-white btn-dim btn-outline-warning btn-block" >
+                                <em class="icon ni ni-cc-alt2" ></em>
+                                <span> Location </span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

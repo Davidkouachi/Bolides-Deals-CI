@@ -32,7 +32,7 @@ class MarqueController extends Controller
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
                 // Renommer le fichier avec un nom unique pour éviter les conflits
-                $filename = time() . '.' . $request->file('image')->getClientOriginalName();
+                $filename = $request->file('image')->getClientOriginalName();
 
                 $rech = Marque::where('image_nom', '=', $filename)->first();
                 if($rech){

@@ -27,40 +27,47 @@
                                     <div class="col-12">
                                         <h4>Mes Annonces</h4>
                                     </div>
-                                    <div class="col-12" hidden>
-                                        <form action="#" class="row g-gs">
-                                            <div class="col-lg-4 col-md-6">
-                                                <div class="form-group">
-                                                    <div class="form-control-wrap">
-                                                        <input placeholder="Model, marque" type="text" class="form-control form-control-sm">
+                                    <div class="col-12" style="margin-top: -20px;" hidden>
+                                        <div class="card-inner">
+                                            <ul class="nav nav-tabs nav-tabs-s2 mt-n2">
+                                                <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tabVente">Ventes</a></li>
+                                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tabLocation">Locations</a></li>
+                                            </ul>
+                                            <div class="tab-content text-center">
+                                                <div class="tab-pane active" id="tabVente">
+                                                    <div class="row g-gs">
+                                                        <div class="col">
+                                                            <div class="amount">En ligne</div>
+                                                            <div class="title">28.49%</div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="amount">Hors ligne</div>
+                                                            <div class="title">7m 28s</div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="amount">Indisponible</div>
+                                                            <div class="title">3.98K</div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-6">
-                                                <div class="form-group">
-                                                    <div class="form-control-wrap">
-                                                        <input placeholder="Kilométrage" type="text" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-6">
-                                                <div class="form-group">
-                                                    <div class="form-control-wrap">
-                                                        <div class="input-group">
-                                                            <input id="min-price" placeholder="prix min" type="tel" class="form-control form-control-sm">
-                                                            <input id="max-price" placeholder="prix max" type="tel" class="form-control form-control-sm">
+                                                <div class="tab-pane" id="tabLocation">
+                                                    <div class="row g-gs">
+                                                        <div class="col">
+                                                            <div class="amount">En ligne</div>
+                                                            <div class="title">28.49%</div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="amount">Hors-ligne</div>
+                                                            <div class="title">7m 28s</div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="amount">Indisponible</div>
+                                                            <div class="title">3.98K</div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12 text-center">
-                                                <div class="form-group">
-                                                    <button type="submit" class="btn btn-white btn-md btn-dim btn-outline-success ">
-                                                        <em class="ni ni-search"></em>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -169,7 +176,7 @@
                             @endforeach
                         @else
                             <div class="col-12 text-center">
-                                <p class="text-muted">Aucune annonce disponible pour le moment.</p>
+                                <p class="text-muted">Vous n'avez aucune annonce.</p>
                             </div>
                         @endif
                     </div>

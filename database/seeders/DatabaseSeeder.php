@@ -10,6 +10,7 @@ use App\Models\Role;
 use App\Models\Contact_user;
 use App\Models\Ville;
 use App\Models\Type_marque;
+use App\Models\Parametrage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +23,8 @@ class DatabaseSeeder extends Seeder
         foreach ($types as $value) {
             Type_marque::create(['nom' => $value]);
         }
+
+        $para = Parametrage::create(['nbre_jours_ligne' => '0','nbre_jours_delete' => '0','nbre_refresh' => '0']);
 
         $role_admin =Role::create(['nom' => 'ADMINISTRATEUR']);
         $role_user =Role::create(['nom' => 'UTILISATEUR']);

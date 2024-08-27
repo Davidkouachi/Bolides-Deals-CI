@@ -19,6 +19,8 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Marque;
 use App\Models\Suggestion;
+use App\Models\Annonce;
+use App\Models\Parametrage;
 
 
 class BordController extends Controller
@@ -51,6 +53,19 @@ class BordController extends Controller
                     ->select('users.*','roles.nom as role')
                     ->orderBy('created_at', 'desc')
                     ->get();
+        foreach ($users as $value) {
+            $value->nbre_annonce = Annonce::where('user_id', '=', $value->id)->count() ?: 0;
+            $value->nbre_annonce_ligne = Annonce::where('user_id', '=', $value->id)
+                                                ->where('statut', '=', 'en ligne')
+                                                ->count() ?: 0;
+            $value->nbre_annonce_hligne = Annonce::where('user_id', '=', $value->id)
+                                                ->where('statut', '=', 'hors ligne')
+                                                ->count() ?: 0;
+            $value->nbre_annonce_indispo = Annonce::where('user_id', '=', $value->id)
+                                                ->where('statut', '=', 'indisponible')
+                                                ->count() ?: 0;
+        }
+
         return view('bord.user.index',['users' => $users]);
     }
 
@@ -60,6 +75,13 @@ class BordController extends Controller
         $suggs = Suggestion::orderBy('created_at', 'desc')->get();      
 
         return view('bord.suggestion.index',['suggs' => $suggs]);
+    }
+
+    public function index_bord_parametrage()
+    {    
+        $para = Parametrage::find('1');
+
+        return view('bord.parametrage.index',['para'=>$para]);
     }
 
 }

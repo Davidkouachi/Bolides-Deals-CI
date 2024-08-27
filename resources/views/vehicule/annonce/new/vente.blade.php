@@ -14,7 +14,7 @@
                         <div class="col-12">
                             <div class="nk-block-head">
                                 <div class="nk-block-head-content text-center">
-                                    <h4 class="nk-block-title">Nouvelle Annonce</h4>
+                                    <h4 class="nk-block-title">Nouvelle Annonce Vente</h4>
                                 </div>
                             </div>
                         </div>
@@ -23,12 +23,12 @@
                                     <ul>
                                         <li>
                                             <p class="small mb-0 fs-14px">
-                                                - Les annonces ont une durée de <strong>30 jours maximum.</strong> Passé ce délai, elles ne seront plus en ligne.
+                                                - Les annonces ont une durée de <strong>{{$para->nbre_jours_ligne}} jours maximum.</strong> Passé ce délai, elles ne seront plus en ligne.
                                             </p>
                                         </li>
                                         <li>
                                             <p class="small mb-0 fs-14px">
-                                                - Si aucun renouvellement n'est effectué dans <strong>les 5 jours</strong> suivant la désactivation, l'annonce sera <strong>supprimée définitivement</strong>.
+                                                - Si aucun renouvellement n'est effectué dans <strong>les {{$para->nbre_jours_delete}} jours</strong> suivant la désactivation, l'annonce sera <strong>supprimée définitivement</strong>.
                                             </p>
                                         </li>
                                         <li>
@@ -38,7 +38,7 @@
                                         </li>
                                         <li>
                                             <p class="small mb-0 fs-14px">
-                                                - Veuillez noter que vous ne pouvez <strong>renouveler une annonce que 2 fois</strong>.
+                                                - Veuillez noter que vous ne pouvez <strong>renouveler une annonce que {{$para->nbre_refresh}} fois</strong>.
                                             </p>
                                         </li>
                                     </ul>
@@ -72,7 +72,7 @@
                                                                     <div class="user-card user-card-s2">
                                                                         <label class="form-label text-center" > Photo de la marque</label>
                                                                         <div class="user-avatar xl sq border p-1" style="background: transparent;">
-                                                                            <img class="thumb" id="marqueImage">
+                                                                            <img class="thumb" id="marqueImages">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -247,6 +247,18 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-4 col-md-6" id="div_neuf">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="cp1-team-size">Neuf</label>
+                                                        <div class="form-control-wrap">
+                                                            <select required class="form-select js-select2" data-placeholder="selectionner" name="neuf">
+                                                                <option value=""></option>
+                                                                <option value="oui">Oui</option>
+                                                                <option value="non">Non</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="col-lg-4 col-md-6" id="div_hors_taxe">
                                                     <div class="form-group">
                                                         <label class="form-label" for="cp1-team-size">Hors taxe</label>
@@ -261,42 +273,18 @@
                                                 </div>
                                                 <script>
                                                     document.addEventListener('DOMContentLoaded', function() {
-                                                        var prixUniteElement = document.getElementById('prixUnite');
-                                                        var div_troc = document.getElementById('div_troc');
-                                                        var div_reduc = document.getElementById('div_reduc');
-                                                        var div_cle = document.getElementById('div_cle');
                                                         $('#hors_taxe').on('change', function() {
                                                             var selectedValue = $(this).val();
 
                                                             if (selectedValue == 'oui') {
                                                                 document.getElementById('div_papier').style.display='none';
-                                                                document.getElementById('div_type_annonce').style.display='none';
-                                                                document.getElementById('div_type_vente').style.display='block';
-                                                                prixUniteElement.textContent = 'Fcfa';
-                                                                div_reduc.style.display = 'none';
-                                                                div_troc.style.display = 'block';
-                                                                div_cle.style.display = 'block';
 
                                                             } else {
                                                                 document.getElementById('div_papier').style.display='block';
-                                                                document.getElementById('div_type_annonce').style.display='block';
-                                                                document.getElementById('div_type_vente').style.display='none';
                                                             }
                                                         });
                                                     });
                                                 </script>
-                                                <div class="col-lg-4 col-md-6" id="div_neuf">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="cp1-team-size">Neuf</label>
-                                                        <div class="form-control-wrap">
-                                                            <select required class="form-select js-select2" data-placeholder="selectionner" name="neuf">
-                                                                <option value=""></option>
-                                                                <option value="oui">Oui</option>
-                                                                <option value="non">Non</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="col-lg-4 col-md-6" id="div_papier" style="display: none;">
                                                     <div class="form-group">
                                                         <label class="form-label" for="cp1-team-size">Papiers à jour</label>
@@ -360,23 +348,12 @@
                                                 </div>
                                             </div>
                                             <div class="row g-gs mb-4" >
-                                                <div class="col-lg-4 col-md-6" id="div_type_annonce">
+                                                <div class="col-lg-4 col-md-6" id="div_type_annonce" hidden>
                                                     <div class="form-group">
                                                         <label class="form-label" for="cp1-team-size">Type d'annonce</label>
                                                         <div class="form-control-wrap">
                                                             <select required class="form-select js-select2" data-placeholder="selectionner" id="typeAnnonce" name="type_annonce">
                                                                 <option value=""></option>
-                                                                <option selected value="vente">Vente</option>
-                                                                <option value="location">Location</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-6" id="div_type_vente" style="display: none;">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="cp1-team-size">Type d'annonce</label>
-                                                        <div class="form-control-wrap">
-                                                            <select class="form-select js-select2" name="type_annonce_vente">
                                                                 <option selected value="vente">Vente</option>
                                                             </select>
                                                         </div>
@@ -387,7 +364,7 @@
                                                         <label class="form-label" for="default-05">Prix</label>
                                                         <div class="form-control-wrap">
                                                             <div class="form-text-hint">
-                                                                <span id="prixUnite" class="overline-title">Fcfa</span>
+                                                                <span class="overline-title">Fcfa</span>
                                                             </div>
                                                             <input required type="tel" class="form-control" id="prix" placeholder="Prix de l'annonce" name="prix">
                                                         </div>
@@ -428,47 +405,15 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 col-md-6" id="div_deplace">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="cp1-team-size">Je me déplace</label>
-                                                        <div class="form-control-wrap">
-                                                            <select required class="form-select js-select2" data-placeholder="selectionner" name="deplace">
-                                                                <option value=""></option>
-                                                                <option value="oui">Oui</option>
-                                                                <option value="non">Non</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-6" id="div_reduc" style="display: none;">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="cp1-team-size">Reduction a partir de</label>
-                                                        <div class="form-control-wrap">
-                                                            <select required class="form-select js-select2" data-placeholder="selectionner" name="nbre_reduc">
-                                                                <option selected value="1 semaine">1 Semaine</option>
-                                                                <option value="2 semaines">2 Semaines</option>
-                                                                <option value="3 semaines">3 Semaines</option>
-                                                                <option value="1 mois">1 Mois</option>
-                                                                <option value="2 mois">2 Mois</option>
-                                                                <option value="3 mois">3 Mois</option>
-                                                                <option value="4 mois">4 Mois</option>
-                                                                <option value="5 mois">5 Mois</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="col-lg-4 col-md-6" id="div_cle">
                                                    <div class="form-group">
                                                         <label class="form-label">Nombre de clés</label>
                                                         <div class="form-control-wrap">
-                                                            <input id="cle" required name="nbre_cle" type="tel" class="form-control form-control-md" maxlength="2" placeholder="Entrer le nombre de clés" value="1" >
-                                                            <script>
-                                                                var inputElement = document.getElementById('cle');
-                                                                inputElement.addEventListener('input', function() {
-                                                                    // Supprimer tout sauf les chiffres
-                                                                    this.value = this.value.replace(/[^0-9]/g, '');
-                                                                });
-                                                            </script>
+                                                            <select required class="form-select js-select2" data-placeholder="Selectionner" name="nbre_cle">
+                                                                <option value=""></option>
+                                                                <option value="1"> 1 clé</option>
+                                                                <option value="2"> 2 clés</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -557,7 +502,7 @@
                                                 </div>
                                                 <div class="nk-block-des">
                                                     <p>
-                                                        Vous devez télécharger obligatoirement 6 photos pour l'annonce. <strong>Chaque photo doit être inférieure à 2 Mo</strong>.
+                                                        Vous devez <strong>télécharger obligatoirement 6 photos</strong> pour l'annonce. <strong>Chaque photo doit être inférieure à 2 Mo</strong>.
                                                     </p>
                                                 </div>
                                             </div>
@@ -714,7 +659,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var imageElement = document.getElementById('marqueImage');
+            var imageElement = document.getElementById('marqueImages');
 
             // Convertir les données PHP en format JSON pour JavaScript
             var marques = @json($marques);
@@ -726,7 +671,7 @@
                 var imageUrl = '';
                 marques.forEach(function(marque) {
                     if (marque.id == selectedValue) {
-                        imageUrl = 'storage/images/' + marque.image_nom;
+                        imageUrl = '{{ asset('storage/images/') }}/' + marque.image_nom;
                     }
                 });
 
@@ -744,7 +689,7 @@
                 var initialImageUrl = '';
                 marques.forEach(function(marque) {
                     if (marque.id == initialValue) {
-                        initialImageUrl = 'storage/images/' + marque.image_nom;
+                        initialImageUrl = '{{ asset('storage/images/') }}/' + marque.image_nom;
                     }
                 });
                 if (initialImageUrl) {
@@ -804,31 +749,6 @@
                 // Formater le prix avec des points
                 return input.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
             }
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var prixUniteElement = document.getElementById('prixUnite');
-            var div_troc = document.getElementById('div_troc');
-            var div_reduc = document.getElementById('div_reduc');
-            var div_cle = document.getElementById('div_cle');
-
-            $('#typeAnnonce').on('change', function() {
-                var selectedType = $(this).val();
-
-                if (selectedType === 'location') {
-                    prixUniteElement.textContent = 'Fcfa / 24h';
-                    div_reduc.style.display = 'block';
-                    div_troc.style.display = 'none';
-                    div_cle.style.display = 'none';
-                } else {
-                    prixUniteElement.textContent = 'Fcfa';
-                    div_reduc.style.display = 'none';
-                    div_troc.style.display = 'block';
-                    div_cle.style.display = 'block';
-                }
-            });
         });
     </script>
 

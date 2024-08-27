@@ -11,9 +11,12 @@ use App\Models\Annonce;
 use App\Models\Annonce_photo;
 use App\Models\Annonce_error;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 class Controller
 {
-    public function index_accueil()
+    public function index_accueil(Request $request)
     {
         $marques = Marque::orderBy('marque', 'asc')->get();
         foreach ($marques as $value) {
@@ -56,6 +59,30 @@ class Controller
                                         ->first();
             // Set the photo property
             $value->photo = $firstPhoto->image_chemin;
+        }
+
+        if (Auth::check()) {
+            $lastActivity = $request->session()->get('last_activity', time());
+            $sessionLifetime = config('session.lifetime') * 60;
+
+            // Calculer le temps restant pour la session
+            $timeRemaining = $sessionLifetime - (time() - $lastActivity);
+
+            // Vérifier si la session a expiré
+            if ($timeRemaining <= 0) {
+                // Déconnecter l'utilisateur
+                Auth::logout();
+
+                // Rediriger avec un message d'avertissement
+                return redirect('/')
+                    ->with('warning', 'Votre session a expiré.');
+            }
+
+            // Stocker le temps restant dans la session
+            $request->session()->put('session_time_remaining', $timeRemaining);
+
+            // Mettre à jour l'heure de la dernière activité
+            $request->session()->put('last_activity', time());
         }
 
         return view('index',['marques'=>$marques, 'vanns'=>$vanns, 'lanns'=>$lanns, 'types'=>$types]);

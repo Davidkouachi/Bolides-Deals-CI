@@ -17,6 +17,7 @@ use App\Models\Type_marque;
 use App\Models\Annonce;
 use App\Models\Annonce_photo;
 use App\Models\Annonce_error;
+use App\Models\Parametrage;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Cache;
@@ -146,41 +147,66 @@ class AnnonceController extends Controller
                         ->where('uuid', $uuid)
                         ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.id as marque_id', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque', 'type_marques.id as type_marque_id', 'users.name as nom_user', 'users.prenom as prenom_user', 'users.email as email_user', 'users.image_chemin as photo_user')
                         ->first();
-        $photos = Annonce_photo::where('annonce_id', '=', $ann->id)->get();
-        $firstPhoto = Annonce_photo::where('annonce_id', '=', $ann->id)->orderBy('created_at', 'asc')->first();
-        $ann->image_url = $firstPhoto ? $firstPhoto->image_chemin : null;
 
-        $ann->increment('views');
+        if ($ann) {
 
+            if (!($ann->statut === 'en ligne')) {
+                return redirect()->route('index_annonce')->with('warning', 'Cette annonce n\'existe plus ou le véhicule est indisponible');
+            }
 
-        $sims = Annonce::join('villes','villes.id','=','annonces.ville_id')
-            ->join('marques','marques.id','=','annonces.marque_id')
-            ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
-            ->where('annonces.statut','=','en ligne')
-            ->where('annonces.type_marque_id','=', $ann->type_marque_id)
-            ->where('annonces.marque_id','=', $ann->marque_id)
-            ->where('annonces.annee','=', $ann->annee)
-            ->where('annonces.id','!=', $ann->id)
-            ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque')
-            ->latest() // Order by the latest created_at
-            ->take(10)
-            ->get();
-        foreach ($sims as $value) {
-            $firstPhoto = Annonce_photo::where('annonce_id', '=', $value->id)->orderBy('created_at', 'asc')->first();
-            $value->photo = $firstPhoto ? $firstPhoto->image_chemin : null;
+            $photos = Annonce_photo::where('annonce_id', '=', $ann->id)->get();
+            $firstPhoto = Annonce_photo::where('annonce_id', '=', $ann->id)->orderBy('created_at', 'asc')->first();
+            $ann->image_url = $firstPhoto ? $firstPhoto->image_chemin : null;
+
+            if (!(Auth::check() && Auth::user()->id === $ann->user_id)) {
+                $ann->increment('views');
+            }
+
+            $sims = Annonce::join('villes','villes.id','=','annonces.ville_id')
+                ->join('marques','marques.id','=','annonces.marque_id')
+                ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
+                ->where('annonces.statut','=','en ligne')
+                ->where('annonces.type_marque_id','=', $ann->type_marque_id)
+                ->where('annonces.marque_id','=', $ann->marque_id)
+                ->where('annonces.annee','=', $ann->annee)
+                ->where('annonces.id','!=', $ann->id)
+                ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque')
+                ->latest() // Order by the latest created_at
+                ->take(10)
+                ->get();
+
+            foreach ($sims as $value) {
+                $firstPhoto = Annonce_photo::where('annonce_id', '=', $value->id)->orderBy('created_at', 'asc')->first();
+                $value->photo = $firstPhoto ? $firstPhoto->image_chemin : null;
+            }
+
+            return view('vehicule.annonce.detail',['imgqr'=>$imgqr, 'data_qrcode'=>$data_qrcode, 'ann'=>$ann, 'photos'=>$photos, 'sims'=>$sims, 'types'=>$types]);
+
+        }else {
+
+            return redirect()->route('index_annonce')->with('warning', 'Cette annonce n\'existe plus');
+
         }
-
-
-        return view('vehicule.annonce.detail',['imgqr'=>$imgqr, 'data_qrcode'=>$data_qrcode, 'ann'=>$ann, 'photos'=>$photos, 'sims'=>$sims, 'types'=>$types]);
     }
 
-    public function index_annonce_new()
+    public function index_annonce_new_vente()
     {
         $marques = Marque::all();
         $villes = Ville::all();
         $types = Type_marque::all();
+        $para = Parametrage::find('1');
 
-        return view('vehicule.annonce.new.new',['marques' => $marques,'villes' => $villes,'types' => $types]);
+        return view('vehicule.annonce.new.vente',['marques' => $marques,'villes' => $villes,'types' => $types,'para'=>$para]);
+    }
+
+    public function index_annonce_new_location()
+    {
+        $marques = Marque::all();
+        $villes = Ville::all();
+        $types = Type_marque::all();
+        $para = Parametrage::find('1');
+
+        return view('vehicule.annonce.new.location',['marques' => $marques,'villes' => $villes,'types' => $types,'para'=>$para]);
     }
 
     public function trait_annonce(Request $request)
@@ -200,33 +226,29 @@ class AnnonceController extends Controller
         $ann->cylindre = $request->cylindre;
         $ann->puiss_fiscal = $request->puiss_fiscal;
         $ann->neuf = $request->neuf;
-        $ann->hors_taxe = $request->hors_taxe;
-        $ann->kilometrage = $request->kilometrage;
         $ann->prix = $request->prix;
         $ann->description = $request->description;
-        $ann->nbre_reduc = $request->nbre_reduc;
-        $ann->troc = $request->troc;
-        $ann->deplace = $request->deplace;
-        $ann->whatsapp = $request->whatsapp;
-        $ann->appel = $request->appel;
-        $ann->sms = $request->sms;
-        $ann->nbre_porte = $request->nbre_porte;
-        $ann->negociable = $request->negociable;
-        $ann->nbre_cle = $request->nbre_cle;
-        $ann->papier = $request->papier;
-        if ($request->hors_taxe === 'oui') {
-            $ann->type_annonce = 'vente';
-        }else{
-           $ann->type_annonce = $request->type_annonce; 
-        }
-        if($request->papier === 'oui') {
-            $ann->visite_techn = $request->visite_techn;
-            $ann->assurance = $request->assurance;
-        }
         $ann->statut = 'en ligne';
         $ann->localisation = $request->localisation;
         $ann->ville_id = $request->ville_id;
         $ann->uuid = (string) Str::uuid();
+        $ann->whatsapp = $request->whatsapp;
+        $ann->appel = $request->appel;
+        $ann->sms = $request->sms;
+        $ann->nbre_porte = $request->nbre_porte;
+        $ann->type_annonce = $request->type_annonce;
+
+        if ($request->type_annonce === 'vente') {
+
+            $ann->hors_taxe = $request->hors_taxe;
+            $ann->kilometrage = $request->kilometrage;
+            $ann->troc = $request->troc;
+            $ann->papier = $request->papier;
+            $ann->visite_techn = $request->visite_techn;
+            $ann->assurance = $request->assurance;
+            $ann->nbre_cle = $request->nbre_cle;
+            $ann->negociable = $request->negociable;
+        }
 
         if ($ann->save()) {
             // Vérification des fichiers images

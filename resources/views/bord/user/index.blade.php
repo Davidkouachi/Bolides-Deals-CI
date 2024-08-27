@@ -212,22 +212,6 @@
 				            <div class="col-lg-5 col-md-4 col-6">
 				                <div class="form-group ">
 				                    <label class="form-label-etat" style="font-size: 14px;">
-				                        Date de naissance :
-				                    </label>
-				                </div>
-				            </div>
-				            <div class="col-lg-7 col-md-8 col-6">
-				                <div class="form-group ">
-				                    <span class="fw-normal text-dark" style="font-size: 14px;">
-				                        {{ \Carbon\Carbon::parse($user->date_naissance)->translatedFormat('j F Y ') }}
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				        <div class="col-lg-12 row">
-				            <div class="col-lg-5 col-md-4 col-6">
-				                <div class="form-group ">
-				                    <label class="form-label-etat" style="font-size: 14px;">
 				                        Date de création :
 				                    </label>
 				                </div>
@@ -236,6 +220,70 @@
 				                <div class="form-group ">
 				                    <span class="fw-normal text-dark" style="font-size: 14px;">
 				                        {{ \Carbon\Carbon::parse($user->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="col-lg-12 row">
+				            <div class="col-lg-5 col-md-4 col-6">
+				                <div class="form-group ">
+				                    <label class="form-label-etat" style="font-size: 14px;">
+				                        Nombre d'annonce(s) :
+				                    </label>
+				                </div>
+				            </div>
+				            <div class="col-lg-7 col-md-8 col-6">
+				                <div class="form-group ">
+				                    <span class="fw-normal text-dark" style="font-size: 14px;">
+				                        {{ $user->nbre_annonce }}
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="col-lg-12 row">
+				            <div class="col-lg-5 col-md-4 col-6">
+				                <div class="form-group ">
+				                    <label class="form-label-etat" style="font-size: 14px;">
+				                        Annonce(s) en ligne :
+				                    </label>
+				                </div>
+				            </div>
+				            <div class="col-lg-7 col-md-8 col-6">
+				                <div class="form-group ">
+				                    <span class="fw-normal text-dark" style="font-size: 14px;">
+				                        {{ $user->nbre_annonce_ligne }}
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="col-lg-12 row">
+				            <div class="col-lg-5 col-md-4 col-6">
+				                <div class="form-group ">
+				                    <label class="form-label-etat" style="font-size: 14px;">
+				                        Annonce(s) hors ligne :
+				                    </label>
+				                </div>
+				            </div>
+				            <div class="col-lg-7 col-md-8 col-6">
+				                <div class="form-group ">
+				                    <span class="fw-normal text-dark" style="font-size: 14px;">
+				                        {{ $user->nbre_annonce_hligne }}
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="col-lg-12 row">
+				            <div class="col-lg-5 col-md-4 col-6">
+				                <div class="form-group ">
+				                    <label class="form-label-etat" style="font-size: 14px;">
+				                        Annonce(s) indisponible :
+				                    </label>
+				                </div>
+				            </div>
+				            <div class="col-lg-7 col-md-8 col-6">
+				                <div class="form-group ">
+				                    <span class="fw-normal text-dark" style="font-size: 14px;">
+				                        {{ $user->nbre_annonce_indispo }}
 				                    </span>
 				                </div>
 				            </div>

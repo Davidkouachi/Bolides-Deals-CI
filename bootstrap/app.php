@@ -15,12 +15,15 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->redirectGuestsTo('/');
         $middleware->alias([
-            'role' => RoleMiddleware::class,
-            'statuthorsligne' => StatutHorsLigneMiddleware::class,
+            'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'statuthorsligne' => \App\Http\Middleware\StatutHorsLigneMiddleware::class,
+            'CheckSessionMiddleware' => \App\Http\Middleware\CheckSessionMiddleware::class,
         ]);
         $middleware->web([
-            
+            'statuthorsligne',
+            'CheckSessionMiddleware',
         ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

@@ -8,12 +8,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 use App\Models\Annonce;
 use App\Models\Annonce_photo;
-
+use App\Models\Parametrage;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 
 class StatutHorsLigneMiddleware
 {
@@ -21,24 +27,28 @@ class StatutHorsLigneMiddleware
     {
         $annonces = Annonce::all();
         $currentDate = Carbon::now();
+        $para = Parametrage::find('1');
 
         foreach ($annonces as $value) {
 
-            $daysDifference = $value->nbre_refresh >= 1
-            ? Carbon::parse($value->date_refresh)->diffInDays($currentDate)
-            : Carbon::parse($value->created_at)->diffInDays($currentDate);
+            if ($value->statut === 'en ligne') {
+                $daysDifference = $value->nbre_refresh >= 1
+                    ? floor(Carbon::parse($value->date_refresh)->diffInDays($currentDate))
+                    : floor(Carbon::parse($value->created_at)->diffInDays($currentDate));
 
-            if ($daysDifference > 10) {
-                // Mettre à jour le statut de l'annonce à "hors ligne"
-                $value->statut = 'hors ligne';
-                $value->date_hors_ligne = Carbon::now()->format('Y-m-d');
-                $value->save();
+                if ($daysDifference > $para->nbre_jours_ligne) {
+                    // Mettre à jour le statut de l'annonce à "hors ligne"
+                    $value->statut = 'hors ligne';
+                    $value->date_hors_ligne = Carbon::now()->format('Y-m-d');
+                    $value->save();
+                }
             }
 
-            $days = Carbon::parse($value->date_hors_ligne)->diffInDays($currentDate);
+            if ($value->statut === 'hors ligne') {
 
-            if ($value->statut === 'hors ligne' && $days > 5) {
-                    
+                $days = floor(Carbon::parse($value->date_hors_ligne)->diffInDays($currentDate));
+
+                if ($days > $para->nbre_jours_delete) {
                     // Démarrer une transaction
                     DB::beginTransaction();
 
@@ -80,7 +90,7 @@ class StatutHorsLigneMiddleware
                         // Retourner un message d'erreur avec l'exception capturée
                         // return redirect()->route('index_mesannonces')->with('error', 'Échec de la suppression de l\'annonce : ' . $e->getMessage());
                     }
-                
+                }                
             } 
 
         }

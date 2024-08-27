@@ -21,12 +21,13 @@
                     </div>
                 </div>
 
+                @if($types->isNotEmpty())
                 <div class="nk-block">
                     <ul class="filter-button-group mb-4 pb-1">
                         @foreach($types as $value)
                             @if($value->nom !== 'autre')
                             <li>
-                                <a class="filter-button text-center" type="button" style="width: 120px;">
+                                <a class="filter-button text-center" type="button">
                                     {{$value->nom}} 
                                 </a>
                             </li>
@@ -34,7 +35,9 @@
                         @endforeach
                     </ul>
                 </div>
+                @endif
 
+                @if($marques->isNotEmpty())
                 <div class="nk-block nk-block-lg bg-white rounded p-4 mt-5">
                     <div class="nk-block-head">
                         <div class="nk-block-between g-3">
@@ -45,6 +48,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
                         @foreach($marques as $value)
                         <div class="col">
@@ -75,14 +79,11 @@
                             </div>
                         </div>
                         @endforeach
-                        <script>
-                            function showNoAnnoncesAlert(marque) {
-                                Swal.fire("Information", "Il n'y a pas d'annonces disponibles pour la marque " + marque, "info");
-                            }
-                        </script>
                     </div>
                 </div>
+                @endif
 
+                @if($vanns->isNotEmpty())
                 <div class="nk-block nk-block-lg bg-azure rounded p-4 mt-5">
                     <div class="nk-block-head">
                         <div class="nk-block-between g-3">
@@ -148,7 +149,9 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
+                @if($lanns->isNotEmpty())
                 <div class="nk-block nk-block-lg bg-orange rounded p-4 mt-5">
                     <div class="nk-block-head">
                         <div class="nk-block-between g-3">
@@ -214,22 +217,18 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
             </div>
         </div>
     </div>
-
-<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered modal-lg align-items-center justify-content-center">
-        <ul class="preview-list g-1">
-            <li class="preview-item"> 
-                <a class="btn btn-warning" > 
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
-                    <span>Chargement en cours...</span> 
-                </a> 
-            </li>
-        </ul>
-    </div>
 </div>
+
+<script>
+    function showNoAnnoncesAlert(marque) {
+        Swal.fire("Information", "Il n'y a pas d'annonces disponibles pour la marque " + marque, "info");
+    }
+</script>
+
 
 @endsection

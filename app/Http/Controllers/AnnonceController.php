@@ -145,7 +145,7 @@ class AnnonceController extends Controller
                         ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
                         ->join('users','users.id','=','annonces.user_id')
                         ->where('uuid', $uuid)
-                        ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.id as marque_id', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque', 'type_marques.id as type_marque_id', 'users.name as nom_user', 'users.prenom as prenom_user', 'users.email as email_user', 'users.image_chemin as photo_user')
+                        ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.id as marque_id', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque', 'type_marques.id as type_marque_id', 'users.name as nom_user', 'users.prenom as prenom_user', 'users.id as user_id', 'users.email as email_user', 'users.image_chemin as photo_user')
                         ->first();
 
         if ($ann) {
@@ -326,6 +326,41 @@ class AnnonceController extends Controller
             // Supprimer l'annonce
             $annonce->delete();
         }
+    }
+
+    public function annonce_user($id)
+    {
+        $marques = Marque::all();
+        $types = Type_marque::all();
+        $user = User::find($id);
+
+        // Créez la requête de base
+        $anns = Annonce::join('villes','villes.id','=','annonces.ville_id')
+            ->join('marques','marques.id','=','annonces.marque_id')
+            ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
+            ->where('annonces.statut','=','en ligne')
+            ->where('annonces.user_id','=',$id)
+            ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque')
+            ->orderBy('annonces.created_at', 'desc');
+
+        // Paginer les résultats après avoir appliqué les filtres
+        $anns = $anns->paginate(30);
+
+        // Ajouter la première photo à chaque annonce
+        foreach ($anns as $value) {
+            $firstPhoto = Annonce_photo::where('annonce_id', '=', $value->id)
+                ->orderBy('created_at', 'asc')
+                ->first();
+
+            $value->photo = $firstPhoto ? $firstPhoto->image_chemin : null;
+        }
+
+        return view('vehicule.annonce.user.index', [
+            'marques' => $marques, 
+            'types' => $types, 
+            'anns' => $anns,
+            'user' => $user,
+        ]);
     }
 
 

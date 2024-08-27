@@ -97,3 +97,5 @@ Route::get('/Succès Réinitialisation', [PasswordresetController::class, 'succe
 
 Route::post('/Suggestion', [SuggestionController::class, 'trait_sugg'])->name('trait_sugg');
 Route::get('/Send suggestion/{id}', [SuggestionController::class, 'send_sugg'])->name('send_sugg');
+
+Route::get('/Annonces Vendeur/{id}', [AnnonceController::class, 'annonce_user'])->name('annonce_user');

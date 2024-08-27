@@ -516,27 +516,31 @@
                                 <div class="card-inner">
                                     <div class="team">
                                         <div class="user-card user-card-s2">
-                                            <h4>
-                                                Publié par 
-                                            </h4>
-                                            @if($ann->photo_user)
-                                            <div class="user-avatar lg sq border" style="background: transparent;">
-                                                <span>
-                                                    <img height="80px" width="80px" style="object-fit: cover;" class="thumb" src="{{ Storage::url($ann->photo_user) }}">
-                                                </span>
-                                            </div>
-                                            @else
-                                            <div class="user-avatar lg sq ">
-                                                <span>
-                                                    {{ ucfirst(substr($ann->nom_user, 0, 1)).ucfirst(substr($ann->prenom_user, 0, 1)) }}
-                                                </span>
-                                            </div>
-                                            @endif
+                                            <a href="{{route('annonce_user',$ann->user_id)}}">
+                                                <h4>
+                                                    Publié par 
+                                                </h4>
+                                                @if($ann->photo_user)
+                                                <div class="user-avatar lg sq border" style="background: transparent;">
+                                                    <span>
+                                                        <img height="80px" width="80px" style="object-fit: cover;" class="thumb" src="{{ Storage::url($ann->photo_user) }}">
+                                                    </span>
+                                                </div>
+                                                @else
+                                                <div class="user-avatar lg sq ">
+                                                    <span>
+                                                        {{ ucfirst(substr($ann->nom_user, 0, 1)).ucfirst(substr($ann->prenom_user, 0, 1)) }}
+                                                    </span>
+                                                </div>
+                                                @endif
+                                                <div class="user-info">
+                                                    <h6>
+                                                        {{$ann->nom_user}}
+                                                        {{$ann->prenom_user}}
+                                                    </h6>
+                                                </div>
+                                            </a>
                                             <div class="user-info">
-                                                <h6>
-                                                    {{$ann->nom_user}}
-                                                    {{$ann->prenom_user}}
-                                                </h6>
                                                 @if($ann->appel)
                                                 <a class="btn btn-outline-warning btn-dim btn-sm me-1 mt-1" href="tel:+225{{$ann->appel}}" target="_blank">
                                                     <em class="icon ni ni-call"></em>

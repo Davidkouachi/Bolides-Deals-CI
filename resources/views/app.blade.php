@@ -23,7 +23,7 @@
     </meta>
 </head>
 
-<body class="nk-body ui-rounder has-sidebar ui-light " >
+<body class="nk-body ui-rounder has-sidebar ui-light " style="background-color: ;" >
     <div class="nk-app-root">
         <div class="nk-main ">
 
@@ -139,12 +139,14 @@
                             </div>                           
                             <div class="nk-header-tools">
                                 <ul class="nk-quick-nav">
+                                    @if(!request()->routeIs('index_accueil') )
                                     <li class="dropdown notification-dropdown">
                                         <a class=" nk-quick-nav-icon" href="{{route('index_accueil')}}">
                                             <em class="icon ni ni-home"></em>
                                             <span class="fs-15px"></span>
                                         </a>
                                     </li>
+                                    @ENDIF
                                     <li class="dropdown notification-dropdown" hidden>
                                         <a class=" nk-quick-nav-icon" href="{{route('index_paye')}}">
                                             <em class="icon ni ni-money"></em>
@@ -327,72 +329,6 @@
 
                 @yield('content')
 
-                @if(Auth::check())
-                    {{-- @if (session('session_time_remaining'))
-                        <div class="alert alert-info">
-                            Temps restant avant l'expiration de la session : 
-                            <span id="countdown">{{ gmdate('H:i:s', session('session_time_remaining')) }}</span>
-                        </div>
-                    @endif --}}
-
-                    <div class="modal fade" tabindex="-1" id="sessionExpiredModal" aria-modal="true" role="dialog" style="position: fixed;" data-bs-backdrop="static" data-bs-keyboard="false">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content bg-white">
-                                <div class="modal-body modal-body-lg text-center">
-                                    <div class="nk-modal"><em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger"></em>
-                                        <h4 class="nk-modal-title">Session Expiré</h4>
-                                        <div class="nk-modal-text">
-                                            <div class="caption-text">
-                                                <span>
-                                                    Vous serez rédiriger vers la page d'accueil
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="nk-modal-action">
-                                            <button class="btn btn-lg btn-mw btn-outline-light btn-dim btn-white me-2" {{-- onclick="window.location.href='{{ route('index_accueil') }}'" --}} onclick="window.location.reload();">
-                                                Ok
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            // Temps restant en secondes
-                            let timeRemaining = {{ session('session_time_remaining') }};
-                            
-                            // Fonction pour mettre à jour le compte à rebours chaque seconde
-                            function updateCountdown() {
-                                if (timeRemaining > 0) {
-                                    timeRemaining--;
-
-                                    // Convertir les secondes restantes en format HH:MM:SS
-                                    let hours = Math.floor(timeRemaining / 3600);
-                                    let minutes = Math.floor((timeRemaining % 3600) / 60);
-                                    let seconds = timeRemaining % 60;
-
-                                    // Ajouter un zéro devant les chiffres uniques
-                                    hours = hours < 10 ? '0' + hours : hours;
-                                    minutes = minutes < 10 ? '0' + minutes : minutes;
-                                    seconds = seconds < 10 ? '0' + seconds : seconds;
-
-                                    // Mettre à jour l'affichage du compte à rebours
-                                    document.getElementById('countdown').textContent = hours + ':' + minutes + ':' + seconds;
-                                } else {
-                                    // Afficher le modal lorsque le temps est écoulé
-                                    $('#sessionExpiredModal').modal('show');
-                                }
-                            }
-
-                            // Appeler la fonction updateCountdown toutes les secondes
-                            setInterval(updateCountdown, 1000);
-                        });
-                    </script>
-                @endif
-
                 <div class="nk-footer">
                     <div class="container-xl wide-xl">
                         <div class="nk-footer-wrap">
@@ -402,7 +338,7 @@
                                     document.write(new Date().getFullYear())
                                     </script> Bolides Deals CI Dévéloppé par DAVID Kouachi.
                                 </span>
-                                <marquee  behavior="" direction="">
+                                <marquee  behavior="" direction="" hidden>
                                     <span class="text-danger" >
                                         Conseils de sécurité :
                                     </span>
@@ -428,6 +364,11 @@
         <li class="demo-thumb bg-white">
             <a class="tipinfo text-primary" target="_bank" href="https://web.facebook.com/profile.php?id=61564901360088" title="instagram">
                 <em class="icon ni ni-instagram"></em>
+            </a>
+        </li>
+        <li class="demo-thumb bg-white">
+            <a class="tipinfo text-primary" title="Actualiser" onclick="window.location.reload();">
+                <em class="icon ni ni-regen"></em>
             </a>
         </li>
     </ul>
@@ -521,6 +462,56 @@
             </div>
         </div>
     </div>
+
+@if(Auth::check())
+    {{-- @if (session('session_time_remaining'))
+    <div class="alert alert-info">
+        Temps restant avant l'expiration de la session :
+        <span id="countdown">{{ gmdate('H:i:s', session('session_time_remaining')) }}</span>
+    </div>
+    @endif --}}
+
+    <div class="modal fade" tabindex="-1" id="sessionExpiredModal" aria-modal="true" role="dialog" style="position: fixed;" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-white">
+                <div class="modal-body modal-body-lg text-center">
+                    <div class="nk-modal">
+                        <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger"></em>
+                        <h4 class="nk-modal-title">Session Expiré</h4>
+                        <div class="nk-modal-text">
+                            <div class="caption-text">
+                                <span>
+                                    Vous serez rédiriger vers la page d'accueil
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nk-modal-action">
+                            <button class="btn btn-lg btn-mw btn-outline-light btn-dim btn-white me-2" {{-- onclick="window.location.href='{{ route('index_accueil') }}'" --}} onclick="window.location.reload();">
+                                Ok
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener(' DOMContentLoaded', function() { 
+        // Temps restant en secondes let timeRemaining={{ session('session_time_remaining') }} ; // Fonction pour mettre à jour le compte à rebours chaque seconde function updateCountdown() { if (timeRemaining> 0) {
+                    timeRemaining--;
+                    // Convertir les secondes restantes en format HH:MM:SS
+                    let hours = Math.floor(timeRemaining / 3600);
+                    let minutes = Math.floor((timeRemaining % 3600) / 60);
+                    let seconds = timeRemaining % 60;
+                    // Ajouter un zéro devant les chiffres uniques
+                    hours = hours < 10 ? '0' + hours : hours;
+                    minutes = minutes < 10 ? '0' + minutes : minutes;
+                    seconds = seconds < 10 ? '0' + seconds : seconds; // Mettre à jour l'affichage du compte à rebours document.getElementById('countdown').textContent=hours + ':' + minutes + ':' + seconds; } else { // Afficher le modal lorsque le temps est écoulé $('#sessionExpiredModal').modal('show'); } } // Appeler la fonction updateCountdown toutes les secondes setInterval(updateCountdown, 1000); });
+    </script>
+
+@endif
+
 
     <script src="{{asset('assets/js/bundle55a0.js')}}"></script>
     <script src="{{asset('assets/js/scripts55a0.js')}}"></script>

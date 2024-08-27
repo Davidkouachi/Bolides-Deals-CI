@@ -402,72 +402,6 @@
                                                                 <div class="user-card user-card-s2">
                                                                     <div class="user-avatar md bg-white sq">
                                                                         <span>
-                                                                           <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/papier.webp') }}"> 
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="user-info">
-                                                                        @if($ann->papier === 'oui')
-                                                                            <h4 class="sub-text text-black" >
-                                                                                Papier à jour
-                                                                            </h4>
-                                                                        @else
-                                                                            <h4 class="sub-text text-black" >
-                                                                                Papier non à jour
-                                                                            </h4>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class=" w-199px">
-                                                        <div class="card-inner">
-                                                            <div class="team">
-                                                                <div class="user-card user-card-s2">
-                                                                    <div class="user-avatar md bg-white sq">
-                                                                        <span>
-                                                                           <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/assurance.jpg') }}"> 
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="user-info">
-                                                                        <h4 class="sub-text text-black" >
-                                                                            {{'assurance '.\Carbon\Carbon::parse($ann->assurance)->format('d/m/Y') }}
-                                                                        </h4>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class=" w-199px">
-                                                        <div class="card-inner">
-                                                            <div class="team">
-                                                                <div class="user-card user-card-s2">
-                                                                    <div class="user-avatar md bg-white sq">
-                                                                        <span>
-                                                                           <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/visite.jpg') }}"> 
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="user-info">
-                                                                        <h4 class="sub-text text-black" >
-                                                                            {{'viste technique '.\Carbon\Carbon::parse($ann->visite_techn)->format('d/m/Y') }}
-                                                                        </h4>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class=" w-199px">
-                                                        <div class="card-inner">
-                                                            <div class="team">
-                                                                <div class="user-card user-card-s2">
-                                                                    <div class="user-avatar md bg-white sq">
-                                                                        <span>
                                                                            <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/hors_taxe.png') }}"> 
                                                                         </span>
                                                                     </div>
@@ -487,6 +421,76 @@
                                                         </div>
                                                     </div>
                                                 </li>
+                                                @if($ann->hors_taxe === 'non')
+                                                <li>
+                                                    <div class=" w-199px">
+                                                        <div class="card-inner">
+                                                            <div class="team">
+                                                                <div class="user-card user-card-s2">
+                                                                    <div class="user-avatar md bg-white sq">
+                                                                        <span>
+                                                                           <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/papier.webp') }}"> 
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="user-info">
+                                                                        @if($ann->papier === 'oui')
+                                                                            <h4 class="sub-text text-black" >
+                                                                                Papier à jour
+                                                                            </h4>
+                                                                        @else
+                                                                            <h4 class="sub-text text-black" >
+                                                                                Papier non à jour
+                                                                            </h4>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                    @if($ann->papier === 'oui')
+                                                    <li>
+                                                        <div class=" w-199px">
+                                                            <div class="card-inner">
+                                                                <div class="team">
+                                                                    <div class="user-card user-card-s2">
+                                                                        <div class="user-avatar md bg-white sq">
+                                                                            <span>
+                                                                               <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/assurance.jpg') }}"> 
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="user-info">
+                                                                            <h4 class="sub-text text-black" >
+                                                                                {{'assurance '.\Carbon\Carbon::parse($ann->assurance)->format('d/m/Y') }}
+                                                                            </h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class=" w-199px">
+                                                            <div class="card-inner">
+                                                                <div class="team">
+                                                                    <div class="user-card user-card-s2">
+                                                                        <div class="user-avatar md bg-white sq">
+                                                                            <span>
+                                                                               <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/visite.jpg') }}"> 
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="user-info">
+                                                                            <h4 class="sub-text text-black" >
+                                                                                {{'viste technique '.\Carbon\Carbon::parse($ann->visite_techn)->format('d/m/Y') }}
+                                                                            </h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    @endif
+                                                @endif
                                             @endif
                                         </ul>
                                     </div>
@@ -554,7 +558,7 @@
                                             </div>
                                             <div class="row g-gs user-info" >
                                                 <div class="col-12 mt-2">
-                                                    <img height="120px" width="120px" src="{{ $imgqr }}" alt="Code QR">
+                                                    <img height="90px" width="90px" src="{{ $imgqr }}" alt="Code QR">
                                                 </div>
                                                 <div class="col-12 mt-2">
                                                     <a class="btn btn-white btn-outline-light btn-dim btn-sm mt-1 me-1" data-bs-toggle="modal" data-bs-target="#modalPartager">

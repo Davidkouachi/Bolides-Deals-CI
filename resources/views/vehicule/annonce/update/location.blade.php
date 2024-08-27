@@ -7,48 +7,31 @@
 <div class="nk-content nk-content-fluid">
     <div class="container-xl wide-xl">
         <div class="nk-content-body">
+            <div class="nk-block-head nk-block-head-sm">
+                <div class="nk-block-between g-3">
+                    <div class="nk-block-head-content">
+                        <h3 class="nk-block-title ">
+                            Mise à jour Location
+                        </h3>
+                    </div>
+                    <div class="nk-block-head-content">
+                        <a class="btn btn-white btn-outline-danger btn-dim d-none d-sm-inline-flex" href="javascript:void(0);" onclick="history.back()">
+                            <em class="icon ni ni-arrow-left"></em>
+                            <span>
+                                Retour
+                            </span>
+                        </a>
+                        <a class="btn btn-white btn-outline-danger btn-dim d-inline-flex d-sm-none" href="javascript:void(0);" onclick="history.back()">
+                            <em class="icon ni ni-arrow-left">
+                            </em>
+                        </a>
+                    </div>
+                </div>
+            </div>
             <div class="nk-block nk-block-lg">
-                <form class="nk-block" id="form_annonce_new" action="{{route('trait_annonce')}}" method="post" enctype="multipart/form-data">
+                <form class="nk-block" id="form" action="{{route('trait_annonce_update',$ann->uuid)}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row g-gs" >
-                        <div class="col-12">
-                            <div class="nk-block-head">
-                                <div class="nk-block-head-content text-center">
-                                    <h4 class="nk-block-title">Nouvelle Annonce Location</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                                <div class="alert alert-warning alert-dismissible fade show mb-4 rounded-6" role="alert">
-                                    <ul>
-                                        <li>
-                                            <p class="small mb-0 fs-14px">
-                                                - Les annonces ont une durée de <strong>{{$para->nbre_jours_ligne}} jours maximum.</strong> Passé ce délai, elles ne seront plus en ligne.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="small mb-0 fs-14px">
-                                                - Si aucun renouvellement n'est effectué dans <strong>les {{$para->nbre_jours_delete}} jours</strong> suivant la désactivation, l'annonce sera <strong>supprimée définitivement</strong>.
-                                            </p>
-                                        </li>
-                                        <li>
-                                           <p class="small mb-0 fs-14px">
-                                                - Si l'annonce n'est plus disponible, veuillez marquer son <strong>statut comme "indisponible"</strong>. Dans ce cas, l'annonce ne sera pas supprimée définitivement mais sera <strong>retirée de la liste des annonces disponible</strong>.
-                                            </p> 
-                                        </li>
-                                        <li>
-                                            <p class="small mb-0 fs-14px">
-                                                - Veuillez noter que vous ne pouvez <strong>renouveler une annonce que {{$para->nbre_refresh}} fois</strong>.
-                                            </p>
-                                        </li>
-                                    </ul>
-                                    <div class="d-inline-flex position-absolute end-0 top-50 translate-middle-y me-2">
-                                        <button type="button" class="btn btn-xs btn-icon btn-warning rounded-pill" data-bs-dismiss="alert">
-                                            <em class="icon ni ni-cross"></em>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-inner card-inner-lg">
@@ -89,8 +72,11 @@
                                                                 <select required id="marqueSelect" class="form-select js-select2" data-placeholder="Selectionner" name="marque_id">
                                                                     <option value=""></option>
                                                                     @foreach($marques as $value)
-                                                                    <option value="{{$value->id}}">
-                                                                        {{$value->marque}}
+                                                                    <option value="{{ $value->id }}" 
+                                                                        @if(isset($ann->marque_id) && $ann->marque_id == $value->id)
+                                                                            selected 
+                                                                        @endif>
+                                                                        {{ $value->marque }}
                                                                     </option>
                                                                     @endforeach
                                                                 </select>
@@ -101,7 +87,7 @@
                                                    <div class="form-group">
                                                         <label class="form-label">Model</label>
                                                         <div class="form-control-wrap">
-                                                            <input required name="model" type="text" class="form-control form-control-md" placeholder="Entrer le model du véhicule">
+                                                            <input required name="model" type="text" class="form-control form-control-md" placeholder="saisie obligatoire" value="{{$ann->model}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -122,8 +108,11 @@
                                                             <select required class="form-select js-select2" data-placeholder="Sélectionner" name="type_marque_id">
                                                                 <option value=""></option>
                                                                 @foreach($types as $value)
-                                                                <option value="{{$value->id}}">
-                                                                    {{$value->nom}}
+                                                                <option value="{{ $value->id }}" 
+                                                                    @if(isset($ann->type_marque_id) && $ann->type_marque_id == $value->id)
+                                                                        selected 
+                                                                    @endif>
+                                                                    {{ $value->nom }}
                                                                 </option>
                                                                 @endforeach
                                                             </select>
@@ -136,8 +125,18 @@
                                                         <div class="form-control-wrap">
                                                             <select required name="transmission" class="form-select js-select2" data-placeholder="selectionner">
                                                                 <option value=""></option>
-                                                                <option value="automatique">Automatique</option>
-                                                                <option value="manuelle">Manuelle</option>
+                                                                <option value="automatique" 
+                                                                    @if(isset($ann->transmission) && $ann->transmission == 'automatique') 
+                                                                        selected 
+                                                                    @endif>
+                                                                    Automatique
+                                                                </option>
+                                                                <option value="manuelle" 
+                                                                    @if(isset($ann->transmission) && $ann->transmission == 'manuelle') 
+                                                                        selected 
+                                                                    @endif>
+                                                                    Manuelle
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -147,12 +146,11 @@
                                                         <label class="form-label" for="cp1-team-size">Type de carburant</label>
                                                         <div class="form-control-wrap">
                                                             <select required class="form-select js-select2" data-placeholder="selectionner" name="type_carburant">
-                                                                <option value=""></option>
-                                                                <option value="diesel">Diesel</option>
-                                                                <option value="electrique">Electrique</option>
-                                                                <option value="essence">Essence</option>
-                                                                <option value="gas-oil">Gas-oil</option>
-                                                                <option value="hybride">Hybride</option>
+                                                                <option value="diesel" @if(isset($ann->type_carburant) && $ann->type_carburant == 'diesel') selected @endif>Diesel</option>
+                                                                <option value="electrique" @if(isset($ann->type_carburant) && $ann->type_carburant == 'electrique') selected @endif>Electrique</option>
+                                                                <option value="essence" @if(isset($ann->type_carburant) && $ann->type_carburant == 'essence') selected @endif>Essence</option>
+                                                                <option value="gas-oil" @if(isset($ann->type_carburant) && $ann->type_carburant == 'gas-oil') selected @endif>Gas-oil</option>
+                                                                <option value="hybride" @if(isset($ann->type_carburant) && $ann->type_carburant == 'hybride') selected @endif>Hybride</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -163,8 +161,13 @@
                                                         <div class="form-control-wrap">
                                                             <select required class="form-select js-select2" data-placeholder="selectionner" name="nbre_place">
                                                                 <option value=""></option>
-                                                                @for($i=1; $i < 51 ; $i++)
-                                                                <option value="{{$i}}">{{$i}}</option>
+                                                                @for($i = 1; $i < 51; $i++)
+                                                                    <option value="{{ $i }}" 
+                                                                        @if(isset($ann->nbre_place) && $ann->nbre_place == $i) 
+                                                                            selected 
+                                                                        @endif>
+                                                                        {{ $i }}
+                                                                    </option>
                                                                 @endfor
                                                             </select>
                                                         </div>
@@ -175,10 +178,30 @@
                                                         <label class="form-label" for="cp1-team-size">Version</label>
                                                         <div class="form-control-wrap">
                                                             <select required class="form-select js-select2" data-placeholder="selectionner" name="version">
-                                                                <option selected value="standard">Standard</option>
-                                                                <option value="full option">Full Option</option>
-                                                                <option value="sport">Sport</option>
-                                                                <option value="autre">Autre</option>
+                                                                <option value="standard" 
+                                                                    @if(isset($ann->version) && $ann->version == 'standard') 
+                                                                        selected 
+                                                                    @endif>
+                                                                    Standard
+                                                                </option>
+                                                                <option value="full option" 
+                                                                    @if(isset($ann->version) && $ann->version == 'full option') 
+                                                                        selected 
+                                                                    @endif>
+                                                                    Full Option
+                                                                </option>
+                                                                <option value="sport" 
+                                                                    @if(isset($ann->version) && $ann->version == 'sport') 
+                                                                        selected 
+                                                                    @endif>
+                                                                    Sport
+                                                                </option>
+                                                                <option value="autre" 
+                                                                    @if(isset($ann->version) && $ann->version == 'autre') 
+                                                                        selected 
+                                                                    @endif>
+                                                                    Autre
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -187,7 +210,7 @@
                                                    <div class="form-group">
                                                         <label class="form-label">Couleur</label>
                                                         <div class="form-control-wrap">
-                                                            <input required name="couleur" type="text" class="form-control form-control-md" placeholder="Entrer la couleur du véhicule">
+                                                            <input required name="couleur" type="text" class="form-control form-control-md" placeholder="saisie obligatoire" value="{{$ann->couleur}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -198,7 +221,7 @@
                                                             <div class="form-text-hint">
                                                                 <span class="overline-title">CV</span>
                                                             </div>
-                                                            <input required name="puiss_fiscal" type="tel" class="form-control form-control-md" id="puiss" placeholder="Entrer le nombre de Chevaux" maxlength="3">
+                                                            <input required name="puiss_fiscal" type="tel" class="form-control form-control-md" id="puiss" placeholder="saisie obligatoire" maxlength="3" value="{{$ann->puiss_fiscal}}">
                                                             <script>
                                                                 var inputElement = document.getElementById('puiss');
                                                                 inputElement.addEventListener('input', function() {
@@ -213,7 +236,7 @@
                                                    <div class="form-group">
                                                         <label class="form-label">Cylindré</label>
                                                         <div class="form-control-wrap">
-                                                            <input name="cylindre" type="tel" class="form-control form-control-md" placeholder="Entrer le nombre de cylindré" id="cylin" maxlength="2">
+                                                            <input name="cylindre" type="tel" class="form-control form-control-md" placeholder="saisie obligatoire" id="cylin" maxlength="2" value="{{$ann->cylindre}}">
                                                             <script>
                                                                 var inputElement = document.getElementById('cylin');
                                                                 inputElement.addEventListener('input', function() {
@@ -229,9 +252,18 @@
                                                         <label class="form-label" for="cp1-team-size">Nombre de Portes</label>
                                                         <div class="form-control-wrap">
                                                             <select required class="form-select js-select2" data-placeholder="selectionner" name="nbre_porte">
-                                                                <option value=""></option>
-                                                                <option value="3">3</option>
-                                                                <option value="5">5</option>
+                                                                <option value="3" 
+                                                                    @if(isset($ann->nbre_porte) && $ann->nbre_porte == 3) 
+                                                                        selected 
+                                                                    @endif>
+                                                                    3
+                                                                </option>
+                                                                <option value="5" 
+                                                                    @if(isset($ann->nbre_porte) && $ann->nbre_porte == 5) 
+                                                                        selected 
+                                                                    @endif>
+                                                                    5
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -241,9 +273,12 @@
                                                         <label class="form-label" for="cp1-team-size">Neuf</label>
                                                         <div class="form-control-wrap">
                                                             <select required class="form-select js-select2" data-placeholder="selectionner" name="neuf">
-                                                                <option value=""></option>
-                                                                <option value="oui">Oui</option>
-                                                                <option value="non">Non</option>
+                                                                <option value="oui" @if(isset($ann->neuf) && $ann->neuf == 'oui') selected @endif>
+                                                                    Oui
+                                                                </option>
+                                                                <option value="non" @if(isset($ann->neuf) && $ann->neuf == 'non') selected @endif>
+                                                                    Non
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -286,7 +321,7 @@
                                                             <div class="form-text-hint">
                                                                 <span class="overline-title">Fcfa / 24H</span>
                                                             </div>
-                                                            <input required type="tel" class="form-control" id="prix" placeholder="Prix de l'annonce" name="prix">
+                                                            <input required type="tel" class="form-control" id="prix" placeholder="saisie obligatoire" name="prix" value="{{$ann->prix}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -295,10 +330,12 @@
                                                         <label class="form-label" for="cp1-team-size">Ville</label>
                                                         <div class="form-control-wrap">
                                                             <select required id="sousCategorieSelect" class="form-select js-select2" data-placeholder="Selectionner" name="ville_id">
-                                                                <option value=""></option>
                                                                 @foreach($villes as $value)
-                                                                <option value="{{$value->id}}">
-                                                                    {{$value->nom}}
+                                                                <option value="{{ $value->id }}" 
+                                                                    @if(isset($ann->ville_id) && $ann->ville_id == $value->id)
+                                                                        selected 
+                                                                    @endif>
+                                                                    {{ $value->nom }}
                                                                 </option>
                                                                 @endforeach
                                                             </select>
@@ -309,7 +346,7 @@
                                                    <div class="form-group">
                                                         <label class="form-label">Localisation</label>
                                                         <div class="form-control-wrap">
-                                                            <input required name="localisation" type="text" class="form-control form-control-md" placeholder="Situation géographique">
+                                                            <input required name="localisation" type="text" class="form-control form-control-md" placeholder="saisie obligatoire" value="{{$ann->localisation}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -321,7 +358,7 @@
                                                             <div class="form-icon form-icon-left">
                                                                 <em class="icon ni ni-whatsapp"></em>
                                                             </div>
-                                                            <input type="tel" name="whatsapp" class="form-control" id="whatsapp" placeholder="Contact whatsapp" maxlength="10">
+                                                            <input type="tel" name="whatsapp" class="form-control" id="whatsapp" placeholder="Contact" maxlength="10" value="{{$ann->whatsapp}}">
                                                             <script>
                                                                 var inputElement = document.getElementById('whatsapp');
                                                                 inputElement.addEventListener('input', function() {
@@ -355,7 +392,7 @@
                                                             <div class="form-icon form-icon-left">
                                                                 <em class="icon ni ni-mail"></em>
                                                             </div>
-                                                            <input type="tel" name="sms" class="form-control" id="sms" placeholder="Contact sms" maxlength="10">
+                                                            <input type="tel" name="sms" class="form-control" id="sms" placeholder="Contact" maxlength="10" value="{{$ann->sms}}">
                                                             <script>
                                                                 var inputElement = document.getElementById('sms');
                                                                 inputElement.addEventListener('input', function() {
@@ -370,7 +407,7 @@
                                             <div class="form-group">
                                                 <label class="form-label">Descriptions / Conditions</label>
                                                 <div class="form-control-wrap">
-                                                    <textarea required name="description" class="form-control no-resize" id="default-textarea"></textarea>
+                                                    <textarea required name="description" class="form-control no-resize" id="default-textarea">{{$ann->description}}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -393,17 +430,20 @@
                                             </div>
                                             <div class="form-group"  id="div_photo">
                                                 <label class="form-label d-flex" for="default-textarea">
-                                                    <span class="me-1" >Photo(s)</span> 
+                                                    <span class="me-1" >Photo(s) Changée(s)</span> 
                                                     <div id="fileCount"></div>
                                                 </label>
                                                 <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 1, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
+                                                    @for($i = 1; $i < 7; $i++)
+                                                    @foreach($photos as $value)
+                                                    @if($i === $value->image_nbre)
                                                     <div class="col">
                                                         <div class="">
                                                             <div class="card h-50" style="display: flex;justify-content: center;align-items: center;border:block;">
                                                                 <a>
-                                                                    <img id="imagePreview1" style="object-fit: cover;height: 150px;"  />
+                                                                    <img id="imagePreview{{$i}}" style="object-fit: cover;height: 150px;"   src="{{ Storage::url($value->image_chemin) }}" />
                                                                 </a>
-                                                                <ul class="product-badges" id="btn_image1">
+                                                                <ul class="product-badges" id="btn_image{{$i}}">
                                                                     <li>
                                                                         <a class="btn btn-icon btn-white btn-danger btn-dim btn-sm" >
                                                                             <em class="icon ni ni-cross"></em>
@@ -411,112 +451,17 @@
                                                                     </li>
                                                                 </ul>
                                                             </div>
-                                                            <div class="card-inner pt-2 pb-2"> 
-                                                                <input type="file" required id="image1" name="image1" style="width:120px; margin-left: -13px;" accept="image/*">
-                                                                <p id="image_size1" style="display: none;" ></p>
+                                                            <div class="card-inner pt-2 pb-2">
+                                                                <input type="file"  id="image{{$i}}" name="image{{$i}}" style="width:120px; margin-left: -13px;" accept="image/*">
+                                                                <input type="hidden" id="update{{$i}}" name="update{{$i}}" value="0" >
+                                                                <p id="image_size{{$i}}" style="display: none;" ></p>
+                                                                {{-- {{ substr($value->image_nom, 22) }} --}}
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col">
-                                                        <div class="">
-                                                            <div class="card h-50 " style="display: flex;justify-content: center;align-items: center;border:block;">
-                                                                <a>
-                                                                    <img id="imagePreview2" style="object-fit: cover;height: 150px;"  />
-                                                                </a>
-                                                                <ul class="product-badges" id="btn_image2">
-                                                                    <li>
-                                                                        <a class="btn btn-icon btn-white btn-danger btn-dim btn-sm" >
-                                                                            <em class="icon ni ni-cross"></em>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="card-inner text-center pt-2 pb-2">
-                                                                <input type="file" required id="image2" style="width:120px; margin-left: -13px;" accept="image/*" name="image2">
-                                                                <p id="image_size2" style="display: none;" ></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="">
-                                                            <div class="card h-50 " style="display: flex;justify-content: center;align-items: center;border:block;">
-                                                                <a>
-                                                                    <img id="imagePreview3" style="object-fit: cover;height: 150px;"  />
-                                                                </a>
-                                                                <ul class="product-badges" id="btn_image3">
-                                                                    <li>
-                                                                        <a class="btn btn-icon btn-white btn-danger btn-dim btn-sm" >
-                                                                            <em class="icon ni ni-cross"></em>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="card-inner text-center pt-2 pb-2">
-                                                                <input type="file" required id="image3" style="width:120px; margin-left: -13px;" accept="image/*" name="image3">
-                                                                <p id="image_size3" style="display: none;" ></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="">
-                                                            <div class="card h-50 " style="display: flex;justify-content: center;align-items: center;border:block;">
-                                                                <a>
-                                                                    <img id="imagePreview4" style="object-fit: cover;height: 150px;"  />
-                                                                </a>
-                                                                <ul class="product-badges" id="btn_image4">
-                                                                    <li>
-                                                                        <a class="btn btn-icon btn-white btn-danger btn-dim btn-sm" >
-                                                                            <em class="icon ni ni-cross"></em>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="card-inner text-center pt-2 pb-2">
-                                                                <input type="file" required id="image4" style="width:120px; margin-left: -13px;" accept="image/*" name="image4">
-                                                                <p id="image_size4" style="display: none;" ></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="">
-                                                            <div class="card h-50 " style="display: flex;justify-content: center;align-items: center;border:block;">
-                                                                <a>
-                                                                    <img id="imagePreview5" style="object-fit: cover;height: 150px;"  />
-                                                                </a>
-                                                                <ul class="product-badges" id="btn_image5">
-                                                                    <li>
-                                                                        <a class="btn btn-icon btn-white btn-danger btn-dim btn-sm" >
-                                                                            <em class="icon ni ni-cross"></em>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="card-inner text-center pt-2 pb-2">
-                                                                <input type="file" required id="image5" style="width:120px; margin-left: -13px;" accept="image/*" name="image5">
-                                                                <p id="image_size5" style="display: none;" ></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="">
-                                                            <div class="card h-50 " style="display: flex;justify-content: center;align-items: center;border:block;">
-                                                                <a>
-                                                                    <img id="imagePreview6" style="object-fit: cover;height: 150px;"  />
-                                                                </a>
-                                                                <ul class="product-badges" id="btn_image6">
-                                                                    <li>
-                                                                        <a class="btn btn-icon btn-white btn-danger btn-dim btn-sm" >
-                                                                            <em class="icon ni ni-cross"></em>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="card-inner text-center pt-2 pb-2">
-                                                                <input type="file" required id="image6" style="width:120px; margin-left: -13px;" accept="image/*" name="image6">
-                                                                <p id="image_size6" style="display: none;" ></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    @endif
+                                                    @endforeach
+                                                    @endfor
                                                 </div>
                                             </div>
                                             <div class="form-group row g-gs align-items-center justify-content-center">
@@ -538,8 +483,8 @@
     </div>
 </div>
 
-<script src="{{asset('assets/js/app/js/annonce/new/vente/download_image.js') }}"></script>
-<script src="{{asset('assets/js/app/js/annonce/new/form_annonce_new.js') }}"></script>
+<script src="{{asset('assets/js/app/js/annonce/update/location/download_image.js') }}"></script>
+<script src="{{asset('assets/js/app/js/annonce/update/location/form.js') }}"></script>
 
 
     <script>
@@ -588,12 +533,19 @@
         document.addEventListener('DOMContentLoaded', function() {
             var anneeSelect = document.getElementById('anneeSelect');
             var currentYear = new Date().getFullYear();
-            var startYear = 2000; // Commencer à partir de 2021
+            var startYear = 2000;
+            var selectedYear = {{ $ann->annee ?? 'null' }}; // Get the selected year from $ann->annee, or null if it doesn't exist
 
             for (var year = currentYear; year >= startYear; year--) {
                 var option = document.createElement('option');
                 option.value = year;
                 option.textContent = year;
+
+                // Check if this year should be selected by default
+                if (selectedYear == year) {
+                    option.selected = true;
+                }
+
                 anneeSelect.appendChild(option);
             }
         });
@@ -636,48 +588,5 @@
             }
         });
     </script>
-
-    @if (session('success_ann'))
-        <div class="modal fade" tabindex="-1" id="modalSuccess_ann" aria-modal="true" role="dialog">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content bg-white">
-                    <div class="modal-body">
-                        <div class="team" style="margin-top: -60px;">
-                            <div class="user-card user-card-s2">
-                                <div class="row g-gs user-info">
-                                    <div class="col-12" >
-                                        <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-check bg-success"></em>
-                                        <h4 class="nk-modal-title">
-                                            Félicitations votre annonce a bien été publié
-                                        </h4>
-                                    </div>
-                                    <div class="col-12 mt-2">
-                                        <img height="100px" width="100px" src="{{ session('imgqr') }}" alt="Code QR">
-                                        <p>{{ session('data_qrcode') }}</p>
-                                    </div>
-                                    <div class="col-12 mt-4">
-                                        <a class="btn btn-white btn-outline-light btn-dim btn-sm mt-1 me-1" href="{{route('index_detail', session('uuid'))}}">
-                                            <em class="icon ni ni-eye"></em>
-                                            <span>Voir l'annonce</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var myModal = new bootstrap.Modal(document.getElementById('modalSuccess_ann'));
-                myModal.show();
-            });
-        </script>
-        @php session()->forget('success_ann'); @endphp
-    @endif
-
-
 
 @endsection

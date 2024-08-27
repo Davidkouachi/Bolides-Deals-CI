@@ -244,5 +244,128 @@ class MesannoncesController extends Controller
         }
     }
 
+    public function update_vente($uuid)
+    {
+        $marques = Marque::all();
+        $villes = Ville::all();
+        $types = Type_marque::all();
+
+        $ann = Annonce::join('villes','villes.id','=','annonces.ville_id')
+                        ->join('marques','marques.id','=','annonces.marque_id')
+                        ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
+                        ->join('users','users.id','=','annonces.user_id')
+                        ->where('uuid', '=', $uuid)
+                        ->select('annonces.*', 'villes.id as ville_id', 'marques.id as marque_id', 'type_marques.id as type_marque_id', 'users.phone as phone_user',)
+                        ->first();
+        $photos = Annonce_photo::where('annonce_id', '=', $ann->id)->get();
+
+        return view('vehicule.annonce.update.vente',['marques' => $marques,'villes' => $villes,'types' => $types,'ann'=>$ann,'photos'=>$photos]);
+    }
+
+    public function update_location($uuid)
+    {
+        $marques = Marque::all();
+        $villes = Ville::all();
+        $types = Type_marque::all();
+
+        $ann = Annonce::join('villes','villes.id','=','annonces.ville_id')
+                        ->join('marques','marques.id','=','annonces.marque_id')
+                        ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
+                        ->join('users','users.id','=','annonces.user_id')
+                        ->where('uuid', '=', $uuid)
+                        ->select('annonces.*', 'villes.id as ville_id', 'marques.id as marque_id', 'type_marques.id as type_marque_id', 'users.phone as phone_user',)
+                        ->first();
+        $photos = Annonce_photo::where('annonce_id', '=', $ann->id)->get();
+
+        return view('vehicule.annonce.update.location',['marques' => $marques,'villes' => $villes,'types' => $types,'ann'=>$ann,'photos'=>$photos]);
+    }
+
+    public function trait_annonce_update(Request $request, $uuid)
+    {
+        // Créer une nouvelle annonce
+        $ann = Annonce::where('uuid','=',$uuid)->first();
+        $ann->marque_id = $request->marque_id;
+        $ann->type_marque_id = $request->type_marque_id;
+        $ann->model = $request->model;
+        $ann->transmission = $request->transmission;
+        $ann->type_carburant = $request->type_carburant;
+        $ann->nbre_place = $request->nbre_place;
+        $ann->version = $request->version;
+        $ann->couleur = $request->couleur;
+        $ann->annee = $request->annee;
+        $ann->cylindre = $request->cylindre;
+        $ann->puiss_fiscal = $request->puiss_fiscal;
+        $ann->neuf = $request->neuf;
+        $ann->prix = $request->prix;
+        $ann->description = $request->description;
+        $ann->localisation = $request->localisation;
+        $ann->ville_id = $request->ville_id;
+        $ann->whatsapp = $request->whatsapp;
+        $ann->appel = $request->appel;
+        $ann->sms = $request->sms;
+        $ann->nbre_porte = $request->nbre_porte;
+        $ann->type_annonce = $request->type_annonce;
+
+        if ($request->type_annonce === 'vente') {
+
+            $ann->hors_taxe = $request->hors_taxe;
+            if ($request->hors_taxe === 'non') {
+                $ann->papier = 'non';
+            }else{
+                $ann->papier = $request->papier;
+            }
+            $ann->kilometrage = $request->kilometrage;
+            $ann->troc = $request->troc;
+            $ann->visite_techn = $request->visite_techn;
+            $ann->assurance = $request->assurance;
+            $ann->nbre_cle = $request->nbre_cle;
+            $ann->negociable = $request->negociable;
+        }
+
+        if ($ann->save()) {
+            // Vérification des fichiers images
+            for ($i = 1; $i <= 6; $i++) {
+                if ($request->input('update'.$i) === '1') {
+
+                    if ($request->hasFile('image'.$i)) {
+
+                        $file = $request->file('image'.$i);
+                        if ($file->isValid()) {
+                            $filename = time() . '_' . Str::random(10) . '.' .$file->getClientOriginalName();
+                        } else {
+                            Annonce_error::create(['motif' => 'Une ou plusieurs images sont invalides.','user_id' => Auth::user()->id]);
+                            return back()->with('error', 'Certaines images ne sont pas valides.Veuillez sélectionner des images valides.');
+                        }
+
+                        $path = $request->file('image' . ($i))->storeAs('public/images', $filename);
+
+                        $photo = Annonce_photo::where('annonce_id','=',$ann->id)
+                                                ->where('image_nbre','=', $i)
+                                                ->first();
+                        $photo->image_nom = $filename;
+                        $photo->image_chemin = $path;
+                        if (!$photo->save()) {
+                            Annonce_error::create(['motif' => 'Échec de la mise à jour des images.','user_id' => Auth::user()->id]);
+                            return back()->with('error', 'Échec de la mise à jour de l\'annonce.');
+                        }
+
+                        return redirect()->route('index_mesannonces')->with('success','Mise à jour éffectuée.');
+                    }else {
+                        Annonce_error::create(['motif' => 'Veuillez sélectionner toutes les images requises.','user_id' => Auth::user()->id]);
+
+                        return back()->with('warning', 'Certaines images ne sont pas valides.Veuillez sélectionner des images valides.');
+                    }
+
+                }
+            }
+
+            return redirect()->route('index_mesannonces')->with('success','Mise à jour éffectuée.');
+
+        }
+
+        Annonce_error::create(['motif' => 'Échec de la publication de l\'annonce.','user_id' => Auth::user()->id]);
+
+        return redirect()->back()->with('error','Échec de la mise à jour de l\'annonce.');
+    }
 
 }

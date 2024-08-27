@@ -46,7 +46,10 @@ Route::middleware(['auth','statuthorsligne'])->group(function () {
     Route::get('/Nouvelle Annonces/Location', [AnnonceController::class, 'index_annonce_new_location'])->name('index_annonce_new_location');
 
     Route::get('/Mes Annonces', [MesannoncesController::class, 'index_mesannonces'])->name('index_mesannonces');
+    Route::get('/Mes Annonces/Mise à jour/Vente/{uuid}', [MesannoncesController::class, 'update_vente'])->name('update_vente');
+    Route::get('/Mes Annonces/Mise à jour/Location/{uuid}', [MesannoncesController::class, 'update_location'])->name('update_location');
 
+    Route::post('/trait_annonce_update/{uuid}', [MesannoncesController::class, 'trait_annonce_update'])->name('trait_annonce_update');
 });
 
 Route::middleware(['role:ADMINISTRATEUR'])->group(function () {

@@ -14,6 +14,7 @@
     </title>
     <link href="{{asset('assets/css/dashlite55a0.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/theme55a0.css')}}" id="skin-default" rel="stylesheet">
+    <link href="{{asset('assets/css/style_preloader.css')}}" rel="stylesheet">
     </link>
     </link>
     </link>
@@ -24,6 +25,9 @@
 </head>
 
 <body class="nk-body ui-rounder has-sidebar ui-light " style="background-color: ;" >
+    <div id="preloader">
+        <div class="spinner_preloader"></div>
+    </div>
     <div class="nk-app-root">
         <div class="nk-main ">
 
@@ -379,8 +383,6 @@
         </div>
     </a>
 
-    
-
     <div class="modal fade" tabindex="-1" id="modalCommentaire">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
@@ -512,6 +514,17 @@
 
 @endif
 
+    <script>
+        window.addEventListener('load', function() {
+            // Minimum time for the preloader to be displayed (in milliseconds)
+            const minimumPreloaderTime = 1000; // 2 seconds (2000 ms)
+            
+            // Use setTimeout to ensure the preloader is shown for at least the minimum time
+            setTimeout(function() {
+                document.getElementById('preloader').style.display = 'none';
+            }, minimumPreloaderTime);
+        });
+    </script>
 
     <script src="{{asset('assets/js/bundle55a0.js')}}"></script>
     <script src="{{asset('assets/js/scripts55a0.js')}}"></script>

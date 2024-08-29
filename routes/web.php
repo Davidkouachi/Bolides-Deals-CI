@@ -31,24 +31,23 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/Mes Annonces/Véhicule indisponible/{uuid}', [MesannoncesController::class, 'trait_indispo'])->name('trait_indispo');
     Route::get('/Mes Annonces/Supprimer annonce/{uuid}', [MesannoncesController::class, 'delete_ann'])->name('delete_ann');
 
+    Route::get('/Nouvelle Annonces/Vente', [AnnonceController::class, 'index_annonce_new_vente'])->name('index_annonce_new_vente');
+    Route::get('/Nouvelle Annonces/Location', [AnnonceController::class, 'index_annonce_new_location'])->name('index_annonce_new_location');
+
 });
 
-Route::middleware('statuthorsligne')->group(function () {
+Route::middleware('statuthorsligne','CheckPapierJourMiddleware')->group(function () {
 
     Route::get('/Annonces', [AnnonceController::class, 'index_annonce'])->name('index_annonce');
     Route::get('/Detail Annonces/{uuid}', [AnnonceController::class, 'index_detail'])->name('index_detail');
 
 });
 
-Route::middleware(['auth','statuthorsligne'])->group(function () {
-
-    Route::get('/Nouvelle Annonces/Vente', [AnnonceController::class, 'index_annonce_new_vente'])->name('index_annonce_new_vente');
-    Route::get('/Nouvelle Annonces/Location', [AnnonceController::class, 'index_annonce_new_location'])->name('index_annonce_new_location');
+Route::middleware(['auth','statuthorsligne','CheckPapierJourMiddleware'])->group(function () {
 
     Route::get('/Mes Annonces', [MesannoncesController::class, 'index_mesannonces'])->name('index_mesannonces');
     Route::get('/Mes Annonces/Mise à jour/Vente/{uuid}', [MesannoncesController::class, 'update_vente'])->name('update_vente');
     Route::get('/Mes Annonces/Mise à jour/Location/{uuid}', [MesannoncesController::class, 'update_location'])->name('update_location');
-
     Route::post('/trait_annonce_update/{uuid}', [MesannoncesController::class, 'trait_annonce_update'])->name('trait_annonce_update');
 });
 

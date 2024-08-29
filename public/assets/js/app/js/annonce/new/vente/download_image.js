@@ -1,31 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     const fileInputs = document.querySelectorAll('input[type="file"]');
     const fileCountDisplay = document.getElementById('fileCount');
-    const imagePreviews = [
-        document.getElementById('imagePreview1'),
-        document.getElementById('imagePreview2'),
-        document.getElementById('imagePreview3'),
-        document.getElementById('imagePreview4'),
-        document.getElementById('imagePreview5'),
-        document.getElementById('imagePreview6')
-    ];
-    const removeButtons = [
-        document.getElementById('btn_image1'),
-        document.getElementById('btn_image2'),
-        document.getElementById('btn_image3'),
-        document.getElementById('btn_image4'),
-        document.getElementById('btn_image5'),
-        document.getElementById('btn_image6')
-    ];
 
-    const image_sizes = [
-        document.getElementById('image_size1'),
-        document.getElementById('image_size2'),
-        document.getElementById('image_size3'),
-        document.getElementById('image_size4'),
-        document.getElementById('image_size5'),
-        document.getElementById('image_size6')
-    ];
+    const imagePreviews = Array.from({ length: 6 }, (_, i) => document.getElementById(`imagePreview${i + 1}`));
+    const removeButtons = Array.from({ length: 6 }, (_, i) => document.getElementById(`btn_image${i + 1}`));
+    const image_sizes = Array.from({ length: 6 }, (_, i) => document.getElementById(`image_size${i + 1}`));
+    const imageDefauts = Array.from({ length: 6 }, (_, i) => document.getElementById(`imageDefaut${i + 1}`));
 
     const maxFileSize = 2 * 1024 * 1024; // 2 Mo
 
@@ -38,6 +18,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         fileCountDisplay.textContent = ` ${filledCount} / ${fileInputs.length }`;
     }
+
+    imageDefauts.forEach((img, index) => {
+        img.addEventListener('click', function() {
+            fileInputs[index].click();
+        });
+    });
 
     fileInputs.forEach((input, index) => {
         input.addEventListener('change', function(event) {
@@ -53,6 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const reader = new FileReader();
                 reader.onload = function(e) {
+                    imagePreviews[index].style.display = 'block';
+                    imageDefauts[index].style.display = 'none';
                     imagePreviews[index].src = e.target.result;
                     removeButtons[index].style.display = 'block';
                     image_sizes[index].style.display = 'block';
@@ -79,10 +67,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     removeButtons.forEach((button, index) => {
         button.addEventListener('click', function() {
+            imagePreviews[index].style.display = 'none';
+            imageDefauts[index].style.display = 'block';
             imagePreviews[index].src = ''; // Reset to default image or clear it
             fileInputs[index].value = ''; // Clear the file input value
             button.style.display = 'none'; // Hide the remove button
-            fileInputs[index].style.display = 'block';
             image_sizes[index].style.display = 'none';
             updateFileCount();
         });

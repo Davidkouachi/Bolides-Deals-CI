@@ -18,10 +18,12 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \App\Http\Middleware\RoleMiddleware::class,
             'statuthorsligne' => \App\Http\Middleware\StatutHorsLigneMiddleware::class,
             'CheckSessionMiddleware' => \App\Http\Middleware\CheckSessionMiddleware::class,
+            'CheckPapierJourMiddleware' => \App\Http\Middleware\CheckPapierJourMiddleware::class,
         ]);
         $middleware->web([
             'statuthorsligne',
             'CheckSessionMiddleware',
+            'CheckPapierJourMiddleware',
         ]);
 
     })

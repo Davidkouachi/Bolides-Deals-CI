@@ -442,6 +442,7 @@
                                                             <div class="card h-50" style="display: flex;justify-content: center;align-items: center;border:block;">
                                                                 <a>
                                                                     <img id="imagePreview{{$i}}" style="object-fit: cover;height: 150px;"   src="{{ Storage::url($value->image_chemin) }}" />
+                                                                    <img id="imageDefaut{{$i}}" style="object-fit: cover;height: 150px; cursor: pointer; display: none" src="{{asset('images/logo/defaut/car.webp')}}"  />
                                                                 </a>
                                                                 <ul class="product-badges" id="btn_image{{$i}}">
                                                                     <li>
@@ -452,7 +453,7 @@
                                                                 </ul>
                                                             </div>
                                                             <div class="card-inner pt-2 pb-2">
-                                                                <input type="file"  id="image{{$i}}" name="image{{$i}}" style="width:120px; margin-left: -13px;" accept="image/*">
+                                                                <input type="file" id="image{{$i}}" name="image{{$i}}" style="width:120px; margin-left: -13px;display: none;" accept="image/*">
                                                                 <input type="hidden" id="update{{$i}}" name="update{{$i}}" value="0" >
                                                                 <p id="image_size{{$i}}" style="display: none;" ></p>
                                                                 {{-- {{ substr($value->image_nom, 22) }} --}}

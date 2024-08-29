@@ -349,17 +349,25 @@
                                                 <div class="user-avatar xl sq " style="background: transparent;"> 
                                                     <span class="tb-product">
                                                         <img height="110px" width="110px" style="object-fit: cover;" class="thumb" src="{{asset('storage/images/'.Auth::user()->image_nom)}}" id="imagePreview">
+                                                        <img height="110px" width="110px" id="imageDefaut" style="object-fit: cover; cursor: pointer;display: none" class="thumb" src="{{asset('images/logo/defaut/profil.jpg')}}" >
                                                     </span>
                                                 </div>
                                             @else
-                                                <div class="user-avatar xl sq bg-light"> 
+                                                <div class="user-avatar xl sq bg-white"> 
                                                     <span>
-                                                        <img height="110px" width="110px" id="imagePreview" style="object-fit: cover;" class="thumb" >
+                                                        <img height="110px" width="110px" id="imagePreview" style="object-fit: cover; display: none;" class="thumb" >
+                                                        <img height="110px" width="110px" id="imageDefaut" style="object-fit: cover; cursor: pointer;" class="thumb" src="{{asset('images/logo/defaut/profil.jpg')}}" >
                                                     </span>
                                                 </div>
                                             @endif
-                                            <div class="user-info">
+                                            <div class="user-info" style="display: none;">
                                                 <input name="image" type="file" id="imageInput" style="width:120px;" accept="image/*">
+                                            </div>
+                                            <div class="user-info" id="div_removeimg" @if(!Auth::user()->image_nom) style="display: none;" @endif>
+                                                <a id="removeimg" class="btn btn-danger" >
+                                                    <span>Supprimer la photo</span>
+                                                    <em class="icon ni ni-trash" ></em>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

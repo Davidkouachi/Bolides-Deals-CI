@@ -59,7 +59,7 @@
 				                    <div class="col-12" >
 					                    <div class="form-group">
 					                        <div class="form-control-wrap">
-					                            <input name="marque" class="form-control" required type="text" oninput="this.value = this.value.toUpperCase()" placeholder="Entrer la Marque"/>
+					                            <input name="marque" class="form-control" required type="text" oninput="this.value = this.value.toUpperCase()" placeholder="Entrer la Marque" id="marque" />
 					                        </div>
 					                    </div>
 				                    </div>
@@ -154,7 +154,7 @@
 							                    <div class="nk-modal-text">
 							                        <div class="caption-text">
 							                            <span>
-							                            	Voulez-vous vraiment éffectuée la suppression
+							                            	Voulez-vous vraiment éffectuée la suppression ?
 							                            </span>
 							                        </div>
 							                    </div>

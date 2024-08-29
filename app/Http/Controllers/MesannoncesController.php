@@ -309,7 +309,7 @@ class MesannoncesController extends Controller
         if ($request->type_annonce === 'vente') {
 
             $ann->hors_taxe = $request->hors_taxe;
-            if ($request->hors_taxe === 'non') {
+            if ($request->hors_taxe === 'oui') {
                 $ann->papier = 'non';
             }else{
                 $ann->papier = $request->papier;
@@ -342,6 +342,8 @@ class MesannoncesController extends Controller
                         $photo = Annonce_photo::where('annonce_id','=',$ann->id)
                                                 ->where('image_nbre','=', $i)
                                                 ->first();
+                        Storage::delete($photo->image_chemin);
+                        
                         $photo->image_nom = $filename;
                         $photo->image_chemin = $path;
                         if (!$photo->save()) {

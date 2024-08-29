@@ -81,7 +81,7 @@ class PasswordresetController extends Controller
                     $mail->setFrom('bolidesdealsci@gmail.com', 'BOLIDES DEALS CI');
                     $mail->addAddress($request->email);
                     $mail->Subject = 'Lien de reinitialisation du mot de passe !';
-                    $mail->Body = $resetLink;
+                    $mail->Body = 'Lien : '.$resetLink;
 
                     if ($mail->send()) {
                         return redirect()->back()->with('success', 'Le lien de réinitialisation de votre mot de passe a été envoyer par Email');
@@ -94,7 +94,7 @@ class PasswordresetController extends Controller
                     $error = new Phpmailer_error();
                     $error->email = $request->email;
                     $error->message = $mail->ErrorInfo;
-                    $email->save();
+                    $error->save();
 
                     return redirect()->back()->with('error', 'L\'email n\'a pas pu être envoyé');
                 }

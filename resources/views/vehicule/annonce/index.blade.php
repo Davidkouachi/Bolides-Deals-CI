@@ -166,12 +166,12 @@
 
                                     @if (is_array($element))
                                         @foreach ($element as $page => $url)
-                                            @if ($anns->lastPage() > 10)
+                                            @if ($anns->lastPage() > 5)
                                                 @if ($page == $anns->currentPage())
                                                     <li class="page-item active" aria-current="page"><span class="page-link">{{ $page }}</span></li>
-                                                @elseif ($page <= 3 || $page > $anns->lastPage() - 3 || abs($page - $anns->currentPage()) <= 1)
+                                                @elseif ($page <= 1 || $page > $anns->lastPage() - 1 || abs($page - $anns->currentPage()) <= 1)
                                                     <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
-                                                @elseif ($page == 4 || $page == $anns->lastPage() - 3)
+                                                @elseif ($page == 2 || $page == $anns->lastPage() - 1)
                                                     <li class="page-item disabled"><span class="page-link">...</span></li>
                                                 @endif
                                             @else

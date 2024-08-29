@@ -135,6 +135,7 @@ class AnnonceController extends Controller
         $types = Type_marque::all();
 
         $data_qrcode = url()->current();
+        // $data_qrcode = 'http://192.168.1.2:8000/Detail%20Annonces/'.$uuid;
         $qrCode = new QrCode($data_qrcode);
         $writer = new PngWriter();
         $result = $writer->write($qrCode);
@@ -191,7 +192,7 @@ class AnnonceController extends Controller
 
     public function index_annonce_new_vente()
     {
-        $marques = Marque::all();
+        $marques = Marque::orderBy('marque', 'asc')->get();
         $villes = Ville::all();
         $types = Type_marque::all();
         $para = Parametrage::find('1');
@@ -201,7 +202,7 @@ class AnnonceController extends Controller
 
     public function index_annonce_new_location()
     {
-        $marques = Marque::all();
+        $marques = Marque::orderBy('marque', 'asc')->get();
         $villes = Ville::all();
         $types = Type_marque::all();
         $para = Parametrage::find('1');

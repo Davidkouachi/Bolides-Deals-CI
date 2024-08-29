@@ -35,7 +35,7 @@
             <div class="nk-sidebar is-light nk-sidebar-fixed " data-content="sidebarMenu">
                 <div class="nk-sidebar-element nk-sidebar-head">
                     <div class="nk-sidebar-brand">
-                        <a class="logo-link nk-sidebar-logo" href="">
+                        <a class="logo-link nk-sidebar-logo" onclick="window.location.reload();">
                             <img height="50" width="50" src="{{asset('images/logo/logo.png')}}" /></img>
                         </a>
                     </div>
@@ -137,7 +137,7 @@
                             @endif
                             
                             <div class="nk-header-brand ">
-                                <a class="logo-link" href="">
+                                <a class="logo-link" onclick="window.location.reload();">
                                     <img height="50" width="50" src="{{asset('images/logo/logo.png')}}" /></img>
                                 </a>
                             </div>                           
@@ -358,7 +358,7 @@
         </div>
     </div>
 
-    <ul class="nk-sticky-toolbar">
+    {{-- <ul class="nk-sticky-toolbar">
         @yield('btn_lateral')
         <li class="demo-thumb bg-white">
             <a class="tipinfo text-primary" target="_bank" href="https://www.facebook.com/profile.php?id=61564901360088&mibextid=LQQJ4d" title="facebook">
@@ -375,18 +375,18 @@
                 <em class="icon ni ni-regen"></em>
             </a>
         </li>
-    </ul>
+    </ul> --}}
 
-    <a style="z-index: 1;" class="pmo-st pmo-dark active bg-success" data-bs-toggle="modal" data-bs-target="#modalCommentaire" >
+    <a class="pmo-st pmo-dark active bg-azure" data-bs-toggle="modal" data-bs-target="#modalCommentaire" >
         <div class="pmo-st-img">
-            <em class="icon ni ni-chat" style="font-size: 25px;"></em>
+            <em class="icon ni ni-chat-circle" style="font-size: 25px;"></em>
         </div>
     </a>
 
     <div class="modal fade" tabindex="-1" id="modalCommentaire">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-success text-white">
+                <div class="modal-header bg-azure text-white">
                     <h5 class="modal-title">Nouvelle suggestion</h5>
                     <a class="text-white fs-20px" data-bs-dismiss="modal" aria-label="Close">
                         <em class="icon ni ni-cross"></em>
@@ -479,16 +479,16 @@
                 <div class="modal-body modal-body-lg text-center">
                     <div class="nk-modal">
                         <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger"></em>
-                        <h4 class="nk-modal-title">Session Expiré</h4>
+                        <h4 class="nk-modal-title">Session Expirée</h4>
                         <div class="nk-modal-text">
                             <div class="caption-text">
                                 <span>
-                                    Vous serez rédiriger vers la page d'accueil
+                                    Vous serez déconnecter et rédiriger vers la page d'accueil
                                 </span>
                             </div>
                         </div>
                         <div class="nk-modal-action">
-                            <button class="btn btn-lg btn-mw btn-outline-light btn-dim btn-white me-2" {{-- onclick="window.location.href='{{ route('index_accueil') }}'" --}} onclick="window.location.reload();">
+                            <button class="btn btn-lg btn-mw btn-outline-light btn-dim btn-white me-2" onclick="window.location.href='{{ route('index_accueil') }}'">
                                 Ok
                             </button>
                         </div>
@@ -499,20 +499,42 @@
     </div>
 
     <script>
-        document.addEventListener(' DOMContentLoaded', function() { 
-        // Temps restant en secondes let timeRemaining={{ session('session_time_remaining') }} ; // Fonction pour mettre à jour le compte à rebours chaque seconde function updateCountdown() { if (timeRemaining> 0) {
-                    timeRemaining--;
-                    // Convertir les secondes restantes en format HH:MM:SS
-                    let hours = Math.floor(timeRemaining / 3600);
-                    let minutes = Math.floor((timeRemaining % 3600) / 60);
-                    let seconds = timeRemaining % 60;
-                    // Ajouter un zéro devant les chiffres uniques
-                    hours = hours < 10 ? '0' + hours : hours;
-                    minutes = minutes < 10 ? '0' + minutes : minutes;
-                    seconds = seconds < 10 ? '0' + seconds : seconds; // Mettre à jour l'affichage du compte à rebours document.getElementById('countdown').textContent=hours + ':' + minutes + ':' + seconds; } else { // Afficher le modal lorsque le temps est écoulé $('#sessionExpiredModal').modal('show'); } } // Appeler la fonction updateCountdown toutes les secondes setInterval(updateCountdown, 1000); });
-    </script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Convertir le temps restant en secondes
+        let timeRemaining = parseInt('{{ session('session_time_remaining') }}', 10);
+        // const countdownElement = document.getElementById('countdown');
+        
+        // Fonction pour mettre à jour le compte à rebours
+        function updateCountdown() {
+            if (timeRemaining > 0) {
+                timeRemaining--;
+                // Convertir les secondes restantes en format HH:MM:SS
+                let hours = Math.floor(timeRemaining / 3600);
+                let minutes = Math.floor((timeRemaining % 3600) / 60);
+                let seconds = timeRemaining % 60;
+                // Ajouter un zéro devant les chiffres uniques
+                hours = hours < 10 ? '0' + hours : hours;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                // Mettre à jour l'affichage du compte à rebours
+                // countdownElement.textContent = hours + ':' + minutes + ':' + seconds;
+                
+                // Mettre à jour le compte à rebours après une seconde
+                setTimeout(updateCountdown, 1000);
+            } else {
+                // Afficher le modal lorsque le temps est écoulé
+                $('#sessionExpiredModal').modal('show');
+            }
+        }
+        
+        // Démarrer le compte à rebours
+        updateCountdown();
+    });
+</script>
+
 
 @endif
+
 
     <script>
         window.addEventListener('load', function() {

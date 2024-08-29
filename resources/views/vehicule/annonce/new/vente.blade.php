@@ -8,7 +8,7 @@
     <div class="container-xl wide-xl">
         <div class="nk-content-body">
             <div class="nk-block nk-block-lg">
-                <form class="nk-block" id="form_annonce_new" action="{{route('trait_annonce')}}" method="post" enctype="multipart/form-data">
+                <form class="nk-block" id="form_new_vente" action="{{route('trait_annonce')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row g-gs" >
                         <div class="col-12">
@@ -512,13 +512,15 @@
                                                     <div id="fileCount"></div>
                                                 </label>
                                                 <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 1, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
+                                                    @for($i = 1; $i < 7; $i++)
                                                     <div class="col">
                                                         <div class="">
                                                             <div class="card h-50" style="display: flex;justify-content: center;align-items: center;border:block;">
-                                                                <a>
-                                                                    <img id="imagePreview1" style="object-fit: cover;height: 150px;"  />
+                                                                <a >
+                                                                    <img id="imagePreview{{$i}}" style="object-fit: cover;height: 150px; display: none" />
+                                                                    <img id="imageDefaut{{$i}}" style="object-fit: cover;height: 150px; cursor: pointer;" src="{{asset('images/logo/defaut/car.webp')}}"  />
                                                                 </a>
-                                                                <ul class="product-badges" id="btn_image1">
+                                                                <ul class="product-badges" id="btn_image{{$i}}">
                                                                     <li>
                                                                         <a class="btn btn-icon btn-white btn-danger btn-dim btn-sm" >
                                                                             <em class="icon ni ni-cross"></em>
@@ -526,112 +528,13 @@
                                                                     </li>
                                                                 </ul>
                                                             </div>
-                                                            <div class="card-inner pt-2 pb-2"> 
-                                                                <input type="file" required id="image1" name="image1" style="width:120px; margin-left: -13px;" accept="image/*">
-                                                                <p id="image_size1" style="display: none;" ></p>
+                                                            <div class="card-inner pt-2 pb-2">
+                                                                <input style="display: none" type="file" required id="image{{$i}}" name="image{{$i}}" style="width:120px; margin-left: -13px;" accept="image/*">
+                                                                <p id="image_size{{$i}}" style="display: none;" ></p>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col">
-                                                        <div class="">
-                                                            <div class="card h-50 " style="display: flex;justify-content: center;align-items: center;border:block;">
-                                                                <a>
-                                                                    <img id="imagePreview2" style="object-fit: cover;height: 150px;"  />
-                                                                </a>
-                                                                <ul class="product-badges" id="btn_image2">
-                                                                    <li>
-                                                                        <a class="btn btn-icon btn-white btn-danger btn-dim btn-sm" >
-                                                                            <em class="icon ni ni-cross"></em>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="card-inner text-center pt-2 pb-2">
-                                                                <input type="file" required id="image2" style="width:120px; margin-left: -13px;" accept="image/*" name="image2">
-                                                                <p id="image_size2" style="display: none;" ></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="">
-                                                            <div class="card h-50 " style="display: flex;justify-content: center;align-items: center;border:block;">
-                                                                <a>
-                                                                    <img id="imagePreview3" style="object-fit: cover;height: 150px;"  />
-                                                                </a>
-                                                                <ul class="product-badges" id="btn_image3">
-                                                                    <li>
-                                                                        <a class="btn btn-icon btn-white btn-danger btn-dim btn-sm" >
-                                                                            <em class="icon ni ni-cross"></em>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="card-inner text-center pt-2 pb-2">
-                                                                <input type="file" required id="image3" style="width:120px; margin-left: -13px;" accept="image/*" name="image3">
-                                                                <p id="image_size3" style="display: none;" ></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="">
-                                                            <div class="card h-50 " style="display: flex;justify-content: center;align-items: center;border:block;">
-                                                                <a>
-                                                                    <img id="imagePreview4" style="object-fit: cover;height: 150px;"  />
-                                                                </a>
-                                                                <ul class="product-badges" id="btn_image4">
-                                                                    <li>
-                                                                        <a class="btn btn-icon btn-white btn-danger btn-dim btn-sm" >
-                                                                            <em class="icon ni ni-cross"></em>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="card-inner text-center pt-2 pb-2">
-                                                                <input type="file" required id="image4" style="width:120px; margin-left: -13px;" accept="image/*" name="image4">
-                                                                <p id="image_size4" style="display: none;" ></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="">
-                                                            <div class="card h-50 " style="display: flex;justify-content: center;align-items: center;border:block;">
-                                                                <a>
-                                                                    <img id="imagePreview5" style="object-fit: cover;height: 150px;"  />
-                                                                </a>
-                                                                <ul class="product-badges" id="btn_image5">
-                                                                    <li>
-                                                                        <a class="btn btn-icon btn-white btn-danger btn-dim btn-sm" >
-                                                                            <em class="icon ni ni-cross"></em>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="card-inner text-center pt-2 pb-2">
-                                                                <input type="file" required id="image5" style="width:120px; margin-left: -13px;" accept="image/*" name="image5">
-                                                                <p id="image_size5" style="display: none;" ></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="">
-                                                            <div class="card h-50 " style="display: flex;justify-content: center;align-items: center;border:block;">
-                                                                <a>
-                                                                    <img id="imagePreview6" style="object-fit: cover;height: 150px;"  />
-                                                                </a>
-                                                                <ul class="product-badges" id="btn_image6">
-                                                                    <li>
-                                                                        <a class="btn btn-icon btn-white btn-danger btn-dim btn-sm" >
-                                                                            <em class="icon ni ni-cross"></em>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="card-inner text-center pt-2 pb-2">
-                                                                <input type="file" required id="image6" style="width:120px; margin-left: -13px;" accept="image/*" name="image6">
-                                                                <p id="image_size6" style="display: none;" ></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    @endfor
                                                 </div>
                                             </div>
                                             <div class="form-group row g-gs align-items-center justify-content-center">
@@ -654,7 +557,7 @@
 </div>
 
 <script src="{{asset('assets/js/app/js/annonce/new/vente/download_image.js') }}"></script>
-<script src="{{asset('assets/js/app/js/annonce/new/form_annonce_new.js') }}"></script>
+<script src="{{asset('assets/js/app/js/annonce/new/vente/form.js') }}"></script>
 
 
     <script>

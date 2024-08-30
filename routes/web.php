@@ -98,3 +98,5 @@ Route::post('/Suggestion', [SuggestionController::class, 'trait_sugg'])->name('t
 Route::get('/Send suggestion/{id}', [SuggestionController::class, 'send_sugg'])->name('send_sugg');
 
 Route::get('/Annonces Vendeur/{id}', [AnnonceController::class, 'annonce_user'])->name('annonce_user');
+
+Route::post('/Signal Annonce', [AnnonceController::class, 'signal_annonce'])->name('signal_annonce');

@@ -544,19 +544,19 @@
                                                 @if($ann->appel)
                                                 <a class="btn btn-outline-warning btn-dim btn-sm me-1 mt-1" href="tel:+225{{$ann->appel}}" target="_blank">
                                                     <em class="icon ni ni-call"></em>
-                                                    <span> {{'(+225) '.$ann->appel}} </span>
+                                                    <span> {{$ann->appel}} </span>
                                                 </a>
                                                 @endif
                                                 @if($ann->whatsapp)
-                                                <a class="btn btn-outline-success btn-dim btn-sm me-1 mt-1" href="https://wa.me/{{$ann->whatsapp}}" target="_blank">
+                                                <a class="btn btn-outline-success btn-dim btn-sm me-1 mt-1" href="https://wa.me/+225{{$ann->whatsapp}}?text={{ urlencode($ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce) }}%0A%0A{{'Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{urlencode($data_qrcode)}}%0A%0A{{urlencode('Bonjour, je suis intéressé par votre annonce. Pourriez-vous m\'en dire plus ?') }}" target="_blank">
                                                     <em class="icon ni ni-whatsapp"></em>
-                                                    <span> {{'(+225) '.$ann->whatsapp}} </span>
+                                                    <span> {{$ann->whatsapp}} </span>
                                                 </a>
                                                 @endif
                                                 @if($ann->sms)
-                                                <a class="btn btn-outline-info btn-dim btn-sm me-1 mt-1" href="sms:+225{{$ann->sms}}" target="_blank">
+                                                <a class="btn btn-outline-info btn-dim btn-sm me-1 mt-1" href="sms:+225{{$ann->sms}}?body={{ $ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce }}%0A%0A{{ 'Prix : '.$ann->prix.' Fcfa' }}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}%0A%0A{{ 'Bonjour, je suis intéressé par votre annonce. Pourriez-vous m\'en dire plus ?' }}" target="_blank">
                                                     <em class="icon ni ni-mail"></em>
-                                                    <span> {{'(+225) '.$ann->sms}} </span>
+                                                    <span> {{$ann->sms}} </span>
                                                 </a>
                                                 @endif
                                             </div>
@@ -648,6 +648,8 @@
     </div>
 </div>
 
+<script src="{{asset('assets/js/app/js/annonce/form_signal.js') }}"></script>
+
 {{-- <div class="modal fade zoom" tabindex="-1" id="modalContact">
     <div class="modal-dialog modal-sm" role="document" style="width: 100%;">
         <div class="modal-content">
@@ -707,7 +709,7 @@
                 <div class="card-inner text-center" >
                     <ul class="row g-gs text-center">
                         <li class="col-lg-12">
-                            <a class="btn btn-outline-success btn-dim btn-block" href="https://wa.me/?text={{ urlencode($ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce) }}%0A%0A{{'- Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{'- Version : '.$ann->version}}%0A%0A{{'- Kilométrage : '.$ann->kilometrage.' KM'}}%0A%0A{{'- Transmission : '.$ann->transmission}}%0A%0A{{'- Type de carburant : '.$ann->type_carburant}}%0A%0A{{'- Puissance fiscale : '.$ann->puiss_fiscal. ' CV'}}%0A%0A{{'- Cylindré : '.$ann->cylindre.' C'}}%0A%0A{{'- Couleur : '.$ann->couleur}}%0A%0A{{'- Neuf : '.$ann->neuf}}%0A%0A{{'- Descriptions / Conditions : '.$ann->description}}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}" target="_blank">
+                            <a class="btn btn-outline-success btn-dim btn-block" href="https://wa.me/?text={{ urlencode($ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce) }}%0A%0A{{'- Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}" target="_blank">
                                 <em class="icon ni ni-whatsapp"></em>
                                 <span>WhatsApp</span>
                             </a>
@@ -720,32 +722,20 @@
                             </a>
                         </li>
                         <li class="col-lg-12">
-                            <a class="btn btn-outline-warning btn-dim btn-block" href="sms:?body={{ urlencode($data_qrcode) }}" target="_blank">
+                            <a class="btn btn-outline-warning btn-dim btn-block" href="sms:?body={{ $ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.' ,Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}" target="_blank">
                                 <em class="icon ni ni-chat"></em>
                                 <span>SMS</span>
                             </a>
                         </li>
-                        <li class="col-lg-12">
-                            <a class="btn btn-outline-info btn-dim btn-block" href="https://twitter.com/intent/tweet?text={{ urlencode($ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce) }}%0A%0A{{'- Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{'- Kilométrage : '.$ann->kilometrage.' KM'}}%0A%0A{{'- Transmission : '.$ann->transmission}}%0A%0A{{'- Type de carburant : '.$ann->type_carburant}}%0A%0A{{'- Puissance fiscale : '.$ann->puiss_fiscal. ' CV'}}%0A%0A{{'- Cylindré : '.$ann->cylindre.' C'}}%0A%0A{{'- Couleur : '.$ann->couleur}}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}" target="_blank">
-                                <em class="icon ni ni-twitter"></em>
-                                <span>Twitter</span>
-                            </a>
-                        </li>
-                        <li class="col-lg-12">
-                            <a class="btn btn-outline-primary btn-dim btn-block" href="https://www.linkedin.com/shareArticle?mini=true&url={{ urlencode($ann->marque . ' ' . $ann->model . ' ' . $ann->annee . ' en ' . $ann->type_annonce) }}&title={{ urlencode('- Prix : ' . $ann->prix . ' Fcfa' . '%0A' . '- Kilométrage : ' . $ann->kilometrage . ' KM' . '%0A' . '- Transmission : ' . $ann->transmission . '%0A' . '- Type de carburant : ' . $ann->type_carburant . '%0A' . '- Puissance fiscale : ' . $ann->puiss_fiscal . ' CV' . '%0A' . '- Cylindré : ' . $ann->cylindre . ' C' . '%0A' . '- Couleur : ' . $ann->couleur . '%0A' . 'Lien : ' . $data_qrcode) }}" target="_blank">
-                                <em class="icon ni ni-linkedin"></em>
-                                <span>LinkedIn</span>
-                            </a>
-                        </li>
                     </ul>
-
                 </div> 
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" id="modalAlert">
+@if (session('success_signal'))
+<div class="modal fade" tabindex="-1" id="modalSuccess_signal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <a href="#" class="close" data-bs-dismiss="modal">
@@ -754,13 +744,21 @@
             <div class="modal-body modal-body-lg text-center">
                 <div class="nk-modal">
                     <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-check bg-success"></em>
-                    <h4 class="nk-modal-title">Vendeur signalé!</h4>
+                    <h4 class="nk-modal-title">{{session('success_signal')}}</h4>
                     <div class="nk-modal-action"><a href="#" class="btn btn-white btn-lg btn-mw btn-outline-success btn-dim" data-bs-dismiss="modal">OK</a></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var myModal = new bootstrap.Modal(document.getElementById('modalSuccess_signal'));
+        myModal.show();
+    });
+</script>
+@php session()->forget('success_signal'); @endphp
+@endif
 
 <div class="modal fade" tabindex="-1" id="modalSignal">
     <div class="modal-dialog modal-lg" role="document">
@@ -772,12 +770,14 @@
                 </a>
             </div>
             <div class="modal-body">
-                <form id="form" method="post" action="" class="">
+                <form id="form_signal" method="post" action="{{route('signal_annonce')}}">
                     @csrf
+                    <input type="hidden" name="user_id" value="{{$ann->user_id}}">
+                    <input type="hidden" name="uuid" value="{{$ann->uuid}}">
                     <div class="form-group">
-                        <label class="form-label">Motif</label>
+                        <label class="form-label"> Motif </label>
                         <div class="form-control-wrap">
-                            <textarea name="text" class="form-control no-resize" required ></textarea>
+                            <textarea  name="motif" name="text" class="form-control no-resize" required ></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -789,7 +789,7 @@
                 </form>
             </div>
             <div class="modal-footer bg-light">
-                <span class="sub-text">Signaler le vendeur</span>
+                <span class="sub-text">Signaler l'annonce</span>
             </div>
         </div>
     </div>

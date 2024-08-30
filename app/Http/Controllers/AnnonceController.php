@@ -18,6 +18,7 @@ use App\Models\Annonce;
 use App\Models\Annonce_photo;
 use App\Models\Annonce_error;
 use App\Models\Parametrage;
+use App\Models\Signal_annonce;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Cache;
@@ -129,10 +130,11 @@ class AnnonceController extends Controller
         ]);
     }
 
-
     public function index_detail($uuid)
     {
         $types = Type_marque::all();
+
+        
 
         $data_qrcode = url()->current();
         // $data_qrcode = 'http://192.168.1.2:8000/Detail%20Annonces/'.$uuid;
@@ -146,7 +148,7 @@ class AnnonceController extends Controller
                         ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
                         ->join('users','users.id','=','annonces.user_id')
                         ->where('uuid', $uuid)
-                        ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.id as marque_id', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque', 'type_marques.id as type_marque_id', 'users.name as nom_user', 'users.prenom as prenom_user', 'users.id as user_id', 'users.email as email_user', 'users.image_chemin as photo_user')
+                        ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.id as marque_id', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque', 'type_marques.id as type_marque_id', 'users.id as user_id', 'users.name as nom_user', 'users.prenom as prenom_user', 'users.id as user_id', 'users.email as email_user', 'users.image_chemin as photo_user')
                         ->first();
 
         if ($ann) {
@@ -364,5 +366,17 @@ class AnnonceController extends Controller
         ]);
     }
 
+    public function signal_annonce(Request $request)
+    {
+        $add = new Signal_annonce();
+        $add->user_id = $request->user_id;
+        $add->annonce_uuid = $request->uuid;
+        $add->motif = $request->motif;
 
+        if ($add->save()) {
+            return redirect()->back()->with('success_signal','Annonce signalé!');
+        }
+
+        return redirect()->back()->with('error','Cette annonce ne peut être signalé, Veuillez réessayer plutard');
+    }
 }

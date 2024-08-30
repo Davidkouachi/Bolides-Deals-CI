@@ -143,7 +143,7 @@
                             </div>                           
                             <div class="nk-header-tools">
                                 <ul class="nk-quick-nav">
-                                    @if(!request()->routeIs('index_accueil') )
+                                    @if(!request()->routeIs('index_accueil'))
                                     <li class="dropdown notification-dropdown">
                                         <a class=" nk-quick-nav-icon" href="{{route('index_accueil')}}">
                                             <em class="icon ni ni-home"></em>
@@ -167,13 +167,13 @@
                                     @endif
 
                                     @auth()
-                                    <li class="dropdown notification-dropdown">
-                                        <a  {{-- href="{{route('index_annonce_new')}}" --}} class="nk-quick-nav-icon" data-bs-toggle="modal" data-bs-target="#modalAnnonceNew">
+                                    {{-- <li class="dropdown notification-dropdown">
+                                        <a class="nk-quick-nav-icon" data-bs-toggle="modal" data-bs-target="#modalAnnonceNew">
                                             <div class="icon-status icon-status-info">
                                                 <em class="icon ni ni-plus-circle"></em>
                                             </div>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     {{-- <li class="dropdown notification-dropdown"><a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
                                             <div class="icon-status icon-status-info">
                                                 <em class="icon ni ni-bell"></em>
@@ -377,11 +377,24 @@
         </li>
     </ul> --}}
 
-    <a class="pmo-st pmo-dark active bg-azure" data-bs-toggle="modal" data-bs-target="#modalCommentaire" >
+    <a class="pmo-st pmo-dark bg-azure active" data-bs-toggle="modal" data-bs-target="#modalCommentaire" >
         <div class="pmo-st-img">
             <em class="icon ni ni-chat-circle" style="font-size: 25px;"></em>
         </div>
     </a>
+
+    @if(!request()->routeIs('index_annonce_new_vente','index_annonce_new_location'))
+    <div class="pmo-lv pmo-dark active p-3" style="width: 200px;">
+        <a class="" data-bs-toggle="modal" data-bs-target="#modalAnnonceNew">
+            <div class="pmo-text text-white">
+                Publier une annonce
+            </div>
+            <p class="pmo-close" data-bs-toggle="modal" data-bs-target="#modalAnnonceNew">
+                <em class="ni ni-arrow-long-right"></em>
+            </p>
+        </a>
+    </div>
+    @endif
 
     <div class="modal fade" tabindex="-1" id="modalCommentaire">
         <div class="modal-dialog modal-md" role="document">
@@ -443,18 +456,21 @@
                 <div class="modal-body">
                     <div class="row g-gs align-items-center justify-content-center" >
                         <div class="col-12" >
-                            <h4 class="mb-2 text-center" >
-                                <ins>Type d'annonce</ins>
-                            </h4>
+                            <h6 class="text-center" >
+                                <img height="40px" width="40px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/type.jpg') }}">
+                            </h6>
+                            <p class="text-center text-black fs-20px" >
+                                Quel type d'annonce voulez-vous créer ? 
+                            </p>
                         </div>
                         <div class="col-6" >
-                            <a href="{{route('index_annonce_new_vente')}}" class="btn btn-white btn-dim btn-outline-info btn-block" >
+                            <a href="{{route('index_annonce_new_vente')}}" class="btn btn-white btn-dim btn-info btn-block" >
                                 <em class="icon ni ni-cc-alt2" ></em>
                                 <span> Vente </span>
                             </a>
                         </div>
                         <div class="col-6" >
-                            <a href="{{route('index_annonce_new_location')}}" class="btn btn-white btn-dim btn-outline-warning btn-block" >
+                            <a href="{{route('index_annonce_new_location')}}" class="btn btn-white btn-dim btn-warning btn-block" >
                                 <em class="icon ni ni-cc-alt2" ></em>
                                 <span> Location </span>
                             </a>
@@ -466,12 +482,12 @@
     </div>
 
 @if(Auth::check())
-    {{-- @if (session('session_time_remaining'))
+    @if (session('session_time_remaining'))
     <div class="alert alert-info">
         Temps restant avant l'expiration de la session :
         <span id="countdown">{{ gmdate('H:i:s', session('session_time_remaining')) }}</span>
     </div>
-    @endif --}}
+    @endif
 
     <div class="modal fade" tabindex="-1" id="sessionExpiredModal" aria-modal="true" role="dialog" style="position: fixed;" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog" role="document">
@@ -483,7 +499,7 @@
                         <div class="nk-modal-text">
                             <div class="caption-text">
                                 <span>
-                                    Vous serez déconnecter et rédiriger vers la page d'accueil
+                                    Vous serez déconnecté et redirigé vers la page d'accueil
                                 </span>
                             </div>
                         </div>
@@ -499,41 +515,40 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Convertir le temps restant en secondes
-        let timeRemaining = parseInt('{{ session('session_time_remaining') }}', 10);
-        // const countdownElement = document.getElementById('countdown');
-        
-        // Fonction pour mettre à jour le compte à rebours
-        function updateCountdown() {
-            if (timeRemaining > 0) {
-                timeRemaining--;
-                // Convertir les secondes restantes en format HH:MM:SS
-                let hours = Math.floor(timeRemaining / 3600);
-                let minutes = Math.floor((timeRemaining % 3600) / 60);
-                let seconds = timeRemaining % 60;
-                // Ajouter un zéro devant les chiffres uniques
-                hours = hours < 10 ? '0' + hours : hours;
-                minutes = minutes < 10 ? '0' + minutes : minutes;
-                seconds = seconds < 10 ? '0' + seconds : seconds;
-                // Mettre à jour l'affichage du compte à rebours
-                // countdownElement.textContent = hours + ':' + minutes + ':' + seconds;
-                
-                // Mettre à jour le compte à rebours après une seconde
-                setTimeout(updateCountdown, 1000);
-            } else {
-                // Afficher le modal lorsque le temps est écoulé
-                $('#sessionExpiredModal').modal('show');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Convertir le temps restant en secondes
+            let timeRemaining = parseInt('{{ session('session_time_remaining') }}', 10);
+            const countdownElement = document.getElementById('countdown');
+            
+            // Fonction pour mettre à jour le compte à rebours
+            function updateCountdown() {
+                if (timeRemaining > 0) {
+                    timeRemaining--;
+                    // Convertir les secondes restantes en format HH:MM:SS
+                    let hours = Math.floor(timeRemaining / 3600);
+                    let minutes = Math.floor((timeRemaining % 3600) / 60);
+                    let seconds = timeRemaining % 60;
+                    // Ajouter un zéro devant les chiffres uniques
+                    hours = hours < 10 ? '0' + hours : hours;
+                    minutes = minutes < 10 ? '0' + minutes : minutes;
+                    seconds = seconds < 10 ? '0' + seconds : seconds;
+                    // Mettre à jour l'affichage du compte à rebours
+                    countdownElement.textContent = hours + ':' + minutes + ':' + seconds;
+                    
+                    // Mettre à jour le compte à rebours après une seconde
+                    setTimeout(updateCountdown, 1000);
+                } else {
+                    // Afficher le modal lorsque le temps est écoulé
+                    $('#sessionExpiredModal').modal('show');
+                }
             }
-        }
-        
-        // Démarrer le compte à rebours
-        updateCountdown();
-    });
-</script>
-
-
+            
+            // Démarrer le compte à rebours
+            updateCountdown();
+        });
+    </script>
 @endif
+
 
 
     <script>

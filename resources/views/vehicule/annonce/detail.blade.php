@@ -38,6 +38,52 @@
             <div class="nk-block">
                 <div class="card">
                     <div class="card-inner">
+                        <div class="row ">
+                            <div class="col-lg-12">
+                                <div class="card-inner">
+                                    <div class="team">
+                                        <div class="user-card user-card-s2">
+                                            <a href="{{route('annonce_user',$ann->user_id)}}">
+                                                <h4>
+                                                    Publié par 
+                                                </h4>
+                                                @if($ann->photo_user)
+                                                <div class="user-avatar lg sq border" style="background: transparent;">
+                                                    <span>
+                                                        <img height="80px" width="80px" style="object-fit: cover;" class="thumb" src="{{ Storage::url($ann->photo_user) }}">
+                                                    </span>
+                                                </div>
+                                                @else
+                                                <div class="user-avatar lg sq ">
+                                                    <span>
+                                                        {{ ucfirst(substr($ann->nom_user, 0, 1)).ucfirst(substr($ann->prenom_user, 0, 1)) }}
+                                                    </span>
+                                                </div>
+                                                @endif
+                                                <div class="user-info">
+                                                    <h6>
+                                                        {{$ann->nom_user}}
+                                                        {{$ann->prenom_user}}
+                                                    </h6>
+                                                    <span class="sub-text">
+                                                        <a class="btn btn-white btn-light btn-dim btn-sm" href="{{route('annonce_user',$ann->user_id)}}">
+                                                            <em class="icon ni ni-eye"></em>
+                                                            <span>Voir ses annonces </span>
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nk-block">
+                <div class="card">
+                    <div class="card-inner">
                         <div class="row pb-5">
                             <div class="col-lg-12">
                                 <div class="card-inner">
@@ -76,31 +122,43 @@
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <ul class="filter-button-group mb-4 pb-1 align-items-center justify-content-center">
+                                <ul class="filter-button-group mb-4 pb-1 align-items-center justify-content-center" >
                                     @foreach($photos as $value)
                                         <li>
-                                            <div class="" style="height: 100px;width: 100px;">
-                                                <div class="card" style=" display: flex;justify-content: center;align-items: center; border-radius: none;">
-                                                    <img style="height: 100px; width:100px; object-fit: cover;" src="{{ Storage::url($value->image_chemin) }}" data-bs-toggle="modal" data-bs-target="#imageModal{{$value->id}}" style="height: auto; width:auto; object-fit: cover; cursor: pointer;"> 
+                                            <div class="" style="height: 130px;width: 130px;">
+                                                <div class="card" style=" display: flex;justify-content: center;align-items: center; border-radius: 0px;">
+                                                    <img style="height: 130px; width:130px; object-fit: cover;" src="{{ Storage::url($value->image_chemin) }}" data-bs-toggle="modal" data-bs-target="#imageModal{{$value->id}}" style="height: auto; width:auto; object-fit: cover; cursor: pointer;"> 
                                                 </div>
                                             </div>
                                         </li>
                                     @endforeach
                                 </ul>
+                                <p class="mt-2 text-center" >
+                                    {{$photos->count().' photo(s)'}}
+                                </p>
                             </div>
-                            <div class="col-lg-12 mt-5">
-                                <div class="product-details entry me-xxl-3">
-                                    <h4 class="mb-2 text-center" >
-                                        <ins>Caractéristiques</ins>
-                                    </h4>
-                                    <div class="nk-block mb-5">
+                            <div class="col-12 mt-5" >
+                                <ul class="nav nav-tabs nav-tabs-s2">
+                                    <li class="nav-item"> 
+                                        <a class="nav-link active" data-bs-toggle="tab" href="#caracteristique">
+                                            Caractéristiques
+                                        </a> 
+                                    </li>
+                                    <li class="nav-item"> 
+                                        <a class="nav-link" data-bs-toggle="tab" href="#description">
+                                            Descriptions / Conditions
+                                        </a> 
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="caracteristique">
                                         <ul class="filter-button-group mb-4 align-items-center justify-content-center">
                                             <li>
-                                                <div class=" w-199px">
-                                                    <div class="card-inner">
+                                                <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar md bg-white sq">
+                                                                <div class="" style="width: 50px;height: 50px;">
                                                                     <span>
                                                                        <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/weight.jpg') }}"> 
                                                                     </span>
@@ -114,11 +172,11 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class=" w-199px">
-                                                    <div class="card-inner">
+                                                <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar md bg-white sq">
+                                                                <div class="" style="width: 50px;height: 50px;">
                                                                     <span>
                                                                        <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/eingne.webp') }}"> 
                                                                     </span>
@@ -132,11 +190,11 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class=" w-199px">
-                                                    <div class="card-inner">
+                                                <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar md bg-white sq">
+                                                                <div class="" style="width: 50px;height: 50px;">
                                                                     <span>
                                                                        <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/fuel.jpg') }}"> 
                                                                     </span>
@@ -150,11 +208,11 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class=" w-199px">
-                                                    <div class="card-inner">
+                                                <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar md bg-white sq">
+                                                                <div class="" style="width: 50px;height: 50px;">
                                                                     <span>
                                                                        <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/transmission.jpg') }}"> 
                                                                     </span>
@@ -168,11 +226,11 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class=" w-199px">
-                                                    <div class="card-inner">
+                                                <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar md bg-white sq">
+                                                                <div class="" style="width: 50px;height: 50px;">
                                                                     <span>
                                                                        <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/place.png') }}"> 
                                                                     </span>
@@ -186,11 +244,11 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class=" w-199px">
-                                                    <div class="card-inner">
+                                                <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar md bg-white sq">
+                                                                <div class="" style="width: 50px;height: 50px;">
                                                                     <span>
                                                                        <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/date.jpg') }}"> 
                                                                     </span>
@@ -204,11 +262,11 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class=" w-199px">
-                                                    <div class="card-inner">
+                                                <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar md bg-white sq">
+                                                                <div class="" style="width: 50px;height: 50px;">
                                                                     <span>
                                                                        <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/couleur.png') }}"> 
                                                                     </span>
@@ -222,11 +280,11 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class=" w-199px">
-                                                    <div class="card-inner">
+                                                <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar md bg-white sq">
+                                                                <div class="" style="width: 50px;height: 50px;">
                                                                     <span>
                                                                        <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/porte.jpg') }}"> 
                                                                     </span>
@@ -240,11 +298,11 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class=" w-199px">
-                                                    <div class="card-inner">
+                                                <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar md bg-white sq">
+                                                                <div class="" style="width: 50px;height: 50px;">
                                                                     <span>
                                                                        <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/version.webp') }}"> 
                                                                     </span>
@@ -258,11 +316,11 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class=" w-199px">
-                                                    <div class="card-inner">
+                                                <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar md bg-white sq">
+                                                                <div class="" style="width: 50px;height: 50px;">
                                                                     <span>
                                                                        <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/type.jpg') }}"> 
                                                                     </span>
@@ -277,11 +335,11 @@
                                             </li>
                                             @if($ann->neuf === 'oui')
                                             <li>
-                                                <div class=" w-199px">
-                                                    <div class="card-inner">
+                                                <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar md bg-white sq">
+                                                                <div class="" style="width: 50px;height: 50px;">
                                                                     <span>
                                                                        <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/neuf.png') }}"> 
                                                                     </span>
@@ -296,11 +354,11 @@
                                             </li>
                                             @endif
                                             <li>
-                                                <div class=" w-199px">
-                                                    <div class="card-inner">
+                                                <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
-                                                                <div class="user-avatar md bg-white sq">
+                                                                <div class="" style="width: 50px;height: 50px;">
                                                                     <span>
                                                                        <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/localisation.jpg') }}"> 
                                                                     </span>
@@ -317,11 +375,11 @@
                                             </li>
                                             @if($ann->type_annonce === 'vente')
                                                 <li>
-                                                    <div class=" w-199px">
-                                                        <div class="card-inner">
+                                                    <div class="p-0" style="width: 150px;">
+                                                        <div class="p-0">
                                                             <div class="team">
                                                                 <div class="user-card user-card-s2">
-                                                                    <div class="user-avatar md bg-white sq">
+                                                                    <div class="" style="width: 50px;height: 50px;">
                                                                         <span>
                                                                            <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/compteur.jpg') }}"> 
                                                                         </span>
@@ -335,17 +393,19 @@
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class=" w-199px">
-                                                        <div class="card-inner">
+                                                    <div class="p-0" style="width: 150px;">
+                                                        <div class="p-0">
                                                             <div class="team">
                                                                 <div class="user-card user-card-s2">
-                                                                    <div class="user-avatar md bg-white sq">
+                                                                    <div class="" style="width: 50px;height: 50px;">
                                                                         <span>
                                                                            <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/key car.webp') }}"> 
                                                                         </span>
                                                                     </div>
                                                                     <div class="user-info"> 
-                                                                        <h4 class="sub-text text-black" >{{$ann->nbre_cle.' Clé(s)'}}</h4>
+                                                                        <h4 class="sub-text text-black" >
+                                                                            {{is_numeric($ann->nbre_cle).' Clé(s)'}}
+                                                                        </h4>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -353,11 +413,11 @@
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class=" w-199px">
-                                                        <div class="card-inner">
+                                                    <div class="p-0" style="width: 150px;">
+                                                        <div class="p-0">
                                                             <div class="team">
                                                                 <div class="user-card user-card-s2">
-                                                                    <div class="user-avatar md bg-white sq">
+                                                                    <div class="" style="width: 50px;height: 50px;">
                                                                         <span>
                                                                            <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/troc.jpg') }}"> 
                                                                         </span>
@@ -379,11 +439,11 @@
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class=" w-199px">
-                                                        <div class="card-inner">
+                                                    <div class="p-0" style="width: 150px;">
+                                                        <div class="p-0">
                                                             <div class="team">
                                                                 <div class="user-card user-card-s2">
-                                                                    <div class="user-avatar md bg-white sq">
+                                                                    <div class="" style="width: 50px;height: 50px;">
                                                                         <span>
                                                                            <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/negociable.png') }}"> 
                                                                         </span>
@@ -405,11 +465,11 @@
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class=" w-199px">
-                                                        <div class="card-inner">
+                                                    <div class="p-0" style="width: 150px;">
+                                                        <div class="p-0">
                                                             <div class="team">
                                                                 <div class="user-card user-card-s2">
-                                                                    <div class="user-avatar md bg-white sq">
+                                                                    <div class="" style="width: 50px;height: 50px;">
                                                                         <span>
                                                                            <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/hors_taxe.png') }}"> 
                                                                         </span>
@@ -432,11 +492,11 @@
                                                 </li>
                                                 @if($ann->hors_taxe === 'non')
                                                 <li>
-                                                    <div class=" w-199px">
-                                                        <div class="card-inner">
+                                                    <div class="p-0" style="width: 150px;">
+                                                        <div class="p-0">
                                                             <div class="team">
                                                                 <div class="user-card user-card-s2">
-                                                                    <div class="user-avatar md bg-white sq">
+                                                                    <div class="" style="width: 50px;height: 50px;">
                                                                         <span>
                                                                            <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/papier.webp') }}"> 
                                                                         </span>
@@ -459,11 +519,11 @@
                                                 </li>
                                                     @if($ann->papier === 'oui')
                                                     <li>
-                                                        <div class=" w-199px">
-                                                            <div class="card-inner">
+                                                        <div class="p-0" style="width: 150px;">
+                                                            <div class="p-0">
                                                                 <div class="team">
                                                                     <div class="user-card user-card-s2">
-                                                                        <div class="user-avatar md bg-white sq">
+                                                                        <div class="" style="width: 50px;height: 50px;">
                                                                             <span>
                                                                                <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/assurance.jpg') }}"> 
                                                                             </span>
@@ -479,18 +539,18 @@
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class=" w-199px">
-                                                            <div class="card-inner">
+                                                        <div class="p-0" style="width: 150px;">
+                                                            <div class="p-0">
                                                                 <div class="team">
                                                                     <div class="user-card user-card-s2">
-                                                                        <div class="user-avatar md bg-white sq">
+                                                                        <div class="" style="width: 50px;height: 50px;">
                                                                             <span>
                                                                                <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/visite.jpg') }}"> 
                                                                             </span>
                                                                         </div>
                                                                         <div class="user-info">
                                                                             <h4 class="sub-text text-black" >
-                                                                                {{'viste technique '.\Carbon\Carbon::parse($ann->visite_techn)->format('d/m/Y') }}
+                                                                                {{' '.\Carbon\Carbon::parse($ann->visite_techn)->format('d/m/Y') }}
                                                                             </h4>
                                                                         </div>
                                                                     </div>
@@ -503,12 +563,15 @@
                                             @endif
                                         </ul>
                                     </div>
-                                    <h4 class="mb-2 text-center" >
-                                        <ins>Descriptions / Conditions</ins>
-                                    </h4>
-                                    <p class="text-center" >
-                                        {{$ann->description}}
-                                    </p>
+                                    <div class="tab-pane" id="description">
+                                        <p>
+                                            {{$ann->description}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mt-4">
+                                <div class="product-details entry me-xxl-3">
                                     <div class="alert alert-warning alert-icon" role="alert">    
                                         <em class="icon ni ni-alert-fill"></em>     
                                         <strong> Soyez Prudents !!! </strong>
@@ -525,99 +588,35 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
-                                <div class="card-inner">
-                                    <div class="team">
-                                        <div class="user-card user-card-s2">
-                                            {{-- <div class="user-info">
-                                                @if($ann->appel)
-                                                <a class="btn btn-outline-warning btn-dim btn-sm me-1 mt-1" href="tel:+225{{$ann->appel}}" target="_blank">
-                                                    <em class="icon ni ni-call"></em>
-                                                    <span> {{$ann->appel}} </span>
-                                                </a>
-                                                @endif
-                                                @if($ann->whatsapp)
-                                                <a class="btn btn-outline-success btn-dim btn-sm me-1 mt-1" href="https://wa.me/+225{{$ann->whatsapp}}?text={{ urlencode($ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce) }}%0A%0A{{'Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{urlencode($data_qrcode)}}%0A%0A{{urlencode('Bonjour, je suis intéressé par votre annonce. Pourriez-vous m\'en dire plus ?') }}" target="_blank">
-                                                    <em class="icon ni ni-whatsapp"></em>
-                                                    <span> {{$ann->whatsapp}} </span>
-                                                </a>
-                                                @endif
-                                                @if($ann->sms)
-                                                <a class="btn btn-outline-info btn-dim btn-sm me-1 mt-1" href="sms:+225{{$ann->sms}}?body={{ $ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce }}%0A%0A{{ 'Prix : '.$ann->prix.' Fcfa' }}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}%0A%0A{{ 'Bonjour, je suis intéressé par votre annonce. Pourriez-vous m\'en dire plus ?' }}" target="_blank">
-                                                    <em class="icon ni ni-mail"></em>
-                                                    <span> {{$ann->sms}} </span>
-                                                </a>
-                                                @endif
-                                            </div> --}}
-                                            <div class="row g-gs user-info" >
-                                                <div class="col-12 mt-2">
-                                                    <h6 class="mb-1">
-                                                        Partager l'annonce avec vos ami(e)s
-                                                    </h6>
-                                                    <img height="90px" width="90px" src="{{ $imgqr }}" alt="Code QR">
-                                                </div>
-                                                <div class="col-12 mt-2">
-                                                    <a rel="noopener nofollow" target="_blank" class="btn btn-success mt-1 me-1" style="border-radius: 100px;" href="whatsapp://send?text={{ urlencode($ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.', prix : '.$ann->prix.' Fcfa')}}%0A%0A{{'lien : '.urlencode($data_qrcode) }}" target="_blank">
-                                                        <em class="icon ni ni-whatsapp"></em>
-                                                    </a>
-                                                    <a rel="noopener nofollow" target="_blank" class="btn btn-primary mt-1 me-1" style="border-radius: 100px;" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($data_qrcode) }}" target="_blank">
-                                                        <em class="icon ni ni-facebook-circle"></em>
-                                                    </a>
-                                                    <a rel="noopener nofollow" target="_blank" class="btn btn-info mt-1 me-1" style="border-radius: 100px;" href="https://twitter.com/intent/tweet?text={{ urlencode($ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.', prix : '.$ann->prix.' Fcfa')}}%0A%0A{{'lien : '.urlencode($data_qrcode) }}" target="_blank">
-                                                        <em class="icon ni ni-twitter"></em>
-                                                    </a>
-                                                    <a rel="noopener nofollow" target="_blank" class="btn btn-warning mt-1 me-1" style="border-radius: 100px;" href="sms:?body={{ $ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.' ,Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}" target="_blank">
-                                                        <em class="icon ni ni-chat"></em>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="nk-block">
                 <div class="card">
-                    <div class="card-inner">
-                        <div class="row ">
-                            <div class="col-lg-12">
-                                <div class="card-inner">
-                                    <div class="team">
-                                        <div class="user-card user-card-s2">
-                                            <a href="{{route('annonce_user',$ann->user_id)}}">
-                                                <h4>
-                                                    Publié par 
-                                                </h4>
-                                                @if($ann->photo_user)
-                                                <div class="user-avatar lg sq border" style="background: transparent;">
-                                                    <span>
-                                                        <img height="80px" width="80px" style="object-fit: cover;" class="thumb" src="{{ Storage::url($ann->photo_user) }}">
-                                                    </span>
-                                                </div>
-                                                @else
-                                                <div class="user-avatar lg sq ">
-                                                    <span>
-                                                        {{ ucfirst(substr($ann->nom_user, 0, 1)).ucfirst(substr($ann->prenom_user, 0, 1)) }}
-                                                    </span>
-                                                </div>
-                                                @endif
-                                                <div class="user-info">
-                                                    <h6>
-                                                        {{$ann->nom_user}}
-                                                        {{$ann->prenom_user}}
-                                                    </h6>
-                                                    <span class="sub-text">
-                                                        <a class="btn btn-white btn-light btn-dim btn-sm" href="{{route('annonce_user',$ann->user_id)}}">
-                                                            <em class="icon ni ni-eye"></em>
-                                                            <span>Voir ses annonces </span>
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </div>
+                    <div class="card-inner mt-n5">
+                        <div class="team">
+                            <div class="user-card user-card-s2">
+                                <div class="row g-gs user-info">
+                                    <div class="col-12">
+                                        <h6 class="mb-1">
+                                            Partager l'annonce avec vos ami(e)s
+                                        </h6>
+                                        <img height="90px" width="90px" src="{{ $imgqr }}" alt="Code QR">
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <a rel="noopener nofollow" target="_blank" class="btn btn-success mt-1 me-1" style="border-radius: 100px;" href="whatsapp://send?text={{ urlencode($ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.', prix : '.$ann->prix.' Fcfa')}}%0A%0A{{'lien : '.urlencode($data_qrcode) }}" target="_blank">
+                                            <em class="icon ni ni-whatsapp"></em>
+                                        </a>
+                                        <a rel="noopener nofollow" target="_blank" class="btn btn-primary mt-1 me-1" style="border-radius: 100px;" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($data_qrcode) }}" target="_blank">
+                                            <em class="icon ni ni-facebook-circle"></em>
+                                        </a>
+                                        <a rel="noopener nofollow" target="_blank" class="btn btn-info mt-1 me-1" style="border-radius: 100px;" href="https://twitter.com/intent/tweet?text={{ urlencode($ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.', prix : '.$ann->prix.' Fcfa')}}%0A%0A{{'lien : '.urlencode($data_qrcode) }}" target="_blank">
+                                            <em class="icon ni ni-twitter"></em>
+                                        </a>
+                                        <a rel="noopener nofollow" target="_blank" class="btn btn-warning mt-1 me-1" style="border-radius: 100px;" href="sms:?body={{ $ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.' ,Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}" target="_blank">
+                                            <em class="icon ni ni-chat"></em>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

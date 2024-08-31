@@ -70,7 +70,9 @@
                                                     <img src="{{ Storage::url($value->image_chemin) }}" alt="{{ $value->marque }}" class="thumb">
                                                 </div>
                                                 <div class="user-info">
-                                                    <h6 class="fs-13px">{{ $value->marque }}</h6>
+                                                    <h6 class="fs-13px">
+                                                        {{ $value->marque }}
+                                                    </h6>
                                                 </div>
                                             </a>
                                         @endif

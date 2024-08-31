@@ -460,10 +460,10 @@
                                                         <label class="form-label">Nombre de clés</label>
                                                         <div class="form-control-wrap">
                                                             <select required class="form-select js-select2" data-placeholder="Selectionner" name="nbre_cle">
-                                                                <option value="oui" @if(isset($ann->nbre_cle) && $ann->nbre_cle == '1') selected @endif>
+                                                                <option value="1" @if(isset($ann->nbre_cle) && $ann->nbre_cle == '1') selected @endif>
                                                                     1 clé
                                                                 </option>
-                                                                <option value="non" @if(isset($ann->nbre_cle) && $ann->nbre_cle == '2') selected @endif>
+                                                                <option value="2" @if(isset($ann->nbre_cle) && $ann->nbre_cle == '2') selected @endif>
                                                                     2 clés
                                                                 </option>
                                                             </select>

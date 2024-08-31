@@ -28,6 +28,13 @@
                     </div>
                 </div>
             </div>
+            <nav>    
+                <ul class="breadcrumb">        
+                    <li class="breadcrumb-item">
+                        <a>Annonce crée le {{ \Carbon\Carbon::parse($ann->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}</a>
+                    </li>   
+                </ul>
+            </nav>
             <div class="nk-block">
                 <div class="card">
                     <div class="card-inner">
@@ -689,19 +696,19 @@
             @if($ann->whatsapp)
             <a data-bs-toggle="tooltip" data-bs-placement="top" title="{{$ann->whatsapp}}" class="btn btn-success" style="border-radius: 100px;" href="https://wa.me/+225{{$ann->whatsapp}}?text={{ urlencode($ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce) }}%0A%0A{{'Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{urlencode($data_qrcode)}}%0A%0A{{urlencode('Bonjour, je suis intéressé par votre annonce. Pourriez-vous m\'en dire plus ?') }}" target="_blank">
                 <em class="icon ni ni-whatsapp"></em>
-                <span class="d-none d-md-block" >{{$ann->whatsapp}}</span>
+                <span class="d-none d-lg-block" >{{$ann->whatsapp}}</span>
             </a>
             @endif
             @if($ann->appel)
             <a data-bs-toggle="tooltip" data-bs-placement="top" title="{{$ann->appel}}" class="btn btn-warning" style="border-radius: 100px;" href="tel:+225{{$ann->appel}}">
                 <em class="icon ni ni-call"></em>
-                <span class="d-none d-md-block" >{{$ann->appel}}</span>
+                <span class="d-none d-lg-block" >{{$ann->appel}}</span>
             </a>
             @endif
             @if($ann->sms)
             <a data-bs-toggle="tooltip" data-bs-placement="top" title="{{$ann->sms}}" class="btn btn-info" style="border-radius: 100px;" href="sms:+225{{$ann->sms}}?body={{ $ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce }}%0A%0A{{ 'Prix : '.$ann->prix.' Fcfa' }}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}%0A%0A{{ 'Bonjour, je suis intéressé par votre annonce. Pourriez-vous m\'en dire plus ?' }}" target="_blank">
                 <em class="icon ni ni-chat"></em>
-                <span class="d-none d-md-block" >{{$ann->sms}}</span>
+                <span class="d-none d-lg-block" >{{$ann->sms}}</span>
             </a>
             @endif
         </p>

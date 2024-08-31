@@ -109,15 +109,17 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="slider-init row product-slider mb-3" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 1, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
+                                <ul class="filter-button-group mb-4 pb-1 align-items-center justify-content-center">
                                     @foreach($photos as $value)
-                                    <div class="col">
-                                        <div class="h-100" style=" display: flex;justify-content: center;align-items: center; border: none;">
-                                            <img style="height: 210px; width:210px; object-fit: cover;" src="{{ Storage::url($value->image_chemin) }}" data-bs-toggle="modal" data-bs-target="#imageModal{{$value->id}}" style="height: auto; width:auto; object-fit: cover; cursor: pointer;"> 
-                                        </div>
-                                    </div>
+                                        <li>
+                                            <div class="" style="height: 100px;width: 100px;">
+                                                <div class="card" style=" display: flex;justify-content: center;align-items: center; border-radius: none;">
+                                                    <img style="height: 100px; width:100px; object-fit: cover;" src="{{ Storage::url($value->image_chemin) }}" data-bs-toggle="modal" data-bs-target="#imageModal{{$value->id}}" style="height: auto; width:auto; object-fit: cover; cursor: pointer;"> 
+                                                </div>
+                                            </div>
+                                        </li>
                                     @endforeach
-                                </div>
+                                </ul>
                             </div>
                             <div class="col-lg-12 mt-5">
                                 <div class="product-details entry me-xxl-3">

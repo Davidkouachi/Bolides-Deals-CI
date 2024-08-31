@@ -69,15 +69,17 @@
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="slider-init row product-slider mb-3" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 1, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
+                                <ul class="filter-button-group mb-4 pb-1 align-items-center justify-content-center">
                                     @foreach($photos as $value)
-                                    <div class="col">
-                                        <div class="h-100" style=" display: flex;justify-content: center;align-items: center; border: none;">
-                                            <img style="height: 210px; width:210px; object-fit: cover;" src="{{ Storage::url($value->image_chemin) }}" data-bs-toggle="modal" data-bs-target="#imageModal{{$value->id}}" style="height: auto; width:auto; object-fit: cover; cursor: pointer;"> 
-                                        </div>
-                                    </div>
+                                        <li>
+                                            <div class="" style="height: 100px;width: 100px;">
+                                                <div class="card" style=" display: flex;justify-content: center;align-items: center; border-radius: none;">
+                                                    <img style="height: 100px; width:100px; object-fit: cover;" src="{{ Storage::url($value->image_chemin) }}" data-bs-toggle="modal" data-bs-target="#imageModal{{$value->id}}" style="height: auto; width:auto; object-fit: cover; cursor: pointer;"> 
+                                                </div>
+                                            </div>
+                                        </li>
                                     @endforeach
-                                </div>
+                                </ul>
                             </div>
                             <div class="col-lg-12 mt-5">
                                 <div class="product-details entry me-xxl-3">
@@ -502,16 +504,78 @@
                                     </p>
                                     <div class="alert alert-warning alert-icon" role="alert">    
                                         <em class="icon ni ni-alert-fill"></em>     
-                                        <strong> Conseils de sécurité !!! </strong>
+                                        <strong> Soyez Prudents !!! </strong>
                                         <br> 
                                         <ul>
                                             <li>1- Ne faite pas de paiements sans avoir vérifié le véhicule ou l'identité du vendeur</li>
                                             <li>2- Rencontrer de préference le vendeur dans un lieu public fréquentés ou dans un parc automobiles</li>
                                             <li>3- Etre accompagner de son mecanicien, pour des vérifications approfondies du véhicule</li>
                                         </ul>
+                                        <a class="btn btn-white btn-outline-danger btn-dim btn-sm mt-1 me-1" data-bs-toggle="modal" data-bs-target="#modalSignal">
+                                            <em class="icon ni ni-thumbs-down"></em>
+                                            <span>Signaler l'annonce</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-12">
+                                <div class="card-inner">
+                                    <div class="team">
+                                        <div class="user-card user-card-s2">
+                                            {{-- <div class="user-info">
+                                                @if($ann->appel)
+                                                <a class="btn btn-outline-warning btn-dim btn-sm me-1 mt-1" href="tel:+225{{$ann->appel}}" target="_blank">
+                                                    <em class="icon ni ni-call"></em>
+                                                    <span> {{$ann->appel}} </span>
+                                                </a>
+                                                @endif
+                                                @if($ann->whatsapp)
+                                                <a class="btn btn-outline-success btn-dim btn-sm me-1 mt-1" href="https://wa.me/+225{{$ann->whatsapp}}?text={{ urlencode($ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce) }}%0A%0A{{'Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{urlencode($data_qrcode)}}%0A%0A{{urlencode('Bonjour, je suis intéressé par votre annonce. Pourriez-vous m\'en dire plus ?') }}" target="_blank">
+                                                    <em class="icon ni ni-whatsapp"></em>
+                                                    <span> {{$ann->whatsapp}} </span>
+                                                </a>
+                                                @endif
+                                                @if($ann->sms)
+                                                <a class="btn btn-outline-info btn-dim btn-sm me-1 mt-1" href="sms:+225{{$ann->sms}}?body={{ $ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce }}%0A%0A{{ 'Prix : '.$ann->prix.' Fcfa' }}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}%0A%0A{{ 'Bonjour, je suis intéressé par votre annonce. Pourriez-vous m\'en dire plus ?' }}" target="_blank">
+                                                    <em class="icon ni ni-mail"></em>
+                                                    <span> {{$ann->sms}} </span>
+                                                </a>
+                                                @endif
+                                            </div> --}}
+                                            <div class="row g-gs user-info" >
+                                                <div class="col-12 mt-2">
+                                                    <h6 class="mb-1">
+                                                        Partager l'annonce avec vos ami(e)s
+                                                    </h6>
+                                                    <img height="90px" width="90px" src="{{ $imgqr }}" alt="Code QR">
+                                                </div>
+                                                <div class="col-12 mt-2">
+                                                    <a rel="noopener nofollow" target="_blank" class="btn btn-success mt-1 me-1" style="border-radius: 100px;" href="whatsapp://send?text={{ urlencode($ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.', prix : '.$ann->prix.' Fcfa')}}%0A%0A{{'lien : '.urlencode($data_qrcode) }}" target="_blank">
+                                                        <em class="icon ni ni-whatsapp"></em>
+                                                    </a>
+                                                    <a rel="noopener nofollow" target="_blank" class="btn btn-primary mt-1 me-1" style="border-radius: 100px;" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($data_qrcode) }}" target="_blank">
+                                                        <em class="icon ni ni-facebook-circle"></em>
+                                                    </a>
+                                                    <a rel="noopener nofollow" target="_blank" class="btn btn-info mt-1 me-1" style="border-radius: 100px;" href="https://twitter.com/intent/tweet?text={{ urlencode($ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.', prix : '.$ann->prix.' Fcfa')}}%0A%0A{{'lien : '.urlencode($data_qrcode) }}" target="_blank">
+                                                        <em class="icon ni ni-twitter"></em>
+                                                    </a>
+                                                    <a rel="noopener nofollow" target="_blank" class="btn btn-warning mt-1 me-1" style="border-radius: 100px;" href="sms:?body={{ $ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.' ,Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}" target="_blank">
+                                                        <em class="icon ni ni-chat"></em>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nk-block">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="row ">
                             <div class="col-lg-12">
                                 <div class="card-inner">
                                     <div class="team">
@@ -538,43 +602,14 @@
                                                         {{$ann->nom_user}}
                                                         {{$ann->prenom_user}}
                                                     </h6>
+                                                    <span class="sub-text">
+                                                        <a class="btn btn-white btn-light btn-dim btn-sm" href="{{route('annonce_user',$ann->user_id)}}">
+                                                            <em class="icon ni ni-eye"></em>
+                                                            <span>Voir ses annonces </span>
+                                                        </a>
+                                                    </span>
                                                 </div>
                                             </a>
-                                            <div class="user-info">
-                                                @if($ann->appel)
-                                                <a class="btn btn-outline-warning btn-dim btn-sm me-1 mt-1" href="tel:+225{{$ann->appel}}" target="_blank">
-                                                    <em class="icon ni ni-call"></em>
-                                                    <span> {{$ann->appel}} </span>
-                                                </a>
-                                                @endif
-                                                @if($ann->whatsapp)
-                                                <a class="btn btn-outline-success btn-dim btn-sm me-1 mt-1" href="https://wa.me/+225{{$ann->whatsapp}}?text={{ urlencode($ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce) }}%0A%0A{{'Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{urlencode($data_qrcode)}}%0A%0A{{urlencode('Bonjour, je suis intéressé par votre annonce. Pourriez-vous m\'en dire plus ?') }}" target="_blank">
-                                                    <em class="icon ni ni-whatsapp"></em>
-                                                    <span> {{$ann->whatsapp}} </span>
-                                                </a>
-                                                @endif
-                                                @if($ann->sms)
-                                                <a class="btn btn-outline-info btn-dim btn-sm me-1 mt-1" href="sms:+225{{$ann->sms}}?body={{ $ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce }}%0A%0A{{ 'Prix : '.$ann->prix.' Fcfa' }}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}%0A%0A{{ 'Bonjour, je suis intéressé par votre annonce. Pourriez-vous m\'en dire plus ?' }}" target="_blank">
-                                                    <em class="icon ni ni-mail"></em>
-                                                    <span> {{$ann->sms}} </span>
-                                                </a>
-                                                @endif
-                                            </div>
-                                            <div class="row g-gs user-info" >
-                                                <div class="col-12 mt-2">
-                                                    <img height="90px" width="90px" src="{{ $imgqr }}" alt="Code QR">
-                                                </div>
-                                                <div class="col-12 mt-2">
-                                                    <a class="btn btn-white btn-outline-light btn-dim btn-sm mt-1 me-1" data-bs-toggle="modal" data-bs-target="#modalPartager">
-                                                        <span>Partager l'annonce </span>
-                                                        <em class="icon ni ni-share"></em>
-                                                    </a>
-                                                    <a class="btn btn-white btn-outline-danger btn-dim btn-sm mt-1 me-1" data-bs-toggle="modal" data-bs-target="#modalSignal">
-                                                        <em class="icon ni ni-thumbs-down"></em>
-                                                        <span>Signaler l'annonce</span>
-                                                    </a>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -648,6 +683,32 @@
     </div>
 </div>
 
+@section('btn_bas')
+    <div class="pmo-lv active p-3" style="width: auto;background: none;border: none;">
+        <p class="fs-40px" style="background: transparent;">
+            @if($ann->whatsapp)
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="{{$ann->whatsapp}}" class="btn btn-success" style="border-radius: 100px;" href="https://wa.me/+225{{$ann->whatsapp}}?text={{ urlencode($ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce) }}%0A%0A{{'Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{urlencode($data_qrcode)}}%0A%0A{{urlencode('Bonjour, je suis intéressé par votre annonce. Pourriez-vous m\'en dire plus ?') }}" target="_blank">
+                <em class="icon ni ni-whatsapp"></em>
+                <span class="d-none d-md-block" >{{$ann->whatsapp}}</span>
+            </a>
+            @endif
+            @if($ann->appel)
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="{{$ann->appel}}" class="btn btn-warning" style="border-radius: 100px;" href="tel:+225{{$ann->appel}}">
+                <em class="icon ni ni-call"></em>
+                <span class="d-none d-md-block" >{{$ann->appel}}</span>
+            </a>
+            @endif
+            @if($ann->sms)
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="{{$ann->sms}}" class="btn btn-info" style="border-radius: 100px;" href="sms:+225{{$ann->sms}}?body={{ $ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce }}%0A%0A{{ 'Prix : '.$ann->prix.' Fcfa' }}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}%0A%0A{{ 'Bonjour, je suis intéressé par votre annonce. Pourriez-vous m\'en dire plus ?' }}" target="_blank">
+                <em class="icon ni ni-chat"></em>
+                <span class="d-none d-md-block" >{{$ann->sms}}</span>
+            </a>
+            @endif
+        </p>
+    </div>
+@endsection
+
+
 <script src="{{asset('assets/js/app/js/annonce/form_signal.js') }}"></script>
 
 {{-- <div class="modal fade zoom" tabindex="-1" id="modalContact">
@@ -698,42 +759,6 @@
     </div>
 </div> --}}
 
-<div class="modal fade zoom" tabindex="-1" id="modalPartager">
-    <div class="modal-dialog modal-sm" role="document" style="width: 100%;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Partager</h5>
-                <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
-            </div>
-            <div class="modal-body ">
-                <div class="card-inner text-center" >
-                    <ul class="row g-gs text-center">
-                        <li class="col-lg-12">
-                            <a class="btn btn-outline-success btn-dim btn-block" href="https://wa.me/?text={{ urlencode($ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce) }}%0A%0A{{'- Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}" target="_blank">
-                                <em class="icon ni ni-whatsapp"></em>
-                                <span>WhatsApp</span>
-                            </a>
-
-                        </li>
-                        <li class="col-lg-12">
-                            <a class="btn btn-outline-primary btn-dim btn-block" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($data_qrcode) }}" target="_blank">
-                                <em class="icon ni ni-facebook-circle"></em>
-                                <span>Facebook</span>
-                            </a>
-                        </li>
-                        <li class="col-lg-12">
-                            <a class="btn btn-outline-warning btn-dim btn-block" href="sms:?body={{ $ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.' ,Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}" target="_blank">
-                                <em class="icon ni ni-chat"></em>
-                                <span>SMS</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div> 
-            </div>
-        </div>
-    </div>
-</div>
-
 @if (session('success_signal'))
 <div class="modal fade" tabindex="-1" id="modalSuccess_signal">
     <div class="modal-dialog" role="document">
@@ -761,7 +786,7 @@
 @endif
 
 <div class="modal fade" tabindex="-1" id="modalSignal">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Motif</h5>
@@ -774,6 +799,39 @@
                     @csrf
                     <input type="hidden" name="user_id" value="{{$ann->user_id}}">
                     <input type="hidden" name="uuid" value="{{$ann->uuid}}">
+                    <div class="form-group">
+                        <label class="form-label" for="default-textarea">Nom</label>
+                        <div class="form-control-wrap">
+                            @if(Auth::user())
+                                <input class="form-control" name="nom" readonly type="text" placeholder="Entrer votre nom" value="{{Auth::user()->name}}" />
+                            @else
+                                <input required name="nom" class="form-control" type="text" placeholder="Entrer votre nom" />
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="default-textarea">Email</label>
+                        <div class="form-control-wrap">
+                            @if(Auth::user())
+                                <input class="form-control" readonly type="email" placeholder="Entrer votre email" name="email" value="{{Auth::user()->email}}" />
+                            @else
+                                <input required class="form-control" type="email" placeholder="Entrer votre email" name="email" />
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="type-vehicule">
+                            Objet
+                        </label>
+                        <div class="form-control-wrap">
+                            <select required id="marqueSelect" class="form-select js-select2" data-placeholder="Selectionner" name="marque_id">
+                                <option value=""></option>
+                                <option value="anarque">Anarque</option>
+                                <option value="faux numero">Faux numéro</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label class="form-label"> Motif </label>
                         <div class="form-control-wrap">
@@ -798,8 +856,8 @@
 <!-- Modal -->
 @foreach($photos as $value)
 <div class="modal fade" id="imageModal{{$value->id}}" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg align-items-center justify-content-center row g-gs align-items-center justify-content-center">
-        <div class="col-12 align-items-center justify-content-center" >
+    <div class="modal-dialog modal-dialog-centered modal-lg align-items-center justify-content-center row g-gs">
+        <div class="col-12 text-center" >
             <img src="{{ Storage::url($value->image_chemin) }}" class="img-fluid" alt="Large Image" style="width: auto; height: auto;">
         </div>
     </div>

@@ -565,19 +565,21 @@
                                             </div>
                                             <div class="form-group"  id="div_photo">
                                                 <label class="form-label d-flex" for="default-textarea">
-                                                    <span class="me-1" >Photo(s)</span> 
+                                                    <span class="me-1" >Photo(s) Changée(s)</span> 
                                                     <div id="fileCount"></div>
                                                 </label>
-                                                <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 1, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
+                                                {{-- <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 1, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'> --}}
+                                                <ul class="filter-button-group mb-4 pb-2 align-items-center justify-content-center">
                                                     @for($i = 1; $i < 7; $i++)
                                                     @foreach($photos as $value)
                                                     @if($i === $value->image_nbre)
-                                                    <div class="col">
-                                                        <div class="">
-                                                            <div class="card h-50" style="display: flex;justify-content: center;align-items: center;border:block;">
+                                                    <li>
+                                                    <div class="" style="height: 100px;width: 100px;">
+                                                        <div class="me-1">
+                                                            <div class="card" style="display: flex;justify-content: center;align-items: center;border:block;border-radius: 0px;">
                                                                 <a>
-                                                                    <img id="imagePreview{{$i}}" style="object-fit: cover;height: 150px;"   src="{{ Storage::url($value->image_chemin) }}" />
-                                                                    <img id="imageDefaut{{$i}}" style="object-fit: cover;height: 150px; cursor: pointer; display: none" src="{{asset('images/logo/defaut/car.webp')}}"  />
+                                                                    <img id="imagePreview{{$i}}" style="object-fit: cover;height: 100px;width: 100px;"   src="{{ Storage::url($value->image_chemin) }}" />
+                                                                    <img id="imageDefaut{{$i}}" style="object-fit: cover;height: 100px;width: 100px; cursor: pointer; display: none" src="{{asset('images/logo/defaut/image.png')}}"  />
                                                                 </a>
                                                                 <ul class="product-badges" id="btn_image{{$i}}">
                                                                     <li>
@@ -590,15 +592,14 @@
                                                             <div class="card-inner pt-2 pb-2">
                                                                 <input type="file" id="image{{$i}}" name="image{{$i}}" style="width:120px; margin-left: -13px;display: none;" accept="image/*">
                                                                 <input type="hidden" id="update{{$i}}" name="update{{$i}}" value="0" >
-                                                                <p id="image_size{{$i}}" style="display: none;" ></p>
-                                                                {{-- {{ substr($value->image_nom, 22) }} --}}
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    </li>
                                                     @endif
                                                     @endforeach
                                                     @endfor
-                                                </div>
+                                                </ul>
                                             </div>
                                             <div class="form-group row g-gs align-items-center justify-content-center">
                                                 <div class="col-12 text-center" >

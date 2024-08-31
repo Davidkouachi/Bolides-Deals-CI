@@ -134,8 +134,6 @@ class AnnonceController extends Controller
     {
         $types = Type_marque::all();
 
-        
-
         $data_qrcode = url()->current();
         // $data_qrcode = 'http://192.168.1.2:8000/Detail%20Annonces/'.$uuid;
         $qrCode = new QrCode($data_qrcode);
@@ -214,6 +212,7 @@ class AnnonceController extends Controller
 
     public function trait_annonce(Request $request)
     {
+        DB::beginTransaction();
         // Créer une nouvelle annonce
         $ann = new Annonce();
         $ann->marque_id = $request->marque_id;
@@ -253,83 +252,78 @@ class AnnonceController extends Controller
             $ann->negociable = $request->negociable;
         }
 
-        if ($ann->save()) {
-            // Vérification des fichiers images
-            if ($request->hasFile('image1') && $request->hasFile('image2') && $request->hasFile('image3') &&
-                $request->hasFile('image4') && $request->hasFile('image5') && $request->hasFile('image6')) {
-
-                $filenames = [];
-                for ($i = 1; $i <= 6; $i++) {
-                    $file = $request->file('image' . $i);
-                    if ($file->isValid()) {
-                        $filename = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalName();
-                        $filenames[] = $filename;
-                    } else {
-                        $this->rollbackAnnonce($ann->id); // Supprimer l'annonce et les images si un fichier est invalide
-                        Annonce_error::create(['motif' => 'Une ou plusieurs images sont invalides.','user_id' => Auth::user()->id]);
-                        return back()->with('error', 'Certaines images selectionnées ne sont pas valides.Veuillez sélectionner des images valides.');
-                    }
-                }
-
-                foreach ($filenames as $filename) {
-                    $exists = Annonce_photo::where('image_nom', '=', $filename)->first();
-                    if ($exists) {
-                        $this->rollbackAnnonce($ann->id); // Supprimer l'annonce et les images si l'image existe déjà
-                        Annonce_error::create(['motif' => 'Une ou plusieurs images existent déjà.','user_id' => Auth::user()->id]);
-                        return back()->with('warning', 'Certaines images selectionnées ne sont pas valides.Veuillez sélectionner des images valides ou d\'autres images.');
-                    }
-                }
-
-                foreach ($filenames as $key => $filename) {
-                    $path = $request->file('image' . ($key + 1))->storeAs('public/images', $filename);
-
-                    $photo = new Annonce_photo();
-                    $photo->annonce_id = $ann->id;
-                    $photo->image_nom = $filename;
-                    $photo->image_chemin = $path;
-                    $photo->image_nbre = $key + 1;
-                    if (!$photo->save()) {
-                        $this->rollbackAnnonce($ann->id); // Supprimer l'annonce et les images si l'enregistrement échoue
-                        Annonce_error::create(['motif' => 'Échec de l\'enregistrement des images.','user_id' => Auth::user()->id]);
-                        return back()->with('error', 'Échec de la publication de l\'annonce.');
-                    }
-                }
-
-                $data_qrcode = route('index_detail', $ann->uuid);
-                $qrCode = new QrCode($data_qrcode);
-                $writer = new PngWriter();
-                $result = $writer->write($qrCode);
-                $imgqr = $result->getDataUri();
-
-                return back()->with(['success_ann'=>'Annonce publiée avec succès.','imgqr'=>$imgqr, 'data_qrcode'=>$data_qrcode,'uuid'=>$ann->uuid,]);
-
-            } else {
-                $this->rollbackAnnonce($ann->id); // Supprimer l'annonce si les fichiers requis ne sont pas fournis
-                Annonce_error::create(['motif' => 'Veuillez sélectionner toutes les images requises.','user_id' => Auth::user()->id]);
-                return back()->with('warning', 'Certaines images selectionnées ne sont pas valides.Veuillez sélectionner des images valides.');
+        try {
+            if (!$ann->save()) {
+                return back()->with('error', 'Erreur lors de la publication de l\'annonce.');
             }
+
+            for ($i = 1; $i <= 6; $i++) {
+                $file = $request->file('image' . $i);
+
+                if ($file && $file->isValid()) {
+                    $filename = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalName();
+                    
+                    // Vérification de duplication dans la base de données
+                    if (Annonce_photo::where('image_nom', $filename)->exists()) {
+                        Annonce_error::create(['motif' => 'Une ou plusieurs images existent déjà.','user_id' => Auth::user()->id]);
+                        throw new \Exception('Une ou plusieurs images existent déjà.');
+                    }
+
+                    // Stockage du fichier
+                    $path = $file->storeAs('public/images', $filename);
+
+                    // Création de l'enregistrement de la photo
+                    $photo = new Annonce_photo([
+                        'annonce_id' => $ann->id,
+                        'image_nom' => $filename,
+                        'image_chemin' => $path,
+                        'image_nbre' => $i,
+                    ]);
+
+                    if (!$photo->save()) {
+                        Annonce_error::create(['motif' => 'Échec de l\'enregistrement des images.','user_id' => Auth::user()->id]);
+                        throw new \Exception('Échec de l\'enregistrement des images.');
+                    }
+                } else {
+                    Annonce_error::create(['motif' => 'Une ou plusieurs images sont invalides.','user_id' => Auth::user()->id]);
+                    throw new \Exception('Une ou plusieurs images sont invalides.');
+                }
+            }
+
+            // Génération et stockage du QR Code
+            $data_qrcode = route('index_detail', $ann->uuid);
+            $qrCode = new QrCode($data_qrcode);
+            $writer = new PngWriter();
+            $result = $writer->write($qrCode);
+            $imgqr = $result->getDataUri();
+
+            DB::commit(); // Commit transaction si tout va bien
+            return back()->with(['success_ann' => 'Annonce publiée avec succès.', 'imgqr' => $imgqr, 'data_qrcode' => $data_qrcode, 'uuid' => $ann->uuid]);
+
+        } catch (\Exception $e) {
+            DB::rollback(); // Rollback transaction en cas d'erreur
+            Annonce_error::create(['motif' => $e->getMessage(), 'user_id' => Auth::user()->id]);
+            return back()->with('error', $e->getMessage());
         }
-        Annonce_error::create(['motif' => 'Échec de la publication de l\'annonce.','user_id' => Auth::user()->id]);
-        return redirect()->back()->with('error','Échec de la publication de l\'annonce.');
     }
 
     // Fonction pour supprimer une annonce et les images associées
-    private function rollbackAnnonce($annonceId)
-    {
-        $annonce = Annonce::find($annonceId);
-        if ($annonce) {
-            // Supprimer les images associées
-            $photos = Annonce_photo::where('annonce_id', $annonceId)->get();
-            foreach ($photos as $photo) {
-                // Supprimer le fichier image du stockage
-                Storage::delete($photo->image_chemin);
-                // Supprimer l'enregistrement de la photo
-                $photo->delete();
-            }
-            // Supprimer l'annonce
-            $annonce->delete();
-        }
-    }
+    // private function rollbackAnnonce($annonceId)
+    // {
+    //     $annonce = Annonce::find($annonceId);
+    //     if ($annonce) {
+    //         // Supprimer les images associées
+    //         $photos = Annonce_photo::where('annonce_id', $annonceId)->get();
+    //         foreach ($photos as $photo) {
+    //             // Supprimer le fichier image du stockage
+    //             Storage::delete($photo->image_chemin);
+    //             // Supprimer l'enregistrement de la photo
+    //             $photo->delete();
+    //         }
+    //         // Supprimer l'annonce
+    //         $annonce->delete();
+    //     }
+    // }
 
     public function annonce_user($id)
     {

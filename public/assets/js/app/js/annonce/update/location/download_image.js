@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const imagePreviews = Array.from({ length: 6 }, (_, i) => document.getElementById(`imagePreview${i + 1}`));
     const removeButtons = Array.from({ length: 6 }, (_, i) => document.getElementById(`btn_image${i + 1}`));
-    const imageSizes = Array.from({ length: 6 }, (_, i) => document.getElementById(`image_size${i + 1}`));
     const updates = Array.from({ length: 6 }, (_, i) => document.getElementById(`update${i + 1}`));
     const imageDefauts = Array.from({ length: 6 }, (_, i) => document.getElementById(`imageDefaut${i + 1}`));
 
@@ -37,19 +36,32 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
 
+                let isDuplicate = false;
+                for (let i = 0; i < fileInputs.length; i++) {
+                    if (i !== index && fileInputs[i].files.length > 0 && fileInputs[i].files[0].name === file.name) {
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+
+                if (isDuplicate) {
+                    NioApp.Toast("<h5>Alert</h5><p>Vous avez déjà sélectionné cette photo.</p>", "warning", {position: "top-center"});
+                    input.value = ''; // Clear the file input value
+                    updateFileCount();
+                    return;
+                }
+
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     imagePreviews[index].style.display = 'block';
                     imageDefauts[index].style.display = 'none';
                     imagePreviews[index].src = e.target.result;
                     removeButtons[index].style.display = 'block';
-                    imageSizes[index].style.display = 'block';
                     updates[index].value = '1';
 
                     const sizeInMB = file.size / (1024 * 1024);
                     const displaySize = sizeInMB >= 1 ? `${sizeInMB.toFixed(2)} Mo` : `${(file.size / 1024).toFixed(2)} Ko`;
 
-                    imageSizes[index].textContent = 'Taille : ' + displaySize;
                     input.style.display = 'none';
                 }
                 reader.readAsDataURL(file);
@@ -65,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
             imagePreviews[index].src = ''; // Reset to default image or clear it
             fileInputs[index].value = ''; // Clear the file input value
             button.style.display = 'none'; // Hide the remove button
-            imageSizes[index].style.display = 'none';
             updateFileCount();
         });
     });

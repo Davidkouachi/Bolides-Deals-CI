@@ -96,7 +96,13 @@
                                             <li>
                                                 <span class="badge @php echo $ann->type_annonce === 'vente' ? 'bg-info' : 'bg-warning'; @endphp">
                                                     <em class="icon ni ni-cc-alt2"></em>
-                                                    <span>{{$ann->type_annonce}}</span>
+                                                    <span>
+                                                        @if($ann->type_annonce === 'vente')
+                                                            {{$ann->type_annonce}}
+                                                        @else
+                                                            {{$ann->type_annonce.' / 24h'}}
+                                                        @endif
+                                                    </span>
                                                 </span>
                                             </li>
                                         </ul> 

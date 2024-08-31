@@ -240,7 +240,7 @@ class MesannoncesController extends Controller
             // En cas d'erreur, annuler la transaction
             DB::rollBack();
             // Retourner un message d'erreur avec l'exception capturée
-            return redirect()->route('index_mesannonces')->with('error', 'Échec de la suppression de l\'annonce : ' . $e->getMessage());
+            return redirect()->route('index_mesannonces')->with('error', $e->getMessage());
         }
     }
 
@@ -351,7 +351,6 @@ class MesannoncesController extends Controller
                             return back()->with('error', 'Échec de la mise à jour de l\'annonce.');
                         }
 
-                        return redirect()->route('index_mesannonces')->with('success','Mise à jour éffectuée.');
                     }else {
                         Annonce_error::create(['motif' => 'Veuillez sélectionner toutes les images requises.','user_id' => Auth::user()->id]);
 

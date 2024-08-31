@@ -6,7 +6,7 @@
 * Version: 3.2.0
 * Updated: 06.13.2023
 **/
-
+pmo-lv
 @font-face {
     font-family: "Roboto";
     src: url("../fonts/Roboto-Light.eot");
@@ -52206,11 +52206,8 @@ div.dataTables_wrapper div.dataTables_filter .dark-mode input,
     bottom: -50px;
     max-width: 90%;
     width: 590px;
-    transform: translate(-50%, 100%);
     transition: all .4s;
-    background: #fff;
     border-radius: 50px;
-    box-shadow: 0 0 40px -2px rgba(31, 43, 58, .25);
     z-index: 9999
 }
 

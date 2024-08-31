@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const imagePreviews = Array.from({ length: 6 }, (_, i) => document.getElementById(`imagePreview${i + 1}`));
     const removeButtons = Array.from({ length: 6 }, (_, i) => document.getElementById(`btn_image${i + 1}`));
-    const image_sizes = Array.from({ length: 6 }, (_, i) => document.getElementById(`image_size${i + 1}`));
     const imageDefauts = Array.from({ length: 6 }, (_, i) => document.getElementById(`imageDefaut${i + 1}`));
 
     const maxFileSize = 2 * 1024 * 1024; // 2 Mo
@@ -37,13 +36,29 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
 
+                //let fileName = file.name.split('.').slice(0, -1).join('.');
+
+                let isDuplicate = false;
+                for (let i = 0; i < fileInputs.length; i++) {
+                    if (i !== index && fileInputs[i].files.length > 0 && fileInputs[i].files[0].name === file.name) {
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+
+                if (isDuplicate) {
+                    NioApp.Toast("<h5>Alert</h5><p>Vous avez déjà sélectionné cette photo.</p>", "warning", {position: "top-center"});
+                    input.value = ''; // Clear the file input value
+                    updateFileCount();
+                    return;
+                }
+
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     imagePreviews[index].style.display = 'block';
                     imageDefauts[index].style.display = 'none';
                     imagePreviews[index].src = e.target.result;
                     removeButtons[index].style.display = 'block';
-                    image_sizes[index].style.display = 'block';
 
                     // Conversion de la taille en Mo
                     const sizeInMB = file.size / (1024 * 1024);
@@ -56,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         displaySize = sizeInKB + ' Ko'; // Afficher en Ko
                     }
 
-                    image_sizes[index].textContent = 'Taille : ' + displaySize;
                     input.style.display = 'none';
                 }
                 reader.readAsDataURL(file);
@@ -72,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
             imagePreviews[index].src = ''; // Reset to default image or clear it
             fileInputs[index].value = ''; // Clear the file input value
             button.style.display = 'none'; // Hide the remove button
-            image_sizes[index].style.display = 'none';
             updateFileCount();
         });
     });
@@ -83,3 +96,79 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial update
     updateFileCount();
 });
+
+// document.addEventListener('DOMContentLoaded', function() {
+//     const fileInput = document.getElementById('image');
+//     const maxFileSize = 2 * 1024 * 1024; // 2 Mo
+//     const previewContainer = document.getElementById('previewContainer'); // Container for all previews
+//     const fileCountDisplay = document.getElementById('fileCount');
+//     const maxFiles = 6;
+
+//     function updateFileCount() {
+//         const count = previewContainer.querySelectorAll('.col').length;
+//         fileCountDisplay.textContent = `Photos sélectionnées : ${count} / ${maxFiles}`;
+//     }
+
+//     fileInput.addEventListener('change', function(event) {
+//         const files = event.target.files;
+
+//         if (files.length > maxFiles) {
+//             NioApp.Toast("<h5>Alert</h5><p>Vous pouvez sélectionner un maximum de 6 photos.</p>", "warning", {position: "top-center"});
+//             return;
+//         }
+
+//         for (let i = 0; i < files.length; i++) {
+//             const file = files[i];
+
+//             if (file.size > maxFileSize) {
+//                 NioApp.Toast("<h5>Alert</h5><p>La taille des photos dépasse 2 Mo. Veuillez télécharger des photos plus petite.</p>", "warning", {position: "top-center"});
+//                 continue;
+//             }
+
+//             let isDuplicate = false;
+//             previewContainer.querySelectorAll('.col img').forEach(img => {
+//                 if (img.src === URL.createObjectURL(file)) {
+//                     isDuplicate = true;
+//                 }
+//             });
+
+//             if (isDuplicate) {
+//                 NioApp.Toast("<h5>Alert</h5><p>Certaines photos ont été sélectionner deux fois.</p>", "warning", {position: "top-center"});
+//                 continue;
+//             }
+
+//             const reader = new FileReader();
+//             reader.onload = function(e) {
+//                 const previewDiv = document.createElement('div');
+//                 previewDiv.classList.add('col');
+
+//                 previewDiv.innerHTML = `
+//                     <div class="">
+//                         <div class="card h-50" style="display: flex; justify-content: center; align-items: center; border:block;">
+//                             <a>
+//                                 <img id="imagePreview${i}" style="object-fit: cover; height: 150px;" src="${e.target.result}" />
+//                             </a>
+//                         </div>
+//                         <div class="card-inner pt-2 pb-2">
+//                             <p id="image_size${i}">Taille : ${(file.size / (1024 * 1024)).toFixed(2)} Mo</p>
+//                         </div>
+//                     </div>
+//                 `;
+
+//                 // Append the preview to the container
+//                 previewContainer.appendChild(previewDiv);
+//                 $('#previewContainer').slick('refresh');
+
+//                 updateFileCount(); // Update the count after adding the file
+//             };
+
+//             reader.readAsDataURL(file);
+//         }
+
+//         fileInput.value = ''; // Reset file input to allow re-selection of the same files
+//     });
+
+//     // Initial file count update
+//     updateFileCount();
+// });
+

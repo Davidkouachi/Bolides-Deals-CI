@@ -377,13 +377,12 @@
         </li>
     </ul> --}}
 
-    <a class="pmo-st pmo-dark bg-azure active" data-bs-toggle="modal" data-bs-target="#modalCommentaire" >
+    {{-- <a class="pmo-st pmo-dark bg-azure active" data-bs-toggle="modal" data-bs-target="#modalCommentaire" >
         <div class="pmo-st-img">
             <em class="icon ni ni-chat-circle" style="font-size: 25px;"></em>
         </div>
-    </a>
-
-    @if(!request()->routeIs('index_annonce_new_vente','index_annonce_new_location'))
+    </a> --}}
+    @if(!request()->routeIs('index_detail'))
     <div class="pmo-lv pmo-dark active p-3" style="width: 200px;">
         <a class="" data-bs-toggle="modal" data-bs-target="#modalAnnonceNew">
             <div class="pmo-text text-white">
@@ -396,7 +395,9 @@
     </div>
     @endif
 
-    <div class="modal fade" tabindex="-1" id="modalCommentaire">
+    @yield('btn_bas')
+
+    {{-- <div class="modal fade" tabindex="-1" id="modalCommentaire">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-azure text-white">
@@ -406,7 +407,7 @@
                     </a>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="{{route('trait_sugg')}}" enctype="multipart/form-data">
+                    <form id="form_sugg" method="post" action="{{route('trait_sugg')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label class="form-label" for="default-textarea">Nom</label>
@@ -448,7 +449,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="modal fade zoom" tabindex="-1" id="modalAnnonceNew">
         <div class="modal-dialog modal-sm" role="document">
@@ -482,12 +483,12 @@
     </div>
 
 @if(Auth::check())
-    @if (session('session_time_remaining'))
+    {{-- @if (session('session_time_remaining'))
     <div class="alert alert-info">
         Temps restant avant l'expiration de la session :
         <span id="countdown">{{ gmdate('H:i:s', session('session_time_remaining')) }}</span>
     </div>
-    @endif
+    @endif --}}
 
     <div class="modal fade" tabindex="-1" id="sessionExpiredModal" aria-modal="true" role="dialog" style="position: fixed;" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog" role="document">
@@ -518,7 +519,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Convertir le temps restant en secondes
             let timeRemaining = parseInt('{{ session('session_time_remaining') }}', 10);
-            const countdownElement = document.getElementById('countdown');
+            // const countdownElement = document.getElementById('countdown');
             
             // Fonction pour mettre à jour le compte à rebours
             function updateCountdown() {
@@ -533,7 +534,7 @@
                     minutes = minutes < 10 ? '0' + minutes : minutes;
                     seconds = seconds < 10 ? '0' + seconds : seconds;
                     // Mettre à jour l'affichage du compte à rebours
-                    countdownElement.textContent = hours + ':' + minutes + ':' + seconds;
+                    // countdownElement.textContent = hours + ':' + minutes + ':' + seconds;
                     
                     // Mettre à jour le compte à rebours après une seconde
                     setTimeout(updateCountdown, 1000);
@@ -570,6 +571,7 @@
     <script src="{{asset('assets/js/example-toastr55a0.js') }}"></script>
 
     <script src="{{asset('assets/js/app/js/form_load.js') }}"></script>
+    <script src="{{asset('assets/js/app/js/form_sugg.js') }}"></script>
 
     @if (session('success'))
         <script>

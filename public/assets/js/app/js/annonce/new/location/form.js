@@ -1,6 +1,16 @@
 function handleFormSubmit(event) {
     event.preventDefault(); // Prevent default form submission
-    // Précharger le HTML du modal
+
+    // Get the file input and check the number of selected files
+    // const fileInput = document.getElementById('image');
+    // const selectedFiles = fileInput.files.length;
+
+    // // Check if exactly 6 photos are selected
+    // if (selectedFiles !== 6) {
+    //     NioApp.Toast("<h5>Alert</h5><p>Vous devez sélectionner exactement 6 photos.</p>", "warning", {position: "top-center"});
+    //     return; // Stop the form submission
+    // }
+    
     var modalHtml = `
         <div class="modal fade" id="modalCharg" tabindex="-1" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered modal-lg align-items-center justify-content-center">

@@ -253,7 +253,7 @@
                                 Type d'annonces
                             </label>
                             <div class="form-control-wrap">
-                                <select name="type_annonce" class="form-select js-select2" data-placeholder="Selectionner">
+                                <select name="type_annonce" class="form-select js-select2" data-placeholder="Selectionner" id="type_annonce">
                                     <option value=""></option>
                                     <option selected value="tout" {{ $filterTypeAnnonce == 'tout' ? 'selected' : '' }} >
                                         Tout
@@ -263,6 +263,44 @@
                                     </option>
                                     <option value="location" {{ $filterTypeAnnonce == 'location' ? 'selected' : '' }}>
                                         Location
+                                    </option>
+                                </select>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        $('#type_annonce').on('change', function() {
+                                            var selectedValue = $(this).val();
+
+                                            if (selectedValue == 'vente') {
+                                                document.getElementById('div_vneuf').style.display = 'block';
+                                            } else {
+                                                document.getElementById('div_vneuf').style.display = 'none';
+                                                $('select[name="vneuf"]').val('tout').trigger('change');
+                                            }
+                                        });
+
+                                        // Trigger the change event on page load
+                                        $('#type_annonce').trigger('change');
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" id="div_vneuf" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label" for="fv-topics1">
+                                Véhicule neuf ou d'occasion
+                            </label>
+                            <div class="form-control-wrap">
+                                <select name="vneuf" class="form-select js-select2" data-placeholder="Selectionner">
+                                    <option value=""></option>
+                                    <option selected value="tout" {{ $filterNeuf == 'tout' ? 'selected' : '' }} >
+                                        Tout
+                                    </option>
+                                    <option value="oui" {{ $filterNeuf == 'oui' ? 'selected' : '' }}>
+                                        Véhicule neuf
+                                    </option>
+                                    <option value="non" {{ $filterNeuf == 'non' ? 'selected' : '' }}>
+                                        Véhicule d'occasion
                                     </option>
                                 </select>
                             </div>

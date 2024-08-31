@@ -42,6 +42,7 @@ class AnnonceController extends Controller
         $filterPrixMin = $request->input('prix_min');
         $filterPrixMax = $request->input('prix_max');
         $filterTypeAnnonce = $request->input('type_annonce');
+        $filterNeuf = $request->input('vneuf');
 
         // Créez la requête de base
         $anns = Annonce::join('villes','villes.id','=','annonces.ville_id')
@@ -60,6 +61,15 @@ class AnnonceController extends Controller
             } else {
                 // Filtrer par type spécifique
                 $anns->where('annonces.type_annonce', '=', $filterTypeAnnonce);
+            }
+        }
+        // Filtrer par véhicule neuf
+        if (!empty($filterNeuf)) {
+            if ($filterNeuf == 'tout') {
+            // Pas de filtre spécifique, inclure toutes les annonces
+            } else {
+                // Filtrer par type spécifique
+                $anns->where('annonces.neuf', '=', $filterNeuf);
             }
         }
         // Filtrer par marque (insensible à la casse)
@@ -127,6 +137,7 @@ class AnnonceController extends Controller
             'filterPrixMin' => $filterPrixMin,
             'filterPrixMax' => $filterPrixMax,
             'filterTypeAnnonce' => $filterTypeAnnonce,
+            'filterNeuf' => $filterNeuf,
         ]);
     }
 

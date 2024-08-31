@@ -384,11 +384,11 @@
     </a> --}}
     @if(!request()->routeIs('index_detail'))
     <div class="pmo-lv pmo-dark active p-3" style="width: 200px;">
-        <a class="" data-bs-toggle="modal" data-bs-target="#modalAnnonceNew">
+        <a class="" @if(Auth::check()) data-bs-toggle="modal" data-bs-target="#modalAnnonceNew" @else data-bs-toggle="modal" data-bs-target="#LoginRequis" @endif>
             <div class="pmo-text text-white">
                 Publier une annonce
             </div>
-            <p class="pmo-close" data-bs-toggle="modal" data-bs-target="#modalAnnonceNew">
+            <p class="pmo-close">
                 <em class="ni ni-arrow-long-right"></em>
             </p>
         </a>
@@ -396,6 +396,34 @@
     @endif
 
     @yield('btn_bas')
+
+    <div class="modal fade" tabindex="-1" id="LoginRequis" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-white">
+                <div class="modal-body modal-body-lg text-center">
+                    <div class="nk-modal">
+                        <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></em>
+                        <h4 class="nk-modal-title">Connexion requise</h4>
+                        <div class="nk-modal-text">
+                            <div class="caption-text">
+                                <span>
+                                    Vous devez être connecté avant de publier une annonce.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nk-modal-action">
+                            <button class="btn btn-md btn-success btn-dim btn-white me-2" onclick="window.location.href='{{ route('index_login') }}'">
+                                Se connecter
+                            </button>
+                            <button class="btn btn-md btn-danger btn-dim btn-white me-2" data-bs-dismiss="modal">
+                                Fermer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{-- <div class="modal fade" tabindex="-1" id="modalCommentaire">
         <div class="modal-dialog modal-md" role="document">

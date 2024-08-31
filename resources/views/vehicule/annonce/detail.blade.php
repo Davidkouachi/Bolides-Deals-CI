@@ -333,7 +333,6 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                            @if($ann->neuf === 'oui')
                                             <li>
                                                 <div class="p-0" style="width: 150px;">
                                                     <div class="p-0">
@@ -344,15 +343,20 @@
                                                                        <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/neuf.png') }}"> 
                                                                     </span>
                                                                 </div>
-                                                                <div class="user-info"> 
-                                                                    <h4 class="sub-text text-black" >Véhicule neuf</h4>
+                                                                <div class="user-info">
+                                                                    <h4 class="sub-text text-black" >
+                                                                        @if($ann->neuf === 'oui')
+                                                                            Véhicule neuf
+                                                                        @else
+                                                                            Véhicule d'occasion
+                                                                        @endif
+                                                                    </h4>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
-                                            @endif
                                             <li>
                                                 <div class="p-0" style="width: 150px;">
                                                     <div class="p-0">

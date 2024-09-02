@@ -15,6 +15,7 @@ use App\Http\Controllers\MesannoncesController;
 use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\ParametrageController;
 use App\Http\Controllers\FormuleController;
+use App\Http\Controllers\StatistiqueController;
 
 
 Route::middleware(['auth'])->group(function () {
@@ -50,6 +51,10 @@ Route::middleware(['auth','statuthorsligne','CheckPapierJourMiddleware'])->group
     Route::get('/Mes Annonces/Mise à jour/Vente/{uuid}', [MesannoncesController::class, 'update_vente'])->name('update_vente');
     Route::get('/Mes Annonces/Mise à jour/Location/{uuid}', [MesannoncesController::class, 'update_location'])->name('update_location');
     Route::post('/trait_annonce_update/{uuid}', [MesannoncesController::class, 'trait_annonce_update'])->name('trait_annonce_update');
+
+    Route::get('/Statistique', [StatistiqueController::class, 'index_stat'])->name('index_stat');
+    Route::get('/stat_anne', [StatistiqueController::class, 'stat_anne'])->name('stat_anne');
+    Route::get('/stat_statut', [StatistiqueController::class, 'stat_statut'])->name('stat_statut');
 });
 
 Route::middleware(['role:ADMINISTRATEUR'])->group(function () {

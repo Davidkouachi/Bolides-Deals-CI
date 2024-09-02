@@ -73,11 +73,11 @@
                 @endif
 
                 @if($vanns->isNotEmpty())
-                <div class="nk-block nk-block-lg bg-azure rounded p-4 mt-5">
+                <div class="nk-block nk-block-lg rounded p-0 mt-5">
                     <div class="nk-block-head">
                         <div class="nk-block-between g-3">
                             <div class="nk-block-head-content">
-                                <h5 class="nk-block-title text-white">
+                                <h5 class="nk-block-title text-azure">
                                     <span>Dernières annonces : Ventes</span>
                                 </h5>
                             </div>
@@ -104,7 +104,7 @@
                                 </div>
                                 <div class="card-inner pt-0 pb-2 text-center" style="height:145px;padding-left: 5px;padding-right: 5px;">
                                     <div class="user-card d-flex" style="margin-top: -32px;margin-left: 10px;">
-                                        <div class="user-avatar md sq p-2 border bg-white rounded-circle ">
+                                        <div class="user-avatar md sq p-2 border bg-white rounded-circle border-info border-2 ">
                                             <img src="{{ Storage::url($value->marque_photo) }}" style="object-fit: cover;background: transparent;">
                                         </div>
                                         {{-- <div class="user-avatar sm sq" style="background: transparent;margin-left: 0px;">
@@ -151,12 +151,12 @@
                 @endif
 
                 @if($lanns->isNotEmpty())
-                <div class="nk-block nk-block-lg bg-orange rounded p-4 mt-5">
+                <div class="nk-block nk-block-lg rounded p-0 mt-5">
                     <div class="nk-block-head">
                         <div class="nk-block-between g-3">
                             <div class="nk-block-head-content">
-                                <h5 class="nk-block-title text-white">
-                                    <span>Dernières annonces : Locations</span>
+                                <h5 class="nk-block-title text-orange">
+                                    <span>Derniéres annonces : Locations</span>
                                 </h5>
                             </div>
                         </div>
@@ -182,7 +182,7 @@
                                 </div>
                                 <div class="card-inner pt-0 pb-2 text-center" style="height:145px;padding-left: 5px;padding-right: 5px;">
                                     <div class="user-card d-flex" style="margin-top: -32px;margin-left: 10px;">
-                                        <div class="user-avatar md sq p-2 border bg-white rounded-circle ">
+                                        <div class="user-avatar md sq p-2 border bg-white rounded-circle border-warning border-2 ">
                                             <img src="{{ Storage::url($value->marque_photo) }}" style="object-fit: cover;background: transparent;">
                                         </div>
                                         {{-- <div class="user-avatar sm sq" style="background: transparent;margin-left: 0px;">

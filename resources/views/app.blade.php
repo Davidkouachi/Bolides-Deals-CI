@@ -276,6 +276,15 @@
                                                         </a>
                                                     </li>
                                                     <li>
+                                                        <a href="{{route('index_stat')}}">
+                                                            <em class="icon ni ni-growth">
+                                                            </em>
+                                                            <span>
+                                                                Statistique
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
                                                         <a href="{{route('index_mesannonces')}}">
                                                             <em class="icon ni ni-view-list-fill">
                                                             </em>
@@ -612,7 +621,6 @@
     <script src="{{asset('assets/js/bundle55a0.js')}}"></script>
     <script src="{{asset('assets/js/scripts55a0.js')}}"></script>
     <script src="{{asset('assets/js/demo-settings55a0.js')}}"></script>
-    <script src="{{asset('assets/js/charts/gd-campaign55a0.js')}}"></script>
     <script src="{{asset('assets/js/example-toastr55a0.js') }}"></script>
 
     <script src="{{asset('assets/js/app/js/form_load.js') }}"></script>

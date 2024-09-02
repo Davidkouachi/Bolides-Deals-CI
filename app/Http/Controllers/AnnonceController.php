@@ -117,6 +117,9 @@ class AnnonceController extends Controller
         // Paginer les résultats après avoir appliqué les filtres
         $anns = $anns->paginate(30);
 
+        $anns->nbre_vente = $anns->where('type_annonce', '=', 'vente')->count();
+        $anns->nbre_location = $anns->where('type_annonce', '=', 'location')->count();
+
         // Ajouter la première photo à chaque annonce
         foreach ($anns as $value) {
             $firstPhoto = Annonce_photo::where('annonce_id', '=', $value->id)

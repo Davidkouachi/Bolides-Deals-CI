@@ -30,18 +30,21 @@
                                     <div class="col-12" >
                                         <ul class="filter-button-group mb-4 pb-1 align-items-center justify-content-center">
                                             <li>
-                                                <a class="filter-button text-center text-info">
-                                                    Vente
+                                                <a class="filter-button text-center text-info fw-bold">
+                                                    Vente ( {{$anns->nbre_vente}} )
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="filter-button text-center text-warning">
-                                                    Location
+                                                <a class="filter-button text-center text-warning fw-bold">
+                                                    Location ( {{$anns->nbre_location}} )
                                                 </a>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="col-12" hidden>
+
+                                        {{-- rounded-bottom @php echo $ann->type_annonce === 'vente' ? 'border border-info border-2' : 'border border-warning border-2'; @endphp --}}
+
                                         <form action="#" class="row g-gs">
                                             <div class="col-lg-4 col-md-6">
                                                 <div class="form-group">
@@ -101,7 +104,7 @@
                             @foreach($anns as $ann)
                             {{-- <div class="filter-item  {{$ann->type_marque}}" data-category="{{$ann->type_marque}}" style="width: 195px;"> filter-button-group --}}
                             <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6 filter-item {{$ann->type_marque}}" data-category="{{$ann->type_marque}}">
-                                <div class="card trans_shado img_annonce">
+                                <div class="card trans_shado img_annonce " >
                                     <div class="product-thumb card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                         <a href="{{route('index_detail',$ann->uuid)}}">
                                             <img style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($ann->photo) }}" />
@@ -115,7 +118,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="card-inner pt-0 pb-2 text-center" style="height:145px;padding-left: 5px;padding-right: 5px;">
+                                    <div class="card-inner pt-0 pb-2 text-center " style="height:145px;padding-left: 5px;padding-right: 5px;">
                                         <div class="user-card d-flex" style="margin-top: -32px;margin-left: 10px;">
                                             <div class="user-avatar md sq p-2 border bg-white rounded-circle @php echo $ann->type_annonce === 'vente' ? 'border-info border-2' : 'border-warning border-2'; @endphp">
                                                 <img src="{{ Storage::url($ann->marque_photo) }}" style="object-fit: cover;background: transparent;">
@@ -139,7 +142,7 @@
                                                 {{$ann->annee}}
                                             </a>
                                         </p>
-                                        <div class="h6 fs-13px text-warning text-center" style="margin-top: -13px;">
+                                        <div class="h6 fs-13px text-danger text-center" style="margin-top: -13px;">
                                             {{$ann->prix.' Fcfa'}}
                                         </div>
                                         <span class="text-soft text-center">

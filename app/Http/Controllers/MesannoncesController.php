@@ -132,6 +132,7 @@ class MesannoncesController extends Controller
                 ->first();
 
             $value->photo = $firstPhoto ? $firstPhoto->image_chemin : null;
+            $value->nbre_photo = Annonce_photo::where('annonce_id', '=', $value->id)->count();
         }
 
         return view('vehicule.mes_annonces.index', [

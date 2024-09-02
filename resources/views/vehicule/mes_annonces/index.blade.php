@@ -94,18 +94,12 @@
                             @foreach($anns as $ann)
                             {{-- <div class="filter-item  {{$ann->type_marque}}" data-category="{{$ann->type_marque}}" style="width: 195px;"> filter-button-group --}}
                             <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6 filter-item {{$ann->type_marque}}" data-category="{{$ann->type_marque}}">
-                                <div class="card product-card trans_shado" >
+                                <div class="card product-card trans_shado img_annonce" >
                                     <div class="product-thumb card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                         <a href="{{route('index_mesannonces_detail',['id' => Auth::user()->id, 'uuid' => $ann->uuid])}}">
                                             <img style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($ann->photo) }}" />
                                         </a>
                                         <ul class="product-badges">
-                                            <li>
-                                                <span class="badge @php echo $ann->type_annonce === 'vente' ? 'bg-info' : 'bg-warning'; @endphp">
-                                                    <em class="icon ni ni-cc-alt2"></em>
-                                                    <span>{{$ann->type_annonce}}</span>
-                                                </span>
-                                            </li>
                                             <li>
                                                 <span class="badge 
                                                     @php
@@ -133,6 +127,12 @@
                                                 </span>
                                             </li>
                                             <li>
+                                                <span class="badge bg-danger">
+                                                        <em class="icon ni ni-camera"></em>
+                                                        <span>{{$ann->nbre_photo}}</span>
+                                                </span>
+                                            </li>
+                                            <li>
                                                 <span class="badge bg-secondary">
                                                     <em class="icon ni ni-eye"></em>
                                                     <span>{{$ann->views.' vue(s)'}}</span>
@@ -142,7 +142,7 @@
                                     </div>
                                     <div class="card-inner pt-0 pb-2 text-center" style="height:145px;padding-left: 5px;padding-right: 5px;">
                                         <div class="user-card d-flex" style="margin-top: -32px;margin-left: 10px;">
-                                            <div class="user-avatar md sq p-2 border bg-white rounded-circle ">
+                                            <div class="user-avatar md sq p-2 border bg-white rounded-circle @php echo $ann->type_annonce === 'vente' ? 'border-info border-2' : 'border-warning border-2'; @endphp ">
                                                 <img src="{{ Storage::url($ann->marque_photo) }}" style="object-fit: cover;background: transparent;">
                                             </div>
                                             {{-- <div class="user-avatar sm sq" style="background: transparent;margin-left: 0px;">

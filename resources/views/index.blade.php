@@ -52,30 +52,17 @@
                     <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
                         @foreach($marques as $value)
                         <div class="col ">
-                            <div class="trans" style="height: 180px;">
+                            <div class="trans img_annonce" style="height: 180px;">
                                 <div class="card-inner">
                                     <div class="team">
-                                        @if($value->nbre_ann > 0)
-                                            <a class="user-card user-card-s2" href="{{ route('index_annonce', 'marque='.$value->id) }}">
-                                                <div class="user-avatar lg sq" style="background: transparent;">
-                                                    <img src="{{ Storage::url($value->image_chemin) }}" alt="{{ $value->marque }}" class="thumb">
-                                                </div>
-                                                <div class="user-info">
-                                                    <h6 class="fs-13px">{{ $value->marque }}</h6>
-                                                </div>
-                                            </a>
-                                        @else
-                                            <a class="user-card user-card-s2" href="javascript:void(0);" onclick="showNoAnnoncesAlert('{{ $value->marque }}')">
-                                                <div class="user-avatar lg sq" style="background: transparent;">
-                                                    <img src="{{ Storage::url($value->image_chemin) }}" alt="{{ $value->marque }}" class="thumb">
-                                                </div>
-                                                <div class="user-info">
-                                                    <h6 class="fs-13px">
-                                                        {{ $value->marque }}
-                                                    </h6>
-                                                </div>
-                                            </a>
-                                        @endif
+                                        <a class="user-card user-card-s2" @if($value->nbre_ann > 0) href="{{ route('index_annonce', 'marque='.$value->id) }}" @else href="javascript:void(0);" onclick="showNoAnnoncesAlert('{{ $value->marque }}')" @endif>
+                                            <div class="user-avatar lg sq" style="background: transparent;">
+                                                <img src="{{ Storage::url($value->image_chemin) }}" alt="{{ $value->marque }}" class="thumb">
+                                            </div>
+                                            <div class="user-info">
+                                                <h6 class="fs-13px">{{ $value->marque }}</h6>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -96,14 +83,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
+                    {{-- <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'> --}}
+                    <div class="row g-gs">
                         @foreach($vanns as $value)
-                        <div class="col p-3">
-                            <div class="card trans_shado">
+                        {{-- <div class="col p-3"> --}}
+                        <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6">
+                            <div class="card trans_shado img_annonce">
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                     <a href="{{route('index_detail',$value->uuid)}}">
                                         <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />
                                     </a>
+                                    <ul class="product-badges">
+                                        <li>
+                                            <span class="badge bg-danger">
+                                                    <em class="icon ni ni-camera"></em>
+                                                    <span>{{$value->nbre_photo}}</span>
+                                            </span>
+                                        </li>
+                                    </ul> 
                                 </div>
                                 <div class="card-inner pt-0 pb-2 text-center" style="height:145px;padding-left: 5px;padding-right: 5px;">
                                     <div class="user-card d-flex" style="margin-top: -32px;margin-left: 10px;">
@@ -164,14 +161,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
+                    {{-- <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'> --}}
+                    <div class="row g-gs">
                         @foreach($lanns as $value)
-                        <div class="col p-3">
-                            <div class="card trans_shado">
+                        {{-- <div class="col p-3"> --}}
+                        <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6">
+                            <div class="card trans_shado img_annonce">
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                     <a href="{{route('index_detail',$value->uuid)}}">
                                         <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />
                                     </a>
+                                    <ul class="product-badges">
+                                        <li>
+                                            <span class="badge bg-danger">
+                                                    <em class="icon ni ni-camera"></em>
+                                                    <span>{{$value->nbre_photo}}</span>
+                                            </span>
+                                        </li>
+                                    </ul> 
                                 </div>
                                 <div class="card-inner pt-0 pb-2 text-center" style="height:145px;padding-left: 5px;padding-right: 5px;">
                                     <div class="user-card d-flex" style="margin-top: -32px;margin-left: 10px;">

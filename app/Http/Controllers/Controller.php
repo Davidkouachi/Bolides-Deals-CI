@@ -34,7 +34,7 @@ class Controller
                         ->where('annonces.statut', '=', 'en ligne')
                         ->where('annonces.type_annonce', '=', 'vente')
                         ->latest() // Order by the latest created_at
-                        ->take(10)
+                        ->take(12)
                         ->get();
         foreach ($vanns as $value) {
             $firstPhoto = Annonce_photo::where('annonce_id', '=', $value->id)
@@ -42,6 +42,7 @@ class Controller
                                         ->first();
             // Set the photo property
             $value->photo = $firstPhoto->image_chemin;
+            $value->nbre_photo = Annonce_photo::where('annonce_id', '=', $value->id)->count();
         }
 
         $lanns = Annonce::join('villes','villes.id','=','annonces.ville_id')
@@ -51,7 +52,7 @@ class Controller
                         ->where('annonces.statut', '=', 'en ligne')
                         ->where('annonces.type_annonce', '=', 'location')
                         ->latest() // Order by the latest created_at
-                        ->take(10)
+                        ->take(12)
                         ->get();
         foreach ($lanns as $value) {
             $firstPhoto = Annonce_photo::where('annonce_id', '=', $value->id)
@@ -59,6 +60,7 @@ class Controller
                                         ->first();
             // Set the photo property
             $value->photo = $firstPhoto->image_chemin;
+            $value->nbre_photo = Annonce_photo::where('annonce_id', '=', $value->id)->count();
         }
 
         if (Auth::check()) {

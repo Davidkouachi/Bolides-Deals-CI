@@ -569,8 +569,9 @@
                                                     <div id="fileCount"></div>
                                                 </label>
                                                 {{-- <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 1, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'> --}}
+                                                <input type="hidden" name="nbre_photo" id="nbre_photo" value="{{$photos->count()}}">
                                                 <ul class="filter-button-group mb-4 pb-2 align-items-center justify-content-center">
-                                                    @for($i = 1; $i < 7; $i++)
+                                                    @for($i = 1; $i <= $photos->count(); $i++)
                                                     @foreach($photos as $value)
                                                     @if($i === $value->image_nbre)
                                                     <li>

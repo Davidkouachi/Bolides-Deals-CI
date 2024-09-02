@@ -77,13 +77,13 @@
                 <div class="nk-block">
                     <ul class="filter-button-group mb-4 pb-1">
                         <li>
-                            <button class="filter-button active" data-filter="*" type="button">
+                            <button class="filter-button active trans_shado" data-filter="*" type="button">
                                 Tout
                             </button>
                         </li>
                         @foreach($types as $value)
                         <li>
-                            <button class="filter-button" data-filter=".{{$value->nom}}" type="button">
+                            <button class="filter-button trans_shado" data-filter=".{{$value->nom}}" type="button">
                                 {{$value->nom}} 
                             </button>
                         </li>
@@ -94,7 +94,7 @@
                             @foreach($anns as $ann)
                             {{-- <div class="filter-item  {{$ann->type_marque}}" data-category="{{$ann->type_marque}}" style="width: 195px;"> filter-button-group --}}
                             <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6 filter-item {{$ann->type_marque}}" data-category="{{$ann->type_marque}}">
-                                <div class="card product-card">
+                                <div class="card product-card trans_shado" >
                                     <div class="product-thumb card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                         <a href="{{route('index_mesannonces_detail',['id' => Auth::user()->id, 'uuid' => $ann->uuid])}}">
                                             <img style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($ann->photo) }}" />

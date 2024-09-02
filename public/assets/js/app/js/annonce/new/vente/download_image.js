@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     const fileInputs = document.querySelectorAll('input[type="file"]');
     const fileCountDisplay = document.getElementById('fileCount');
+    const nbre_photo = document.getElementById('nbre_photo');
 
-    const imagePreviews = Array.from({ length: 6 }, (_, i) => document.getElementById(`imagePreview${i + 1}`));
-    const removeButtons = Array.from({ length: 6 }, (_, i) => document.getElementById(`btn_image${i + 1}`));
-    const imageDefauts = Array.from({ length: 6 }, (_, i) => document.getElementById(`imageDefaut${i + 1}`));
+    const imagePreviews = Array.from({ length: nbre_photo.value }, (_, i) => document.getElementById(`imagePreview${i + 1}`));
+    const removeButtons = Array.from({ length: nbre_photo.value }, (_, i) => document.getElementById(`btn_image${i + 1}`));
+    const imageDefauts = Array.from({ length: nbre_photo.value }, (_, i) => document.getElementById(`imageDefaut${i + 1}`));
 
     const maxFileSize = 2 * 1024 * 1024; // 2 Mo
 

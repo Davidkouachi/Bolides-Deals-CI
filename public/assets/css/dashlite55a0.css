@@ -6,7 +6,25 @@
 * Version: 3.2.0
 * Updated: 06.13.2023
 **/
-pmo-lv
+
+.trans_shado {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trans_shado:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.trans {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trans:hover {
+    transform: translateY(-10px);
+}
+
+
 @font-face {
     font-family: "Roboto";
     src: url("../fonts/Roboto-Light.eot");

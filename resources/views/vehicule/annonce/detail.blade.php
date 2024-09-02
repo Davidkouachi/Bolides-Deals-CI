@@ -154,7 +154,7 @@
                                     <div class="tab-pane active" id="caracteristique">
                                         <ul class="filter-button-group mb-4 align-items-center justify-content-center">
                                             <li>
-                                                <div class="p-0" style="width: 150px;">
+                                                <div class="p-0 trans" style="width: 120px;">
                                                     <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
@@ -172,7 +172,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="p-0" style="width: 150px;">
+                                                <div class="p-0 trans" style="width: 120px;">
                                                     <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
@@ -190,7 +190,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="p-0" style="width: 150px;">
+                                                <div class="p-0 trans" style="width: 120px;">
                                                     <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
@@ -208,7 +208,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="p-0" style="width: 150px;">
+                                                <div class="p-0 trans" style="width: 120px;">
                                                     <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
@@ -226,7 +226,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="p-0" style="width: 150px;">
+                                                <div class="p-0 trans" style="width: 120px;">
                                                     <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
@@ -244,7 +244,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="p-0" style="width: 150px;">
+                                                <div class="p-0 trans" style="width: 120px;">
                                                     <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
@@ -262,7 +262,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="p-0" style="width: 150px;">
+                                                <div class="p-0 trans" style="width: 120px;">
                                                     <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
@@ -280,7 +280,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="p-0" style="width: 150px;">
+                                                <div class="p-0 trans" style="width: 120px;">
                                                     <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
@@ -298,7 +298,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="p-0" style="width: 150px;">
+                                                <div class="p-0 trans" style="width: 120px;">
                                                     <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
@@ -316,7 +316,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="p-0" style="width: 150px;">
+                                                <div class="p-0 trans" style="width: 120px;">
                                                     <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
@@ -334,7 +334,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="p-0" style="width: 150px;">
+                                                <div class="p-0 trans" style="width: 120px;">
                                                     <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
@@ -358,7 +358,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="p-0" style="width: 150px;">
+                                                <div class="p-0 trans" style="width: 120px;">
                                                     <div class="p-0">
                                                         <div class="team">
                                                             <div class="user-card user-card-s2">
@@ -379,7 +379,7 @@
                                             </li>
                                             @if($ann->type_annonce === 'vente')
                                                 <li>
-                                                    <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0 trans" style="width: 120px;">
                                                         <div class="p-0">
                                                             <div class="team">
                                                                 <div class="user-card user-card-s2">
@@ -397,7 +397,7 @@
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0 trans" style="width: 120px;">
                                                         <div class="p-0">
                                                             <div class="team">
                                                                 <div class="user-card user-card-s2">
@@ -417,7 +417,7 @@
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0 trans" style="width: 120px;">
                                                         <div class="p-0">
                                                             <div class="team">
                                                                 <div class="user-card user-card-s2">
@@ -443,7 +443,7 @@
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0 trans" style="width: 120px;">
                                                         <div class="p-0">
                                                             <div class="team">
                                                                 <div class="user-card user-card-s2">
@@ -469,7 +469,7 @@
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0 trans" style="width: 120px;">
                                                         <div class="p-0">
                                                             <div class="team">
                                                                 <div class="user-card user-card-s2">
@@ -496,7 +496,7 @@
                                                 </li>
                                                 @if($ann->hors_taxe === 'non')
                                                 <li>
-                                                    <div class="p-0" style="width: 150px;">
+                                                    <div class="p-0 trans" style="width: 120px;">
                                                         <div class="p-0">
                                                             <div class="team">
                                                                 <div class="user-card user-card-s2">
@@ -523,7 +523,7 @@
                                                 </li>
                                                     @if($ann->papier === 'oui')
                                                     <li>
-                                                        <div class="p-0" style="width: 150px;">
+                                                        <div class="p-0 trans" style="width: 120px;">
                                                             <div class="p-0">
                                                                 <div class="team">
                                                                     <div class="user-card user-card-s2">
@@ -543,7 +543,7 @@
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="p-0" style="width: 150px;">
+                                                        <div class="p-0 trans" style="width: 120px;">
                                                             <div class="p-0">
                                                                 <div class="team">
                                                                     <div class="user-card user-card-s2">
@@ -609,16 +609,16 @@
                                         <img height="90px" width="90px" src="{{ $imgqr }}" alt="Code QR">
                                     </div>
                                     <div class="col-12 mt-2">
-                                        <a rel="noopener nofollow" target="_blank" class="btn btn-success mt-1 me-1" style="border-radius: 100px;" href="whatsapp://send?text={{ urlencode($ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.', prix : '.$ann->prix.' Fcfa')}}%0A%0A{{'lien : '.urlencode($data_qrcode) }}" target="_blank">
+                                        <a rel="noopener nofollow" target="_blank" class="btn btn-dim btn-success btn-white mt-1 me-1" style="border-radius: 100px;" href="whatsapp://send?text={{ urlencode($ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.', prix : '.$ann->prix.' Fcfa')}}%0A%0A{{'lien : '.urlencode($data_qrcode) }}" target="_blank">
                                             <em class="icon ni ni-whatsapp"></em>
                                         </a>
-                                        <a rel="noopener nofollow" target="_blank" class="btn btn-primary mt-1 me-1" style="border-radius: 100px;" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($data_qrcode) }}" target="_blank">
+                                        <a rel="noopener nofollow" target="_blank" class="btn btn-dim btn-primary btn-white mt-1 me-1" style="border-radius: 100px;" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($data_qrcode) }}" target="_blank">
                                             <em class="icon ni ni-facebook-circle"></em>
                                         </a>
-                                        <a rel="noopener nofollow" target="_blank" class="btn btn-info mt-1 me-1" style="border-radius: 100px;" href="https://twitter.com/intent/tweet?text={{ urlencode($ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.', prix : '.$ann->prix.' Fcfa')}}%0A%0A{{'lien : '.urlencode($data_qrcode) }}" target="_blank">
+                                        <a rel="noopener nofollow" target="_blank" class="btn btn-dim btn-info btn-white mt-1 me-1" style="border-radius: 100px;" href="https://twitter.com/intent/tweet?text={{ urlencode($ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.', prix : '.$ann->prix.' Fcfa')}}%0A%0A{{'lien : '.urlencode($data_qrcode) }}" target="_blank">
                                             <em class="icon ni ni-twitter"></em>
                                         </a>
-                                        <a rel="noopener nofollow" target="_blank" class="btn btn-warning mt-1 me-1" style="border-radius: 100px;" href="sms:?body={{ $ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.' ,Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}" target="_blank">
+                                        <a rel="noopener nofollow" target="_blank" class="btn btn-dim btn-warning btn-white mt-1 me-1" style="border-radius: 100px;" href="sms:?body={{ $ann->marque.' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce.' ,Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{'Lien : '.urlencode($data_qrcode) }}" target="_blank">
                                             <em class="icon ni ni-chat"></em>
                                         </a>
                                     </div>
@@ -642,7 +642,7 @@
                     @if($sims->isNotEmpty())
                         @foreach($sims as $value)
                             <div class="col ">
-                                <div class="card ">
+                                <div class="card trans_shado">
                                     <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                         <a href="{{route('index_detail',$value->uuid)}}">
                                             <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />
@@ -694,7 +694,7 @@
 </div>
 
 @section('btn_bas')
-    <div class="pmo-lv active p-3" style="width: auto;background: none;border: none;">
+    <div class="pmo-lv active p-1 text-center" style="width: 100%;background: none;border: none;">
         <p class="fs-40px" style="background: transparent;">
             @if($ann->whatsapp)
             <a data-bs-toggle="tooltip" data-bs-placement="top" title="{{$ann->whatsapp}}" class="btn btn-success" style="border-radius: 100px;" href="https://wa.me/+225{{$ann->whatsapp}}?text={{ urlencode($ann->marque. ' '.$ann->model.' '.$ann->annee.' en '.$ann->type_annonce) }}%0A%0A{{'Prix : '.$ann->prix.' Fcfa'}}%0A%0A{{urlencode($data_qrcode)}}%0A%0A{{urlencode('Bonjour, je suis intéressé par votre annonce. Pourriez-vous m\'en dire plus ?') }}" target="_blank">
@@ -717,7 +717,6 @@
         </p>
     </div>
 @endsection
-
 
 <script src="{{asset('assets/js/app/js/annonce/form_signal.js') }}"></script>
 

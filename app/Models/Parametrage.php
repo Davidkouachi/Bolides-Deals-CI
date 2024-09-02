@@ -14,5 +14,6 @@ class Parametrage extends Model
         'nbre_jours_ligne',
         'nbre_jours_delete',
         'nbre_refresh',
+        'nbre_photo',
     ];
 }

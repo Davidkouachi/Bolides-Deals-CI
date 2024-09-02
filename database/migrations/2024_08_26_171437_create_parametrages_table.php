@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('parametrages', function (Blueprint $table) {
             $table->id();
-            $table->integer('nbre_jours_ligne')->default(0);
-            $table->integer('nbre_jours_delete')->default(0);
-            $table->integer('nbre_refresh')->default(0);
+            $table->integer('nbre_jours_ligne')->default(30);
+            $table->integer('nbre_jours_delete')->default(5);
+            $table->integer('nbre_refresh')->default(2);
+            $table->integer('nbre_photo')->default(6);
             $table->timestamps();
         });
     }

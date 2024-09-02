@@ -31,7 +31,7 @@
     <div class="nk-app-root">
         <div class="nk-main ">
 
-            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role','index_bord_user','index_bord_sugg','index_bord_parametrage') )
+            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role','index_bord_user','index_bord_sugg','index_bord_parametrage','index_formule') )
             <div class="nk-sidebar is-light nk-sidebar-fixed " data-content="sidebarMenu">
                 <div class="nk-sidebar-element nk-sidebar-head">
                     <div class="nk-sidebar-brand">
@@ -94,17 +94,6 @@
                                     </a>
                                 </li>
                                 <li class="nk-menu-item">
-                                    <a class="nk-menu-link" href="{{route('index_bord_parametrage')}}">
-                                        <span class="nk-menu-icon">
-                                            <em class="icon ni ni-setting">
-                                            </em>
-                                        </span>
-                                        <span class="nk-menu-text">
-                                            Paramétrage
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nk-menu-item">
                                     <a class="nk-menu-link" href="{{route('index_bord_sugg')}}">
                                         <span class="nk-menu-icon">
                                             <em class="icon ni ni-contact">
@@ -112,6 +101,28 @@
                                         </span>
                                         <span class="nk-menu-text">
                                             Suggestions
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a class="nk-menu-link" href="{{route('index_formule')}}">
+                                        <span class="nk-menu-icon">
+                                            <em class="icon ni ni-sign-usdc">
+                                            </em>
+                                        </span>
+                                        <span class="nk-menu-text">
+                                            Formules
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a class="nk-menu-link" href="{{route('index_bord_parametrage')}}">
+                                        <span class="nk-menu-icon">
+                                            <em class="icon ni ni-setting">
+                                            </em>
+                                        </span>
+                                        <span class="nk-menu-text">
+                                            Paramétrage
                                         </span>
                                     </a>
                                 </li>
@@ -127,7 +138,7 @@
                     <div class="container-xl wide-xl">
                         <div class="nk-header-wrap">
 
-                            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role','index_bord_user','index_bord_sugg','index_bord_parametrage') )
+                            @if(request()->routeIs('index_accueil_bord','index_bord_marque','index_bord_role','index_bord_user','index_bord_sugg','index_bord_parametrage','index_formule') )
                             <div class="nk-menu-trigger d-xl-none ms-n1 me-3">
                                 <a class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu" href="#">
                                     <em class="icon ni ni-menu">
@@ -203,6 +214,15 @@
                                             </div>
                                         </div>
                                     </li> --}}
+                                    @endauth
+
+                                    @auth()
+                                    <li class="dropdown notification-dropdown">
+                                        <a class=" nk-quick-nav-icon" href="">
+                                            <em class="icon ni ni-sign-usdc"></em>
+                                            <span class="fs-15px"></span>
+                                        </a>
+                                    </li>
                                     @endauth
 
                                     @yield('menu_haut')
@@ -338,9 +358,15 @@
                         <div class="nk-footer-wrap">
                             <div class="nk-footer-copyright">
                                 <span class="w-20" >
+                                    @if(Auth::check())
+                                        @if (session('session_time_remaining'))
+                                            <span id="countdown">{{ gmdate('H:i:s', session('session_time_remaining')) }}</span>
+                                        @endif
+                                    @endif
                                     Copyright © <script>
                                     document.write(new Date().getFullYear())
-                                    </script> Bolides Deals CI Dévéloppé par DAVID Kouachi.
+                                    </script> 
+                                    Bolides Deals CI Dévéloppé par DAVID Kouachi.
                                 </span>
                                 <marquee  behavior="" direction="" hidden>
                                     <span class="text-danger" >
@@ -511,13 +537,6 @@
     </div>
 
 @if(Auth::check())
-    {{-- @if (session('session_time_remaining'))
-    <div class="alert alert-info">
-        Temps restant avant l'expiration de la session :
-        <span id="countdown">{{ gmdate('H:i:s', session('session_time_remaining')) }}</span>
-    </div>
-    @endif --}}
-
     <div class="modal fade" tabindex="-1" id="sessionExpiredModal" aria-modal="true" role="dialog" style="position: fixed;" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content bg-white">
@@ -547,7 +566,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Convertir le temps restant en secondes
             let timeRemaining = parseInt('{{ session('session_time_remaining') }}', 10);
-            // const countdownElement = document.getElementById('countdown');
+            const countdownElement = document.getElementById('countdown');
             
             // Fonction pour mettre à jour le compte à rebours
             function updateCountdown() {
@@ -562,7 +581,7 @@
                     minutes = minutes < 10 ? '0' + minutes : minutes;
                     seconds = seconds < 10 ? '0' + seconds : seconds;
                     // Mettre à jour l'affichage du compte à rebours
-                    // countdownElement.textContent = hours + ':' + minutes + ':' + seconds;
+                    countdownElement.textContent = hours + ':' + minutes + ':' + seconds;
                     
                     // Mettre à jour le compte à rebours après une seconde
                     setTimeout(updateCountdown, 1000);
@@ -577,8 +596,6 @@
         });
     </script>
 @endif
-
-
 
     <script>
         window.addEventListener('load', function() {

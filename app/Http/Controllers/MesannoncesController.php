@@ -270,7 +270,7 @@ class MesannoncesController extends Controller
                         ->first();
         $photos = Annonce_photo::where('annonce_id', '=', $ann->id)->get();
 
-        return view('vehicule.annonce.update.vente',['marques' => $marques,'villes' => $villes,'types' => $types,'ann'=>$ann,'photos'=>$photos]);
+        return view('vehicule.annonce.update.vente',['marques' => $marques,'villes' => $villes,'types' => $types,'ann'=>$ann,'photos'=>$photos,]);
     }
 
     public function update_location($uuid)
@@ -335,7 +335,7 @@ class MesannoncesController extends Controller
 
         if ($ann->save()) {
             // Vérification des fichiers images
-            for ($i = 1; $i <= 6; $i++) {
+            for ($i = 1; $i <= $request->nbre_photo; $i++) {
                 if ($request->input('update'.$i) === '1') {
 
                     if ($request->hasFile('image'.$i)) {

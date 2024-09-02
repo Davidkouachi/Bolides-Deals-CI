@@ -14,6 +14,7 @@ use App\Http\Controllers\SuggestionController;
 use App\Http\Controllers\MesannoncesController;
 use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\ParametrageController;
+use App\Http\Controllers\FormuleController;
 
 
 Route::middleware(['auth'])->group(function () {
@@ -73,6 +74,9 @@ Route::middleware(['role:ADMINISTRATEUR'])->group(function () {
     Route::post('/trait_nbre_jours_ligne', [ParametrageController::class, 'trait_nbre_jours_ligne'])->name('trait_nbre_jours_ligne');
     Route::post('/trait_nbre_jours_delete', [ParametrageController::class, 'trait_nbre_jours_delete'])->name('trait_nbre_jours_delete');
     Route::post('/trait_nbre_refresh', [ParametrageController::class, 'trait_nbre_refresh'])->name('trait_nbre_refresh');
+    Route::post('/trait_nbre_photo', [ParametrageController::class, 'trait_nbre_photo'])->name('trait_nbre_photo');
+
+    Route::get('/Formules', [BordController::class, 'index_formule'])->name('index_formule');
 
 });
 

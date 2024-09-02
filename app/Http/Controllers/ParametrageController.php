@@ -64,4 +64,16 @@ class ParametrageController extends Controller
             return redirect()->back()->with('error','Echec de la mise à jour');
         }
     }
+
+    public function trait_nbre_photo(Request $request)
+    {
+        $verf = Parametrage::find('1');
+        $verf->nbre_photo = $request->nbre_photo;
+
+        if ($verf->save()) {
+            return redirect()->back()->with('success','Mise à jour éffectuée');
+        } else {
+            return redirect()->back()->with('error','Echec de la mise à jour');
+        }
+    }
 }

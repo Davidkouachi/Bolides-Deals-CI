@@ -27,7 +27,7 @@
                         @foreach($types as $value)
                             @if($value->nom !== 'autre')
                             <li>
-                                <a class="filter-button text-center" type="button">
+                                <a class="filter-button text-center trans_shado" type="button">
                                     {{$value->nom}} 
                                 </a>
                             </li>
@@ -51,8 +51,8 @@
                     
                     <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
                         @foreach($marques as $value)
-                        <div class="col">
-                            <div class="" style="height: 180px;">
+                        <div class="col ">
+                            <div class="trans" style="height: 180px;">
                                 <div class="card-inner">
                                     <div class="team">
                                         @if($value->nbre_ann > 0)
@@ -98,8 +98,8 @@
                     </div>
                     <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
                         @foreach($vanns as $value)
-                        <div class="col ">
-                            <div class="card ">
+                        <div class="col p-3">
+                            <div class="card trans_shado">
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                     <a href="{{route('index_detail',$value->uuid)}}">
                                         <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />
@@ -166,8 +166,8 @@
                     </div>
                     <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
                         @foreach($lanns as $value)
-                        <div class="col ">
-                            <div class="card ">
+                        <div class="col p-3">
+                            <div class="card trans_shado">
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                     <a href="{{route('index_detail',$value->uuid)}}">
                                         <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />

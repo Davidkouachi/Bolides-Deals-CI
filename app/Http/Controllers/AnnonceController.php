@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class AnnonceController extends Controller
 {
@@ -223,6 +224,8 @@ class AnnonceController extends Controller
 
     public function trait_annonce(Request $request)
     {
+        $para = Parametrage::find('1');
+
         DB::beginTransaction();
         // Créer une nouvelle annonce
         $ann = new Annonce();
@@ -268,7 +271,7 @@ class AnnonceController extends Controller
                 return back()->with('error', 'Erreur lors de la publication de l\'annonce.');
             }
 
-            for ($i = 1; $i <= 6; $i++) {
+            for ($i = 1; $i <= $para->nbre_photo; $i++) {
                 $file = $request->file('image' . $i);
 
                 if ($file && $file->isValid()) {

@@ -84,4 +84,9 @@ class BordController extends Controller
         return view('bord.parametrage.index',['para'=>$para]);
     }
 
+    public function index_formule()
+    {
+        return view('bord.formule.index');
+    }
+
 }

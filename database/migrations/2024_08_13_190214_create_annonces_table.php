@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('annonces', function (Blueprint $table) {
             $table->id();
+            $table->string('imm')->index();
             $table->integer('views')->default(0);
             $table->string('localisation');
             $table->string('model');
@@ -45,6 +46,10 @@ return new class extends Migration
             $table->string('sms')->nullable();
             $table->string('uuid')->unique()->index();
             $table->text('description');
+            $table->string('credit_auto')->index()->nullable();
+            $table->string('credit_auto_mois')->nullable();
+            $table->string('prix_apport')->nullable();
+            $table->string('prix_mois')->nullable();
             $table->unsignedBigInteger('marque_id');
             $table->foreign('marque_id')->references('id')->on('marques');
             $table->unsignedBigInteger('user_id');

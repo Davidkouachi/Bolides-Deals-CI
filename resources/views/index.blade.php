@@ -88,7 +88,7 @@
                         @foreach($vanns as $value)
                         {{-- <div class="col p-3"> --}}
                         <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6">
-                            <div class="card trans_shado img_annonce">
+                            <div class="card trans_shado img_annonce" @if($value->type_annonce === 'vente') style="border-bottom: 5px solid #058efc;" @else style="border-bottom: 5px solid orange;" @endif >
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                     <a href="{{route('index_detail',$value->uuid)}}">
                                         <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />
@@ -100,6 +100,14 @@
                                                     <span>{{$value->nbre_photo}}</span>
                                             </span>
                                         </li>
+                                        @if($value->type_annonce === 'vente' && $value->credit_auto === 'oui')
+                                            <li>
+                                                <span class="badge bg-success">
+                                                    <em class="icon ni ni-check-circle-fill"></em>
+                                                    <span>Crédit Auto</span>
+                                                </span>
+                                            </li>
+                                        @endif
                                     </ul> 
                                 </div>
                                 <div class="card-inner pt-0 pb-2 text-center" style="height:145px;padding-left: 5px;padding-right: 5px;">
@@ -166,7 +174,7 @@
                         @foreach($lanns as $value)
                         {{-- <div class="col p-3"> --}}
                         <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6">
-                            <div class="card trans_shado img_annonce">
+                            <div class="card trans_shado img_annonce" @if($value->type_annonce === 'vente') style="border-bottom: 5px solid #058efc;" @else style="border-bottom: 5px solid orange;" @endif >
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                     <a href="{{route('index_detail',$value->uuid)}}">
                                         <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />

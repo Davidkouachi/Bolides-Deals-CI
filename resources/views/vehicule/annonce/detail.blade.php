@@ -137,6 +137,33 @@
                                     {{$photos->count().' photo(s)'}}
                                 </p>
                             </div>
+                            @if($ann->type_annonce === 'vente')
+                                @if($ann->credit_auto === 'oui')
+                                <div class="col-12 mt-5" >
+                                    <div class="alert alert-fill alert-icon alert-success" role="alert">    
+                                        <em class="icon ni ni-check-circle-fill"></em>     
+                                        <strong>Crédit Auto</strong>
+                                        <ul>
+                                            <li>
+                                                <p class="small mb-0 fs-14px">
+                                                    - <strong>{{$ann->prix_mois.' Fcfa'}}</strong> / Mois.
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p class="small mb-0 fs-14px">
+                                                    - Sur <strong>{{$ann->credit_auto_mois}}</strong> Mois.
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p class="small mb-0 fs-14px">
+                                                    - Apport Initial : <strong>{{$ann->prix_apport.' Fcfa'}}</strong>.
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                @endif
+                            @endif
                             <div class="col-12 mt-5" >
                                 <ul class="nav nav-tabs nav-tabs-s2">
                                     <li class="nav-item"> 

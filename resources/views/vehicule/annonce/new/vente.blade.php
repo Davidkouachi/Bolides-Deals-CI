@@ -41,6 +41,11 @@
                                                 - Veuillez noter que vous ne pouvez <strong>renouveler une annonce que {{$para->nbre_refresh}} fois</strong>.
                                             </p>
                                         </li>
+                                        <li>
+                                            <p class="small mb-0 fs-14px">
+                                                - L'immatriculation du véhicule ne sera pas afficher dans les détails de l'annonce.
+                                            </p>
+                                        </li>
                                     </ul>
                                     <div class="d-inline-flex position-absolute end-0 top-50 translate-middle-y me-2">
                                         <button type="button" class="btn btn-xs btn-icon btn-warning rounded-pill" data-bs-dismiss="alert">
@@ -278,13 +283,32 @@
 
                                                             if (selectedValue == 'oui') {
                                                                 document.getElementById('div_papier').style.display='none';
+                                                                document.getElementById('div_imm').style.display='none';
+                                                                document.getElementById('imm').value='neant';
 
                                                             } else {
                                                                 document.getElementById('div_papier').style.display='block';
+                                                                document.getElementById('div_imm').style.display='block';
+                                                                document.getElementById('imm').value='';
                                                             }
                                                         });
                                                     });
                                                 </script>
+                                                <div class="col-lg-4 col-md-6" id="div_imm" style="display: none;">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="cp1-team-size">
+                                                            Immatriculation
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input id="imm" required name="imm" type="text" class="form-control form-control-md" placeholder="Entrer l'immatriculation du véhicule sans espace" oninput="removeSpaces(this)">
+                                                            <script>
+                                                                function removeSpaces(input) {
+                                                                    input.value = input.value.replace(/\s+/g, '');
+                                                                }
+                                                            </script>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="col-lg-4 col-md-6" id="div_papier" style="display: none;">
                                                     <div class="form-group">
                                                         <label class="form-label" for="cp1-team-size">Papiers à jour</label>
@@ -428,6 +452,77 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-4 col-md-6" id="div_credit_auto">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="cp1-team-size">
+                                                            Crédit Auto
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <select required class="form-select js-select2" data-placeholder="selectionner" name="credit_auto" id="credit_auto">
+                                                                <option value="oui">Oui</option>
+                                                                <option selected value="non">Non</option>
+                                                            </select>
+                                                            <script>
+                                                                document.addEventListener('DOMContentLoaded', function() {
+                                                                    $('#credit_auto').on('change', function() {
+                                                                        var selectedValue = $(this).val();
+
+                                                                        if (selectedValue == 'oui') {
+                                                                            document.getElementById('div_credit_auto_mois').style.display='block';
+                                                                            document.getElementById('div_prix_apport').style.display='block';
+                                                                            document.getElementById('div_prix_mois').style.display='block';
+
+                                                                        } else {
+                                                                            document.getElementById('div_credit_auto_mois').style.display='none';
+                                                                            document.getElementById('div_prix_apport').style.display='none';
+                                                                            document.getElementById('div_prix_mois').style.display='none';
+                                                                        }
+                                                                    });
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6" id="div_credit_auto_mois" style="display: none;">
+                                                   <div class="form-group">
+                                                        <label class="form-label">
+                                                            Crédit Auto nombre de mois
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <select required class="form-select js-select2" data-placeholder="selectionner" id="credit_auto_mois" name="credit_auto_mois">
+                                                                @for($i = 0; $i < 51; $i++)
+                                                                    <option value="{{ $i }}" {{ $i == 1 ? 'selected' : '' }}>{{ $i }}</option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6" id="div_prix_apport" style="display: none;">
+                                                   <div class="form-group">
+                                                        <label class="form-label" for="default-05">
+                                                            Apport initial
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <div class="form-text-hint">
+                                                                <span class="overline-title">Fcfa</span>
+                                                            </div>
+                                                            <input required type="tel" class="form-control" id="prix_apport" placeholder="Apport initial du crédit auto" name="prix_apport" value="0">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6" id="div_prix_mois" style="display: none;">
+                                                   <div class="form-group">
+                                                        <label class="form-label" for="default-05">
+                                                            Somme a payée
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <div class="form-text-hint">
+                                                                <span class="overline-title">Fcfa / mois</span>
+                                                            </div>
+                                                            <input required type="tel" class="form-control" id="prix_mois" name="prix_mois" value="0" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="row g-gs mb-4" >
                                                 <div class="col-lg-4 col-md-6 col-sm-12" >
@@ -562,6 +657,45 @@
 <script src="{{asset('assets/js/app/js/annonce/new/vente/download_image.js') }}"></script>
 <script src="{{asset('assets/js/app/js/annonce/new/vente/form.js') }}"></script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const prixApport = document.getElementById('prix_apport');
+            const creditAutoMois = document.getElementById('credit_auto_mois');
+            const prixMois = document.getElementById('prix_mois');
+            const prix = document.getElementById('prix');
+
+            function calculateMonthlyPayment() {
+                const apport = parseInt(prixApport.value.replace(/\./g, '')) || 0;
+                const prixTotal = parseInt(prix.value.replace(/\./g, '')) || 0;
+                const months = parseInt(creditAutoMois.value) || 1;
+                const remainingAmount = prixTotal - apport;
+                const monthlyPayment = Math.floor(remainingAmount / months);
+                prixMois.value = formatPrice(monthlyPayment.toString());
+            }
+
+            prixApport.addEventListener('input', function() {
+                this.value = formatPrice(this.value);
+                calculateMonthlyPayment();
+            });
+
+            prix.addEventListener('input', function() {
+                this.value = formatPrice(this.value);
+                calculateMonthlyPayment();
+            });
+
+            $('#credit_auto_mois').on('change', function() {
+                calculateMonthlyPayment();
+            });
+
+            function formatPrice(input) {
+                input = input.replace(/\./g, '');
+                return input.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
+
+            // Initial calculation on page load
+            calculateMonthlyPayment();
+        });
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -630,6 +764,10 @@
             document.getElementById('prix').addEventListener('input', function() {
                 this.value = formatPrice(this.value);
             });
+            // Écouter l'événement d'entrée sur les champs de texte
+            document.getElementById('prix_apport').addEventListener('input', function() {
+                this.value = formatPrice(this.value);
+            });
 
             // Événement pour permettre uniquement les chiffres
             document.getElementById('km').addEventListener('keypress', function(event) {
@@ -638,9 +776,15 @@
                     event.preventDefault();
                 }
             });
-
             // Événement pour permettre uniquement les chiffres
             document.getElementById('prix').addEventListener('keypress', function(event) {
+                const key = event.key;
+                if (isNaN(key)) {
+                    event.preventDefault();
+                }
+            });
+            // Événement pour permettre uniquement les chiffres
+            document.getElementById('prix_apport').addEventListener('keypress', function(event) {
                 const key = event.key;
                 if (isNaN(key)) {
                     event.preventDefault();

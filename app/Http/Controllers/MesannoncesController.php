@@ -294,8 +294,16 @@ class MesannoncesController extends Controller
 
     public function trait_annonce_update(Request $request, $uuid)
     {
+        $imm = str_replace(' ', '', $request->input('imm'));
+
+        $verf = Annonce::where('imm', '=', $imm)->where('user_id', '!=', Auth::user()->id)->first();
+        if ($verf) {
+            return back()->with('error', 'Cette immatriculation existe déjà.');
+        }
+
         // Créer une nouvelle annonce
         $ann = Annonce::where('uuid','=',$uuid)->first();
+        $ann->imm = str_replace(' ', '', $request->input('imm'));
         $ann->marque_id = $request->marque_id;
         $ann->type_marque_id = $request->type_marque_id;
         $ann->model = $request->model;
@@ -326,12 +334,26 @@ class MesannoncesController extends Controller
             }else{
                 $ann->papier = $request->papier;
             }
+
             $ann->kilometrage = $request->kilometrage;
             $ann->troc = $request->troc;
             $ann->visite_techn = $request->visite_techn;
             $ann->assurance = $request->assurance;
             $ann->nbre_cle = $request->nbre_cle;
             $ann->negociable = $request->negociable;
+
+            $ann->credit_auto = $request->credit_auto;
+
+            if ($request->credit_auto === 'oui') {
+
+                $ann->credit_auto_mois = $request->credit_auto_mois;
+                $ann->prix_apport = $request->prix_apport;
+                $ann->prix_mois = $request->prix_mois;
+            }else{
+                $ann->credit_auto_mois = '0';
+                $ann->prix_apport = '0';
+                $ann->prix_mois = '0';
+            }
         }
 
         if ($ann->save()) {

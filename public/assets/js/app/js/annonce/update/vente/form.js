@@ -1,5 +1,25 @@
 function handleFormSubmit(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
+
+    const prixApport = parseInt(document.getElementById('prix_apport').value.replace(/\./g, '')) || 0;
+    const creditAutoMois = parseInt(document.getElementById('credit_auto_mois').value) || 1;
+    const prixMois = parseInt(document.getElementById('prix_mois').value.replace(/\./g, '')) || 0;
+    const prix = parseInt(document.getElementById('prix').value.replace(/\./g, '')) || 0;
+    const credit_auto = document.getElementById('credit_auto').value;
+
+    if (credit_auto === 'oui') {
+    // Validation: prixApport should not equal prix, and prixMois should not be negative
+        if (prixApport === prix) {
+            NioApp.Toast("<h5>Vérification</h5><p>L'apport initial ne peut pas être égal au prix total.</p>", "warning", {position: "top-center"});
+            return;
+        }
+
+        if (prixMois < 0) {
+            NioApp.Toast("<h5>Vérification</h5><p>Le montant à payer par mois ne peut pas être négatif.</p>", "warning", {position: "top-center"});
+            return;
+        }
+    }
+    
     // Précharger le HTML du modal
     var modalHtml = `
         <div class="modal fade" id="modalCharg" tabindex="-1" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">

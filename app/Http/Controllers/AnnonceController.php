@@ -228,11 +228,20 @@ class AnnonceController extends Controller
 
     public function trait_annonce(Request $request)
     {
+
+        $imm = str_replace(' ', '', $request->input('imm'));
+
+        $verf = Annonce::where('imm', '=', $imm)->first();
+        if ($verf) {
+            return back()->with('error', 'Ce véhicule existe déjà.');
+        }
+
         $para = Parametrage::find('1');
 
         DB::beginTransaction();
         // Créer une nouvelle annonce
         $ann = new Annonce();
+        $ann->imm = str_replace(' ', '', $request->input('imm'));
         $ann->marque_id = $request->marque_id;
         $ann->user_id = Auth::user()->id;
         $ann->type_marque_id = $request->type_marque_id;
@@ -268,6 +277,19 @@ class AnnonceController extends Controller
             $ann->assurance = $request->assurance;
             $ann->nbre_cle = $request->nbre_cle;
             $ann->negociable = $request->negociable;
+            $ann->credit_auto = $request->credit_auto;
+
+            if ($request->credit_auto === 'oui') {
+
+                $ann->credit_auto_mois = $request->credit_auto_mois;
+                $ann->prix_apport = $request->prix_apport;
+                $ann->prix_mois = $request->prix_mois;
+            }else{
+                
+                $ann->credit_auto_mois = '0';
+                $ann->prix_apport = '0';
+                $ann->prix_mois = '0';
+            }
         }
 
         try {

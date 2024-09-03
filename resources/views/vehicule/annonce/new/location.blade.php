@@ -248,6 +248,21 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-4 col-md-6" id="div_imm">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="cp1-team-size">
+                                                            Immatriculation
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input autocomplete="off" id="imm" required name="imm" type="text" class="form-control form-control-md" placeholder="Entrer l'immatriculation du véhicule sans espace" oninput="removeSpaces(this)">
+                                                            <script>
+                                                                function removeSpaces(input) {
+                                                                    input.value = input.value.replace(/\s+/g, '');
+                                                                }
+                                                            </script>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                 </div>

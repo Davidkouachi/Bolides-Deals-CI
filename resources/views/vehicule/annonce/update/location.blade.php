@@ -283,6 +283,21 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-4 col-md-6" id="div_imm" >
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="cp1-team-size">
+                                                            Immatriculation
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input id="imm" required name="imm" type="text" class="form-control form-control-md" placeholder="Entrer l'immatriculation du véhicule sans espace" oninput="removeSpaces(this)" value="{{$ann->imm}}">
+                                                            <script>
+                                                                function removeSpaces(input) {
+                                                                    input.value = input.value.replace(/\s+/g, '');
+                                                                }
+                                                            </script>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                 </div>
@@ -557,20 +572,9 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Écouter l'événement d'entrée sur les champs de texte
-            document.getElementById('km').addEventListener('input', function() {
-                this.value = formatPrice(this.value);
-            });
             // Écouter l'événement d'entrée sur les champs de texte
             document.getElementById('prix').addEventListener('input', function() {
                 this.value = formatPrice(this.value);
-            });
-
-            // Événement pour permettre uniquement les chiffres
-            document.getElementById('km').addEventListener('keypress', function(event) {
-                const key = event.key;
-                if (isNaN(key)) {
-                    event.preventDefault();
-                }
             });
 
             // Événement pour permettre uniquement les chiffres

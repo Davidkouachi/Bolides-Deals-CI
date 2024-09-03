@@ -104,7 +104,7 @@
                             @foreach($anns as $ann)
                             {{-- <div class="filter-item  {{$ann->type_marque}}" data-category="{{$ann->type_marque}}" style="width: 195px;"> filter-button-group --}}
                             <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6 filter-item {{$ann->type_marque}}" data-category="{{$ann->type_marque}}">
-                                <div class="card trans_shado img_annonce " >
+                                <div class="card trans_shado img_annonce " @if($ann->type_annonce === 'vente') style="border-bottom: 5px solid #058efc;" @else style="border-bottom: 5px solid orange;" @endif >
                                     <div class="product-thumb card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                         <a href="{{route('index_detail',$ann->uuid)}}">
                                             <img style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($ann->photo) }}" />
@@ -116,6 +116,14 @@
                                                     <span>{{$ann->nbre_photo}}</span>
                                                 </span>
                                             </li>
+                                            @if($ann->type_annonce === 'vente' && $ann->credit_auto === 'oui')
+                                            <li>
+                                                <span class="badge bg-success">
+                                                    <em class="icon ni ni-check-circle-fill"></em>
+                                                    <span>Crédit Auto</span>
+                                                </span>
+                                            </li>
+                                            @endif
                                         </ul>
                                     </div>
                                     <div class="card-inner pt-0 pb-2 text-center " style="height:145px;padding-left: 5px;padding-right: 5px;">

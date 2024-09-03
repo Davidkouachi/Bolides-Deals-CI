@@ -11,12 +11,18 @@ class Annonce extends Model
 
     protected $fillable = [
         'id',
+        'imm',
+        'credit_auto',
+        'credit_auto_mois',
+        'prix_apport',
+        'prix_mois',
         'marque_id',
         'user_id',
         'ville_id',
         'type_marque_id',
         'localisation',
         'model',
+        'credit_auto',
         'transmission',
         'kilometrage',
         'type_carburant',

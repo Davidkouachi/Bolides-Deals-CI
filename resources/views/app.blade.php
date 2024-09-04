@@ -433,7 +433,7 @@
     @yield('btn_bas')
 
     <div class="modal fade" tabindex="-1" id="LoginRequis" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content bg-white">
                 <div class="modal-body modal-body-lg text-center">
                     <div class="nk-modal">
@@ -442,7 +442,7 @@
                         <div class="nk-modal-text">
                             <div class="caption-text">
                                 <span>
-                                    Vous devez être connecté avant de publier une annonce.
+                                    Vous devez être connecté d'abord.
                                 </span>
                             </div>
                         </div>

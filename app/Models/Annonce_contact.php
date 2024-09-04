@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class annonce_refresh extends Model
+class Annonce_contact extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'id',
-        'nbre_refresh',
-        'date_refresh',
+        'whatsapp',
+        'appel',
+        'sms',
         'annonce_id',
     ];
 

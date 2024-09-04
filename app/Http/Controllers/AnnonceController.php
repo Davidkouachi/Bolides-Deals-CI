@@ -16,7 +16,13 @@ use App\Models\Ville;
 use App\Models\Type_marque;
 use App\Models\Annonce;
 use App\Models\Annonce_photo;
+use App\Models\Annonce_vente;
+use App\Models\Annonce_contact;
+use App\Models\Annonce_refresh;
 use App\Models\Annonce_error;
+use App\Models\User_formule;
+use App\Models\Formule;
+use App\Models\Credit_auto;
 use App\Models\Parametrage;
 use App\Models\Signal_annonce;
 
@@ -26,6 +32,7 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+
 
 class AnnonceController extends Controller
 {
@@ -158,18 +165,45 @@ class AnnonceController extends Controller
         $imgqr = $result->getDataUri();
 
         $ann = Annonce::join('villes','villes.id','=','annonces.ville_id')
-                        ->join('marques','marques.id','=','annonces.marque_id')
-                        ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
-                        ->join('users','users.id','=','annonces.user_id')
-                        ->where('uuid', $uuid)
-                        ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.id as marque_id', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque', 'type_marques.id as type_marque_id', 'users.id as user_id', 'users.name as nom_user', 'users.prenom as prenom_user', 'users.id as user_id', 'users.email as email_user', 'users.image_chemin as photo_user')
-                        ->first();
+                    ->join('marques','marques.id','=','annonces.marque_id')
+                    ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
+                    ->join('users','users.id','=','annonces.user_id')
+                    ->where('uuid', $uuid)
+                    ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.id as marque_id', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque', 'type_marques.id as type_marque_id', 'users.id as user_id', 'users.name as nom_user', 'users.prenom as prenom_user', 'users.id as user_id', 'users.email as email_user', 'users.image_chemin as photo_user')
+                    ->first();
 
         if ($ann) {
 
             if (!($ann->statut === 'en ligne')) {
                 return redirect()->route('index_annonce')->with('warning', 'Cette annonce n\'existe plus ou le véhicule est indisponible');
             }
+
+            if($ann->type_annonce === 'vente') {
+                $vente = Annonce_vente::where('annonce_id', '=', $ann->id)->first();
+
+                $ann->credit_auto = $vente->credit_auto;
+                $ann->kilometrage = $vente->kilometrage;
+                $ann->hors_taxe = $vente->hors_taxe;
+                $ann->troc = $vente->troc;
+                $ann->negociable = $vente->negociable;
+                $ann->nbre_cle = $vente->nbre_cle;
+                $ann->visite_techn = $vente->visite_techn;
+                $ann->assurance = $vente->assurance;
+                $ann->papier = $vente->papier;
+
+                if ($vente->credit_auto === 'oui') {
+                    $credit = Credit_auto::where('annonce_id', '=', $ann->id)->first();
+
+                    $ann->credit_auto_mois = $credit->nbre_mois;
+                    $ann->prix_apport = $credit->prix_apport;
+                    $ann->prix_mois = $credit->prix_mois;
+                }
+            }
+
+            $contact = Annonce_contact::where('annonce_id', '=', $ann->id)->first();
+            $ann->whatsapp = $contact->whatsapp;
+            $ann->appel = $contact->appel;
+            $ann->sms = $contact->sms;
 
             $photos = Annonce_photo::where('annonce_id', '=', $ann->id)->get();
             $firstPhoto = Annonce_photo::where('annonce_id', '=', $ann->id)->orderBy('created_at', 'asc')->first();
@@ -212,8 +246,25 @@ class AnnonceController extends Controller
         $villes = Ville::all();
         $types = Type_marque::all();
         $para = Parametrage::find('1');
+        $formule = User_formule::join('users', 'users.id', '=', 'user_formules.user_id')
+                            ->join('formules', 'formules.id', '=', 'user_formules.formule_id')
+                            ->where('user_formules.user_id', '=', Auth::user()->id)
+                            ->where('user_formules.statut', '=', 'en cours')
+                            ->select(
+                                'formules.nbre_photo as nbre_photo',
+                                'formules.duree_vie as nbre_jours_ligne',
+                                'formules.nbre_refresh as nbre_refresh',
+                            )
+                            ->first();
+        if ($formule) {
+            $nbre_photo = $formule->nbre_photo;
+            $souscrit = 'oui';
+        }else {
+            $nbre_photo = $para->nbre_photo;
+            $souscrit = 'non';
+        }
 
-        return view('vehicule.annonce.new.vente',['marques' => $marques,'villes' => $villes,'types' => $types,'para'=>$para]);
+        return view('vehicule.annonce.new.vente',['marques' => $marques,'villes' => $villes,'types' => $types,'para'=>$para, 'formule' => $formule, 'nbre_photo' => $nbre_photo, 'souscrit' => $souscrit,]);
     }
 
     public function index_annonce_new_location()
@@ -222,8 +273,25 @@ class AnnonceController extends Controller
         $villes = Ville::all();
         $types = Type_marque::all();
         $para = Parametrage::find('1');
+        $formule = User_formule::join('users', 'users.id', '=', 'user_formules.user_id')
+                            ->join('formules', 'formules.id', '=', 'user_formules.formule_id')
+                            ->where('user_formules.user_id', '=', Auth::user()->id)
+                            ->where('user_formules.statut', '=', 'en cours')
+                            ->select(
+                                'formules.nbre_photo as nbre_photo',
+                                'formules.duree_vie as nbre_jours_ligne',
+                                'formules.nbre_refresh as nbre_refresh',
+                            )
+                            ->first();
+        if ($formule) {
+            $nbre_photo = $formule->nbre_photo;
+            $souscrit = 'oui';
+        }else {
+            $nbre_photo = $para->nbre_photo;
+            $souscrit = 'non';
+        }
 
-        return view('vehicule.annonce.new.location',['marques' => $marques,'villes' => $villes,'types' => $types,'para'=>$para]);
+        return view('vehicule.annonce.new.location',['marques' => $marques,'villes' => $villes,'types' => $types,'para'=>$para, 'formule' => $formule, 'nbre_photo' => $nbre_photo, 'souscrit' => $souscrit,]);
     }
 
     public function trait_annonce(Request $request)
@@ -261,43 +329,64 @@ class AnnonceController extends Controller
         $ann->localisation = $request->localisation;
         $ann->ville_id = $request->ville_id;
         $ann->uuid = (string) Str::uuid();
-        $ann->whatsapp = $request->whatsapp;
-        $ann->appel = $request->appel;
-        $ann->sms = $request->sms;
         $ann->nbre_porte = $request->nbre_porte;
         $ann->type_annonce = $request->type_annonce;
 
-        if ($request->type_annonce === 'vente') {
-
-            $ann->hors_taxe = $request->hors_taxe;
-            $ann->kilometrage = $request->kilometrage;
-            $ann->troc = $request->troc;
-            $ann->papier = $request->papier;
-            $ann->visite_techn = $request->visite_techn;
-            $ann->assurance = $request->assurance;
-            $ann->nbre_cle = $request->nbre_cle;
-            $ann->negociable = $request->negociable;
-            $ann->credit_auto = $request->credit_auto;
-
-            if ($request->credit_auto === 'oui') {
-
-                $ann->credit_auto_mois = $request->credit_auto_mois;
-                $ann->prix_apport = $request->prix_apport;
-                $ann->prix_mois = $request->prix_mois;
-            }else{
-                
-                $ann->credit_auto_mois = '0';
-                $ann->prix_apport = '0';
-                $ann->prix_mois = '0';
-            }
-        }
-
         try {
+
             if (!$ann->save()) {
                 return back()->with('error', 'Erreur lors de la publication de l\'annonce.');
             }
 
-            for ($i = 1; $i <= $para->nbre_photo; $i++) {
+            if ($request->type_annonce === 'vente') {
+
+                $vente = new Annonce_vente();
+                $vente->hors_taxe = $request->hors_taxe;
+                $vente->kilometrage = $request->kilometrage;
+                $vente->troc = $request->troc;
+                $vente->papier = $request->papier;
+                $vente->visite_techn = $request->visite_techn;
+                $vente->assurance = $request->assurance;
+                $vente->nbre_cle = $request->nbre_cle;
+                $vente->negociable = $request->negociable;
+                $vente->credit_auto = $request->credit_auto;
+                $vente->annonce_id = $ann->id;
+
+                if (!$vente->save()) {
+                    Annonce_error::create(['motif' => 'les vente n\'ont pas pu être en enregistrer.','user_id' => Auth::user()->id]);
+                    throw new \Exception('Erreur lors de la publication de l\'annonce.');
+                }
+            }
+
+            $tel = new Annonce_contact();
+            $tel->whatsapp = $request->whatsapp;
+            $tel->appel = $request->appel;
+            $tel->sms = $request->sms;
+            $tel->annonce_id = $ann->id;
+
+            if (!$tel->save()) {
+                Annonce_error::create(['motif' => 'les contacts n\'ont pas pu être en enregistrer.','user_id' => Auth::user()->id]);
+                throw new \Exception('Erreur lors de la publication de l\'annonce.');
+            }
+
+            $credit = new Credit_auto();
+            if ($request->credit_auto === 'oui') {
+                $credit->nbre_mois = $request->credit_auto_mois;
+                $credit->prix_apport = $request->prix_apport;
+                $credit->prix_mois = $request->prix_mois;
+            }else{
+                $credit->nbre_mois = '0';
+                $credit->prix_apport = '0';
+                $credit->prix_mois = '0';
+            }
+            $credit->annonce_id = $ann->id;
+
+            if (!$credit->save()) {
+                Annonce_error::create(['motif' => 'les credits auto n\'ont pas pu être en enregistrer.','user_id' => Auth::user()->id]);
+                throw new \Exception('Erreur lors de la publication de l\'annonce.');
+            }
+
+            for ($i = 1; $i <= $request->nbre_photo; $i++) {
                 $file = $request->file('image' . $i);
 
                 if ($file && $file->isValid()) {
@@ -343,7 +432,7 @@ class AnnonceController extends Controller
         } catch (\Exception $e) {
             DB::rollback(); // Rollback transaction en cas d'erreur
             Annonce_error::create(['motif' => $e->getMessage(), 'user_id' => Auth::user()->id]);
-            return back()->with('error', $e->getMessage());
+            return back()->with('error','Erreur lors de la publication de l\'annonce.');
         }
     }
 

@@ -20,6 +20,7 @@
                         </div>
                         <div class="col-12">
                                 <div class="alert alert-warning alert-dismissible fade show mb-4 rounded-6" role="alert">
+                                    @if($souscrit === 'non')
                                     <ul>
                                         <li>
                                             <p class="small mb-0 fs-14px">
@@ -28,7 +29,7 @@
                                         </li>
                                         <li>
                                             <p class="small mb-0 fs-14px">
-                                                - Si aucun renouvellement n'est effectué dans <strong>les {{$para->nbre_jours_delete}} jours</strong> suivant la désactivation, l'annonce sera <strong>supprimée définitivement</strong>.
+                                                - Si aucun renouvellement n'est effectué dans <strong>les 5 jours</strong> suivant la désactivation, l'annonce sera <strong>supprimée définitivement</strong>.
                                             </p>
                                         </li>
                                         <li>
@@ -47,6 +48,35 @@
                                             </p>
                                         </li>
                                     </ul>
+                                    @else
+                                    <ul>
+                                        <li>
+                                            <p class="small mb-0 fs-14px">
+                                                - Les annonces ont une durée de <strong>{{$formule->nbre_jours_ligne}} jours maximum.</strong> Passé ce délai, elles ne seront plus en ligne.
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p class="small mb-0 fs-14px">
+                                                - Si aucun renouvellement n'est effectué dans <strong>les 5 jours</strong> suivant la désactivation, l'annonce sera <strong>supprimée définitivement</strong>.
+                                            </p>
+                                        </li>
+                                        <li>
+                                           <p class="small mb-0 fs-14px">
+                                                - Si l'annonce n'est plus disponible, veuillez marquer son <strong>statut comme "indisponible"</strong>. Dans ce cas, l'annonce ne sera pas supprimée définitivement mais sera <strong>retirée de la liste des annonces disponible</strong>.
+                                            </p> 
+                                        </li>
+                                        <li>
+                                            <p class="small mb-0 fs-14px">
+                                                - Veuillez noter que vous ne pouvez <strong>renouveler une annonce que {{$formule->nbre_refresh}} fois</strong>.
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p class="small mb-0 fs-14px">
+                                                - L'immatriculation du véhicule ne sera pas afficher dans les détails de l'annonce.
+                                            </p>
+                                        </li>
+                                    </ul>
+                                    @endif
                                     <div class="d-inline-flex position-absolute end-0 top-50 translate-middle-y me-2">
                                         <button type="button" class="btn btn-xs btn-icon btn-warning rounded-pill" data-bs-dismiss="alert">
                                             <em class="icon ni ni-cross"></em>
@@ -597,7 +627,7 @@
                                                 </div>
                                                 <div class="nk-block-des">
                                                     <p>
-                                                        Vous devez <strong>télécharger obligatoirement 6 photos</strong> pour l'annonce. <strong>Chaque photo doit être inférieure à 2 Mo</strong>.
+                                                        Vous devez <strong>télécharger obligatoirement {{$nbre_photo}} photos</strong> pour l'annonce. <strong>Chaque photo doit être inférieure à 2 Mo</strong>.
                                                     </p>
                                                 </div>
                                             </div>
@@ -607,9 +637,9 @@
                                                     <div id="fileCount"></div>
                                                 </label>
                                                 {{-- <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 1, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'> --}}
-                                                <input type="hidden" name="nbre_photo" id="nbre_photo" value="{{$para->nbre_photo}}">
+                                                <input type="hidden" name="nbre_photo" id="nbre_photo" value="{{$nbre_photo}}">
                                                 <ul class="filter-button-group mb-4 pb-2 align-items-center justify-content-center">
-                                                    @for($i = 1; $i <= $para->nbre_photo; $i++)
+                                                    @for($i = 1; $i <= $nbre_photo; $i++)
                                                     <li>
                                                     <div class="" style="height: 100px;width: 100px;">
                                                         <div class="me-1">

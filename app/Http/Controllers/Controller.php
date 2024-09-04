@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Marque;
@@ -9,10 +16,21 @@ use App\Models\Ville;
 use App\Models\Type_marque;
 use App\Models\Annonce;
 use App\Models\Annonce_photo;
+use App\Models\Annonce_contact;
+use App\Models\Annonce_refresh;
 use App\Models\Annonce_error;
+use App\Models\Formule;
+use App\Models\User_formule;
+use App\Models\Credit_auto;
+use App\Models\Parametrage;
+use App\Models\Signal_annonce;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class Controller
 {
@@ -27,16 +45,16 @@ class Controller
 
         $types = Type_marque::orderBy('nom', 'asc')->get();
 
-        $vanns = Annonce::join('villes','villes.id','=','annonces.ville_id')
+
+        $anns = Annonce::join('villes','villes.id','=','annonces.ville_id')
                         ->join('marques','marques.id','=','annonces.marque_id')
                         ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
                         ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque')
                         ->where('annonces.statut', '=', 'en ligne')
-                        ->where('annonces.type_annonce', '=', 'vente')
-                        ->latest() // Order by the latest created_at
-                        ->take(12)
+                        // ->sortByDesc('annonces.created_at')
+                        ->orderBy('annonces.created_at', 'Desc')
                         ->get();
-        foreach ($vanns as $value) {
+        foreach ($anns as $value) {
             $firstPhoto = Annonce_photo::where('annonce_id', '=', $value->id)
                                         ->orderBy('created_at', 'asc') // Adjust the ordering as needed
                                         ->first();
@@ -45,49 +63,11 @@ class Controller
             $value->nbre_photo = Annonce_photo::where('annonce_id', '=', $value->id)->count();
         }
 
-        $lanns = Annonce::join('villes','villes.id','=','annonces.ville_id')
-                        ->join('marques','marques.id','=','annonces.marque_id')
-                        ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
-                        ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque')
-                        ->where('annonces.statut', '=', 'en ligne')
-                        ->where('annonces.type_annonce', '=', 'location')
-                        ->latest() // Order by the latest created_at
-                        ->take(12)
-                        ->get();
-        foreach ($lanns as $value) {
-            $firstPhoto = Annonce_photo::where('annonce_id', '=', $value->id)
-                                        ->orderBy('created_at', 'asc') // Adjust the ordering as needed
-                                        ->first();
-            // Set the photo property
-            $value->photo = $firstPhoto->image_chemin;
-            $value->nbre_photo = Annonce_photo::where('annonce_id', '=', $value->id)->count();
-        }
+        $vanns = $anns->where('type_annonce', '=', 'vente')->take(12);
+        $lanns = $anns->where('type_annonce', '=', 'location')->take(12);
+        $tanns = $anns->take(20);
 
-        if (Auth::check()) {
-            $lastActivity = $request->session()->get('last_activity', time());
-            $sessionLifetime = config('session.lifetime') * 60;
-
-            // Calculer le temps restant pour la session
-            $timeRemaining = $sessionLifetime - (time() - $lastActivity);
-
-            // Vérifier si la session a expiré
-            if ($timeRemaining <= 0) {
-                // Déconnecter l'utilisateur
-                Auth::logout();
-
-                // Rediriger avec un message d'avertissement
-                return redirect('/')
-                    ->with('warning', 'Votre session a expiré.');
-            }
-
-            // Stocker le temps restant dans la session
-            $request->session()->put('session_time_remaining', $timeRemaining);
-
-            // Mettre à jour l'heure de la dernière activité
-            $request->session()->put('last_activity', time());
-        }
-
-        return view('index',['marques'=>$marques, 'vanns'=>$vanns, 'lanns'=>$lanns, 'types'=>$types]);
+        return view('index',['marques'=>$marques, 'vanns'=>$vanns, 'lanns'=>$lanns, 'types'=>$types, 'tanns'=>$tanns,]);
     }
 
 }

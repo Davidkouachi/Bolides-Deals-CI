@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('annonce_errors', function (Blueprint $table) {
+        Schema::create('credit_autos', function (Blueprint $table) {
             $table->id();
-            $table->text('motif');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('nbre_mois');
+            $table->string('prix_apport');
+            $table->string('prix_mois');
+            $table->unsignedBigInteger('annonce_id');
+            $table->foreign('annonce_id')->references('id')->on('annonces');
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('annonce_errors');
+        Schema::dropIfExists('credit_autos');
     }
 };

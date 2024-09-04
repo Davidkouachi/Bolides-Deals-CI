@@ -5,19 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class annonce_refresh extends Model
+class Formule extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'id',
+        'nbre_photo',
+        'duree_vie',
         'nbre_refresh',
-        'date_refresh',
-        'annonce_id',
+        'badge',
+        'tete_liste',
+        'top_annonce',
+        'stat',
+        'nom',
+        'couleur',
+        'gratuit',
+        'prix',
     ];
-
-    public function annonce()
-    {
-        return $this->belongsTo(Annonce::class, 'annonce_id');
-    }
 }

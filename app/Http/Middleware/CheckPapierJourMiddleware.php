@@ -30,25 +30,25 @@ class CheckPapierJourMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $today = Carbon::today();
+        // $today = Carbon::today();
 
-        $anns = Annonce::where('hors_taxe', '=', 'non')
-                        ->where('papier', '=', 'oui')
-                        ->where('type_annonce', '=', 'vente')
-                        ->get();
+        // $anns = Annonce::where('hors_taxe', '=', 'non')
+        //                 ->where('papier', '=', 'oui')
+        //                 ->where('type_annonce', '=', 'vente')
+        //                 ->get();
 
-        foreach ($anns as $key => $value) {
+        // foreach ($anns as $key => $value) {
 
-            $assuranceDate = $value->assurance ? Carbon::parse($value->assurance) : null;
-            $visiteDate = $value->visite_techn ? Carbon::parse($value->visite_techn) : null;
+        //     $assuranceDate = $value->assurance ? Carbon::parse($value->assurance) : null;
+        //     $visiteDate = $value->visite_techn ? Carbon::parse($value->visite_techn) : null;
 
-            if (($assuranceDate && $assuranceDate < $today) || 
-                ($visiteDate && $visiteDate < $today)) {
-                $value->papier = 'non';
-                $value->save();
-            }
+        //     if (($assuranceDate && $assuranceDate < $today) || 
+        //         ($visiteDate && $visiteDate < $today)) {
+        //         $value->papier = 'non';
+        //         $value->save();
+        //     }
 
-        }
+        // }
 
         return $next($request);
     }

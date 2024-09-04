@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class annonce_refresh extends Model
+class Credit_auto extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'id',
-        'nbre_refresh',
-        'date_refresh',
+        'nbre_mois',
+        'prix_apport',
+        'prix_mois',
         'annonce_id',
     ];
 

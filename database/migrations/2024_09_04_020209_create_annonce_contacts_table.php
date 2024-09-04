@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('annonce_errors', function (Blueprint $table) {
+        Schema::create('annonce_contacts', function (Blueprint $table) {
             $table->id();
-            $table->text('motif');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('whatsapp')->nullable();
+            $table->string('appel');
+            $table->string('sms')->nullable();
+            $table->unsignedBigInteger('annonce_id');
+            $table->foreign('annonce_id')->references('id')->on('annonces');
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('annonce_errors');
+        Schema::dropIfExists('annonce_contacts');
     }
 };

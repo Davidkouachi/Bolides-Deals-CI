@@ -82,6 +82,8 @@ Route::middleware(['role:ADMINISTRATEUR'])->group(function () {
     Route::post('/trait_nbre_photo', [ParametrageController::class, 'trait_nbre_photo'])->name('trait_nbre_photo');
 
     Route::get('/Formules', [BordController::class, 'index_formule'])->name('index_formule');
+    Route::post('/trait_formule', [FormuleController::class, 'trait_formule'])->name('trait_formule');
+    Route::post('/trait_formule_update/{id}', [FormuleController::class, 'trait_formule_update'])->name('trait_formule_update');
 
 });
 

@@ -21,6 +21,7 @@ use App\Models\Marque;
 use App\Models\Suggestion;
 use App\Models\Annonce;
 use App\Models\Parametrage;
+use App\Models\Formule;
 
 
 class BordController extends Controller
@@ -86,7 +87,8 @@ class BordController extends Controller
 
     public function index_formule()
     {
-        return view('bord.formule.index');
+        $formules = Formule::all();
+        return view('bord.formule.index',['formules'=>$formules]);
     }
 
 }

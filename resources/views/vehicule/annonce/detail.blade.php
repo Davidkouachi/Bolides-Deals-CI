@@ -187,11 +187,11 @@
                                                             <div class="user-card user-card-s2">
                                                                 <div class="" style="width: 50px;height: 50px;">
                                                                     <span>
-                                                                       <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/weight.jpg') }}"> 
+                                                                       <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/eingne.webp') }}"> 
                                                                     </span>
                                                                 </div>
                                                                 <div class="user-info"> 
-                                                                    <h4 class="sub-text text-black" >{{$ann->cylindre.' cylindre'}}</h4>
+                                                                    <h4 class="sub-text text-black" >{{'Moteur '.$ann->puiss_fiscal.' cv'}}</h4>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -205,11 +205,11 @@
                                                             <div class="user-card user-card-s2">
                                                                 <div class="" style="width: 50px;height: 50px;">
                                                                     <span>
-                                                                       <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/eingne.webp') }}"> 
+                                                                       <img height="50px" width="50px" style="object-fit: cover;" class="thumb" src="{{ asset('images/logo/detail/weight.jpg') }}"> 
                                                                     </span>
                                                                 </div>
                                                                 <div class="user-info"> 
-                                                                    <h4 class="sub-text text-black" >{{$ann->puiss_fiscal.' cheveaux'}}</h4>
+                                                                    <h4 class="sub-text text-black" >{{$ann->cylindre.' cylindre'}}</h4>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -581,7 +581,7 @@
                                                                         </div>
                                                                         <div class="user-info">
                                                                             <h4 class="sub-text text-black" >
-                                                                                {{' '.\Carbon\Carbon::parse($ann->visite_techn)->format('d/m/Y') }}
+                                                                                {{'Visite technique '.\Carbon\Carbon::parse($ann->visite_techn)->format('d/m/Y') }}
                                                                             </h4>
                                                                         </div>
                                                                     </div>

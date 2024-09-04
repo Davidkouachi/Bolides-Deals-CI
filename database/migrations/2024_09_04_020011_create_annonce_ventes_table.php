@@ -11,10 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('annonce_refreshes', function (Blueprint $table) {
+        Schema::create('annonce_ventes', function (Blueprint $table) {
             $table->id();
-            $table->integer('nbre_refresh')->default(0);
-            $table->string('date_refresh')->nullable();
+            $table->string('hors_taxe');
+            $table->string('kilometrage');
+            $table->string('nbre_cle');
+            $table->string('visite_techn');
+            $table->string('assurance');
+            $table->string('papier');
+            $table->string('troc');
+            $table->string('credit_auto')->index();
+            $table->string('negociable');
             $table->unsignedBigInteger('annonce_id');
             $table->foreign('annonce_id')->references('id')->on('annonces');
             $table->timestamps();
@@ -26,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('annonce_refreshes');
+        Schema::dropIfExists('annonce_ventes');
     }
 };

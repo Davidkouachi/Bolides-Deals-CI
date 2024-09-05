@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use App\Models\Annonce;
 use App\Models\Annonce_photo;
+use App\Models\Annonce_vente;
 use App\Models\Parametrage;
 
 use Illuminate\Support\Facades\Auth;
@@ -30,25 +31,27 @@ class CheckPapierJourMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // $today = Carbon::today();
+        $today = Carbon::today();
+        $anns = Annonce::join('annonce_ventes', 'annonce_ventes.annonce_id', '=', 'annonces.id')
+                        ->where('annonces.type_annonce', '=', 'vente')
+                        ->where('annonce_ventes.papier', '=', 'oui')
+                        ->select(
+                            'annonces.id as annonce_id',
+                            'annonce_ventes.assurance as assurance',
+                            'annonce_ventes.visite_techn as visite_techn')
+                        ->get();
 
-        // $anns = Annonce::where('hors_taxe', '=', 'non')
-        //                 ->where('papier', '=', 'oui')
-        //                 ->where('type_annonce', '=', 'vente')
-        //                 ->get();
+        foreach ($anns as $key => $value) {
 
-        // foreach ($anns as $key => $value) {
+            $assuranceDate = $value->assurance ? Carbon::parse($value->assurance) : null;
+            $visiteDate = $value->visite_techn ? Carbon::parse($value->visite_techn) : null;
 
-        //     $assuranceDate = $value->assurance ? Carbon::parse($value->assurance) : null;
-        //     $visiteDate = $value->visite_techn ? Carbon::parse($value->visite_techn) : null;
+            if (($assuranceDate && $assuranceDate < $today) || 
+                ($visiteDate && $visiteDate < $today)) {
+                Annonce_vente::where('annonce_id', $value->annonce_id)->update(['papier' => 'non']);
+            }
 
-        //     if (($assuranceDate && $assuranceDate < $today) || 
-        //         ($visiteDate && $visiteDate < $today)) {
-        //         $value->papier = 'non';
-        //         $value->save();
-        //     }
-
-        // }
+        }
 
         return $next($request);
     }

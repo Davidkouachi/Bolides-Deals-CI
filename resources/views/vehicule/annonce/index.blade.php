@@ -104,9 +104,9 @@
                             @foreach($anns as $key => $ann)
                             {{-- <div class="filter-item  {{$ann->type_marque}}" data-category="{{$ann->type_marque}}" style="width: 195px;"> filter-button-group --}}
                             <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6 filter-item {{$ann->type_marque}}" data-category="{{$ann->type_marque}}">
-                                <div class="card trans_shado img_annonce " @if($ann->type_annonce === 'vente') style="border-bottom: 5px solid #058efc;" @else style="border-bottom: 5px solid orange;" @endif >
+                                <div class="card product-card trans_shado img_annonce " @if($ann->type_annonce === 'vente') style="border-bottom: 5px solid #058efc;" @else style="border-bottom: 5px solid orange;" @endif >
                                     <div class="product-thumb card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
-                                        <a href="{{route('index_detail',$ann->uuid)}}">
+                                        <a href="{{route('index_detail',$ann->uuid)}}" data-cookie-consent>
                                             <img style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($ann->photo) }}" />
                                         </a>
                                         <ul class="product-badges">
@@ -144,7 +144,7 @@
                                             </li>
                                         </ul>
                                         <p class="product-title text-dark fs-12px text-center" style="margin-top: -5px;">
-                                            <a href="{{route('index_detail',$ann->uuid)}}">
+                                            <a href="{{route('index_detail',$ann->uuid)}}" data-cookie-consent>
                                                 {{$ann->marque}}
                                                 {{$ann->model}}
                                                 {{$ann->annee}}

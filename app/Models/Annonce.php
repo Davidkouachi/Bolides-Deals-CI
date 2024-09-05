@@ -35,6 +35,7 @@ class Annonce extends Model
         'nbre_porte',
         'views',
         'date_hors_ligne',
+        'refresh_nbre',
     ];
 
     public function marque()

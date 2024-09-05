@@ -67,7 +67,21 @@ class Controller
         $lanns = $anns->where('type_annonce', '=', 'location')->take(12);
         $tanns = $anns->take(20);
 
-        return view('index',['marques'=>$marques, 'vanns'=>$vanns, 'lanns'=>$lanns, 'types'=>$types, 'tanns'=>$tanns,]);
+        $formules = Formule::all();
+
+        $formule_user = null;
+        
+        if (Auth::check()) {
+            $formule_user = User_formule::join('users', 'users.id', '=', 'user_formules.user_id')
+                            ->join('formules', 'formules.id', '=', 'user_formules.formule_id')
+                            ->where('user_formules.user_id', '=', Auth::user()->id)
+                            ->where('user_formules.statut', '=', 'en cours')
+                            ->select('formules.id as formule_id')
+                            ->first();
+        }
+        
+
+        return view('index',['marques'=>$marques, 'vanns'=>$vanns, 'lanns'=>$lanns, 'types'=>$types, 'tanns'=>$tanns,'formules'=>$formules, 'formule_user' => $formule_user]);
     }
 
 }

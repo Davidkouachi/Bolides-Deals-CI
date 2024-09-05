@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Marque;
@@ -20,6 +21,7 @@ use App\Models\Annonce_vente;
 use App\Models\Annonce_contact;
 use App\Models\Annonce_refresh;
 use App\Models\Annonce_error;
+use App\Models\Annonce_formule;
 use App\Models\User_formule;
 use App\Models\Formule;
 use App\Models\Credit_auto;
@@ -153,7 +155,7 @@ class AnnonceController extends Controller
         ]);
     }
 
-    public function index_detail($uuid)
+    public function index_detail(Request $request, $uuid)
     {
         $types = Type_marque::all();
 
@@ -209,8 +211,20 @@ class AnnonceController extends Controller
             $firstPhoto = Annonce_photo::where('annonce_id', '=', $ann->id)->orderBy('created_at', 'asc')->first();
             $ann->image_url = $firstPhoto ? $firstPhoto->image_chemin : null;
 
+            $cookieConsent = $request->query('cookieConsent');
+            // Vérifiez que l'utilisateur n'est pas l'auteur de l'annonce
             if (!(Auth::check() && Auth::user()->id === $ann->user_id)) {
-                $ann->increment('views');
+                // Nom du cookie unique pour cette annonce et pour le consentement spécifique
+                $uniqueCookieName = 'annonce_' . $ann->id . '_vue_' . $cookieConsent;
+
+                // Vérifiez si le cookie existe
+                if (!$request->cookie($uniqueCookieName)) {
+                    // Incrémentez le compteur de vues
+                    $ann->increment('views');
+
+                    // Définir un cookie pour suivre la visite
+                    Cookie::queue($uniqueCookieName, 'true', 60 * 24 * 30); // Cookie valide pendant 30 jours
+                }
             }
 
             $sims = Annonce::join('villes','villes.id','=','annonces.ville_id')
@@ -383,6 +397,41 @@ class AnnonceController extends Controller
 
             if (!$credit->save()) {
                 Annonce_error::create(['motif' => 'les credits auto n\'ont pas pu être en enregistrer.','user_id' => Auth::user()->id]);
+                throw new \Exception('Erreur lors de la publication de l\'annonce.');
+            }
+
+            $form = User_formule::join('users', 'users.id', '=', 'user_formules.user_id')
+                            ->join('formules', 'formules.id', '=', 'user_formules.formule_id')
+                            ->where('user_formules.user_id', '=', Auth::user()->id)
+                            ->where('user_formules.statut', '=', 'en cours')
+                            ->select(
+                                'formules.nbre_photo as nbre_photo',
+                                'formules.duree_vie as nbre_jours_ligne',
+                                'formules.nbre_refresh as nbre_refresh',
+                            )
+                            ->first();
+
+            $formule = new Annonce_formule();
+            if ($form) {
+
+                $formule->nbre_photo = $form->nbre_photo;
+                $formule->duree_vie = $form->duree_vie;
+                $formule->nbre_refresh = $form->nbre_refresh;
+                $formule->tete_liste = $form->tete_liste;
+                $formule->top_annonce = $form->top_annonce;
+            }else {
+                $para = Parametrage::find('1');
+
+                $formule->nbre_photo = $para->nbre_photo;
+                $formule->duree_vie = $para->nbre_jours_ligne;
+                $formule->nbre_refresh = $para->nbre_refresh;
+                $formule->tete_liste = 'non';
+                $formule->top_annonce = 'non';
+            }
+            $formule->annonce_id = $ann->id;
+
+            if (!$formule->save()) {
+                Annonce_error::create(['motif' => 'les annonces formules n\'ont pas pu être en enregistrer.','user_id' => Auth::user()->id]);
                 throw new \Exception('Erreur lors de la publication de l\'annonce.');
             }
 

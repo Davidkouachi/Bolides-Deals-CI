@@ -86,7 +86,7 @@
                     <div class="slider-init row product-slider" data-slick='{"slidesToShow": 5, "centerMode": false, "slidesToScroll": 2, "infinite":false, "adaptiveHeight":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 5}},{"breakpoint": 1240,"settings":{"slidesToShow": 4}}, {"breakpoint": 999,"settings":{"slidesToShow": 3}},{"breakpoint": 650,"settings":{"slidesToShow": 2}} ]}'>
                         @foreach($tanns as $key => $value)
                         <div class="col p-3">
-                            <div class="card trans_shado img_annonce" style="border-bottom: 10px solid #f2426e;">
+                            <div class="card product-card trans_shado img_annonce" style="border-bottom: 10px solid #f2426e;">
                                 <div class="card h-50 " style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;">
                                     <a href="{{route('index_detail',$value->uuid)}}">
                                         <img class="" style="object-fit: cover;height: 160px; width:auto;" src="{{ Storage::url($value->photo) }}" />
@@ -151,7 +151,7 @@
                                             <span>Augmenter votre visibilité</span>
                                         </h5>
                                         <div class="h6 fs-13px text-center mt-2">
-                                            <a class="btn btn-outline-warning" @if(Auth::check())  @else data-bs-toggle="modal" data-bs-target="#LoginRequis" @endif>
+                                            <a class="btn btn-outline-warning" @if(Auth::check()) data-bs-toggle="modal" data-bs-target="#FormuleUser" @else data-bs-toggle="modal" data-bs-target="#LoginRequis" @endif>
                                                 <span>Prêt</span>
                                                 <em class="icon ni ni-arrow-right" ></em>
                                             </a>
@@ -341,6 +341,123 @@
         </div>
     </div>
 </div>
+
+    <div class="modal fade" tabindex="-1" id="FormuleUser" role="dialog">
+        <div class="modal-dialog modal-fullscreen" role="document">
+            <div class="modal-content bg-white" style="border-radius: 0;">
+                <div class="modal-header">
+                    <h5 class="modal-title">Formule</h5>
+                    <a class="fs-20px" data-bs-dismiss="modal" aria-label="Close">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                </div>
+                <div class="modal-body modal-body-lg bg-light">
+                    <div class="nk-block">
+                        <div class="row g-gs align-items-center justify-content-center">
+                            @foreach($formules as $key => $value)
+                            <div class="col-xxl-3 col-md-6">
+                                <div class="card trans_shado pricing recommend alert alert-pro alert-{{$value->couleur}}" style="padding-left: 10%;">
+                                    <div class="p-4">
+                                        <div class="pricing-title">
+                                            <h4 class="card-title title text-{{$value->couleur}}">
+                                                {{$value->nom}}
+                                            </h4>
+                                        </div>
+                                        <div class="pricing-price">
+                                            @if($value->gratuit === 'oui')
+                                                <h5 class="display-8">Gratuit <span class="caption-text text-base fw-normal">/ mois</span></h5>
+                                            @else
+                                                <h5 class="display-8">
+                                                    {{$value->prix.' Fcfa'}} 
+                                                    <span class="caption-text text-base fw-normal">
+                                                        / mois
+                                                    </span>
+                                                </h5>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="p-4">
+                                        <ul class="pricing-features">
+                                            <li>
+                                                <em class="icon text-primary ni ni-arrow-right-circle-fill"></em>
+                                                <span>{{$value->nbre_photo}} photo(s) / Annonce </span>
+                                            </li>
+                                            <li>
+                                                <em class="icon text-primary ni ni-arrow-right-circle-fill"></em>
+                                                <span>Durée de vie des annonces: {{$value->duree_vie}} jours</span>
+                                            </li>
+                                            <li>
+                                                <em class="icon text-primary ni ni-arrow-right-circle-fill"></em>
+                                                <span>Renouvelement d'une annonce: {{$value->nbre_refresh}} fois </span>
+                                            </li>
+                                            <li>
+                                                @if($value->badge === 'oui')
+                                                    <em class="icon text-success ni ni-check-circle-fill"></em>
+                                                @else
+                                                    <em class="icon text-danger ni ni-cross-circle"></em>
+                                                @endif
+                                                <span>Visibilité améliorée avec badge</span>
+                                            </li>
+                                            <li>
+                                                @if($value->tete_liste === 'non')
+                                                    <em class="icon text-danger ni ni-cross-circle"></em>
+                                                    <span>Annonce en tête de liste </span>
+                                                @else
+                                                    <em class="icon text-success ni ni-check-circle-fill"></em>
+                                                    <span>Annonce en tête de liste : {{$value->tete_liste.'h'}} </span>
+                                                @endif
+                                                
+                                            </li>
+                                            <li>
+                                                @if($value->top_annonce === 'oui')
+                                                    <em class="icon text-success ni ni-check-circle-fill"></em>
+                                                @else
+                                                    <em class="icon text-danger ni ni-cross-circle"></em>
+                                                @endif
+                                                <span>Top des annonces</span>
+                                            </li>
+                                            <li>
+                                                @if($value->stat === 'oui')
+                                                    <em class="icon text-success ni ni-check-circle-fill"></em>
+                                                @else
+                                                    <em class="icon text-danger ni ni-cross-circle"></em>
+                                                @endif
+                                                <span>Analyse statistique des annonces</span>
+                                            </li>
+                                            <li>
+                                                <em class="icon text-success ni ni-check-circle-fill"></em>
+                                                <span>Support client par email ou Chat</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="px-4 mb-4 text-center">
+                                        @if($formule_user)
+                                            @if($value->id === $formule_user->formule_id)
+                                                <span class="badge badge-md bg-secondary">Actuel</span>
+                                            @else
+                                                <button class="btn btn-outline-success btn-block">
+                                                    Souscrire Maintenant
+                                                </button>
+                                            @endif
+                                        @else
+                                            @if($value->nom === 'BASIQUE')
+                                                <span class="badge badge-md bg-secondary">Actuel</span>
+                                            @else
+                                                <button class="btn btn-outline-success btn-block">
+                                                    Souscrire Maintenant
+                                                </button>
+                                            @endif
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script>
     function showNoAnnoncesAlert(marque) {

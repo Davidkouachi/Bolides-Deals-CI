@@ -98,8 +98,21 @@
                             </div>
                             <div class="col-12">
                                 <div class="alert alert-warning alert-dismissible fade show mb-4 rounded-6" role="alert">
+                                    @php
+                                        $dureeVie = (int)$ann->duree_vie;
+                                        $createdAt = \Carbon\Carbon::parse($ann->created_at);
+                                        $expirationDate = $createdAt->addDays($dureeVie);
+                                        $today = \Carbon\Carbon::now();
+                                        $remainingDays = $expirationDate->diffInDays($today, false);
+                                        $remainingDays = floor($remainingDays);
+                                    @endphp
+
                                     <p class="small mb-0">
-                                        Cette annonce sera retirée <strong>{{ \Carbon\Carbon::parse($ann->created_at)->addDays(31)->diffForHumans() }}</strong>.
+                                        @if($remainingDays > 0)
+                                            Cette annonce sera retirée dans <strong>{{ $remainingDays }} jours</strong>.
+                                        @else
+                                            Cette annonce a été retirée il y a <strong>{{ abs($remainingDays) }} jours</strong>.
+                                        @endif
                                     </p>
                                     <div class="d-inline-flex position-absolute end-0 top-50 translate-middle-y me-2">
                                         <button type="button" class="btn btn-xs btn-icon btn-warning rounded-pill" data-bs-dismiss="alert">
@@ -158,6 +171,11 @@
                                     <li class="nav-item"> 
                                         <a class="nav-link" data-bs-toggle="tab" href="#description">
                                             Descriptions / Conditions
+                                        </a> 
+                                    </li>
+                                    <li class="nav-item"> 
+                                        <a class="nav-link" data-bs-toggle="tab" href="#contact">
+                                            Contacts
                                         </a> 
                                     </li>
                                 </ul>
@@ -344,7 +362,6 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                            @if($ann->neuf === 'oui')
                                             <li>
                                                 <div class="p-0 trans" style="width: 150px;">
                                                     <div class="p-0">
@@ -356,14 +373,17 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="user-info"> 
+                                                                    @if($ann->neuf === 'oui')
                                                                     <h4 class="sub-text text-black" >Véhicule neuf</h4>
+                                                                    @else
+                                                                    <h4 class="sub-text text-black" >Véhicule d'occasion</h4>
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
-                                            @endif
                                             <li>
                                                 <div class="p-0 trans" style="width: 150px;">
                                                     <div class="p-0">
@@ -561,7 +581,7 @@
                                                                         </div>
                                                                         <div class="user-info">
                                                                             <h4 class="sub-text text-black" >
-                                                                                {{' '.\Carbon\Carbon::parse($ann->visite_techn)->format('d/m/Y') }}
+                                                                                {{'Visite technique '.\Carbon\Carbon::parse($ann->visite_techn)->format('d/m/Y') }}
                                                                             </h4>
                                                                         </div>
                                                                     </div>
@@ -579,6 +599,22 @@
                                             {{$ann->description}}
                                         </p>
                                     </div>
+                                    <div class="tab-pane" id="contact">
+                                        <ul class="list list-sm list-checked">
+                                            <li>
+                                                <strong>Appel : </strong>
+                                                {{$ann->appel ? : 'Aucun' }}
+                                            </li>
+                                            <li>
+                                                <strong>Sms : </strong>
+                                                {{$ann->sms ? : 'Aucun' }}
+                                            </li>
+                                            <li>
+                                                <strong>Whatsapp : </strong>
+                                                {{$ann->whatsapp ? : 'Aucun' }}
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-12 mt-4">
@@ -587,15 +623,17 @@
                                         <div class="user-card user-card-s2">
                                             <div class="row g-gs user-info" >
                                                 <div class="col-12 mt-2">
+                                                    @if($ann->refresh_nbre < $ann->nbre_refresh)
                                                     <a class="btn btn-white btn-info btn-dim btn-sm mt-1 me-1" @if($ann->type_annonce === 'vente') href="{{route('update_vente',$ann->uuid)}}" @else href="{{route('update_location',$ann->uuid)}}" @endif >
                                                         <span>Modifier l'annonce</span>
                                                         <em class="icon ni ni-edit"></em>
                                                     </a>
+                                                    @endif
                                                     <a data-bs-toggle="modal" data-bs-target="#modalConfirmeDelete" class="btn btn-white btn-danger btn-dim btn-sm mt-1 me-1" >
                                                         <span>Supprimer l'annonce</span>
                                                         <em class="icon ni ni-trash"></em>
                                                     </a>
-                                                    @if($ann->statut === 'hors ligne')
+                                                    @if($ann->statut === 'hors ligne' && $ann->refresh_nbre < $ann->nbre_refresh)
                                                     <a class="btn btn-white btn-warning btn-dim btn-sm mt-1 me-1" data-bs-toggle="modal" data-bs-target="#modalAnnoncerefresh">
                                                         <span>Renouveler l'annonce</span>
                                                         <em class="icon ni ni-reload"></em>
@@ -609,7 +647,7 @@
                                                     @endif
                                                     @if( $ann->statut === 'en ligne' )
                                                     <a class="btn btn-white btn-gray btn-dim btn-sm mt-1 me-1" href="{{route('trait_indispo',$ann->uuid)}}" >
-                                                        <span>Véhicule Indisponible</span>
+                                                        <span>En réparation</span>
                                                         <em class="icon ni ni-cross-circle"></em>
                                                     </a>
                                                     @endif

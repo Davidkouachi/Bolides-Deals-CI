@@ -10,13 +10,35 @@ function handleFormSubmit(event) {
     if (credit_auto === 'oui') {
     // Validation: prixApport should not equal prix, and prixMois should not be negative
         if (prixApport === prix) {
-            NioApp.Toast("<h5>Vérification</h5><p>L'apport initial ne peut pas être égal au prix total.</p>", "warning", {position: "top-center"});
-            return;
+            NioApp.Toast("<h5>Alert</h5><p>L'apport initial ne peut pas être égal au prix total.</p>", "warning", {position: "top-center"});
+            return false;
         }
 
         if (prixMois < 0) {
-            NioApp.Toast("<h5>Vérification</h5><p>Le montant à payer par mois ne peut pas être négatif.</p>", "warning", {position: "top-center"});
-            return;
+            NioApp.Toast("<h5>Alert</h5><p>Le montant à payer par mois ne peut pas être négatif.</p>", "warning", {position: "top-center"});
+            return false;
+        }
+    }
+
+    // Récupérer les valeurs des éléments
+    const papier = document.getElementById('papier').value;
+    const assurance = document.getElementById('assurance').value;
+    const visite_techn = document.getElementById('visite_techn').value;
+
+    // Obtenir la date du jour
+    const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
+
+    // Vérifier si 'papier' est 'oui'
+    if (papier === 'oui') {
+        // Convertir les dates en objets Date pour la comparaison
+        const assuranceDate = new Date(assurance);
+        const visiteDate = new Date(visite_techn);
+        const todayDate = new Date(today);
+
+        // Comparer les dates
+        if (assuranceDate < todayDate || visiteDate < todayDate) {
+            NioApp.Toast("<h5>Alert</h5><p>Veuillez bien vérifier la date d'assurance et de la visite technique.</p>", "warning", {position: "top-center"});
+            return false;
         }
     }
     

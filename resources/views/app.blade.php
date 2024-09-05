@@ -545,7 +545,17 @@
         </div>
     </div>
 
-@if(Auth::check())
+    <!-- Message de consentement aux cookies -->
+    <div id="cookieConsent" class="cookie-consent">
+        <p>
+            Nous utilisons des cookies pour améliorer votre expérience sur notre site. En continuant à naviguer, vous acceptez l'utilisation de cookies.
+            <button id="acceptCookies" class="btn btn-primary">Accepter</button>
+        </p>
+    </div>
+
+
+
+    @if(Auth::check())
     <div class="modal fade" tabindex="-1" id="sessionExpiredModal" aria-modal="true" role="dialog" style="position: fixed;" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content bg-white">
@@ -573,28 +583,37 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Convertir le temps restant en secondes
-            let timeRemaining = parseInt('{{ session('session_time_remaining') }}', 10);
             const countdownElement = document.getElementById('countdown');
+
+            // Récupérer le temps restant soit depuis le stockage local, soit depuis la session
+            let timeRemaining = localStorage.getItem('timeRemaining') 
+                ? parseInt(localStorage.getItem('timeRemaining'), 10)
+                : parseInt('{{ session('session_time_remaining') }}', 10);
             
             // Fonction pour mettre à jour le compte à rebours
             function updateCountdown() {
                 if (timeRemaining > 0) {
                     timeRemaining--;
+                    localStorage.setItem('timeRemaining', timeRemaining); // Enregistrer le temps restant dans localStorage
+
                     // Convertir les secondes restantes en format HH:MM:SS
                     let hours = Math.floor(timeRemaining / 3600);
                     let minutes = Math.floor((timeRemaining % 3600) / 60);
                     let seconds = timeRemaining % 60;
+
                     // Ajouter un zéro devant les chiffres uniques
                     hours = hours < 10 ? '0' + hours : hours;
                     minutes = minutes < 10 ? '0' + minutes : minutes;
                     seconds = seconds < 10 ? '0' + seconds : seconds;
+
                     // Mettre à jour l'affichage du compte à rebours
                     countdownElement.textContent = hours + ':' + minutes + ':' + seconds;
                     
                     // Mettre à jour le compte à rebours après une seconde
                     setTimeout(updateCountdown, 1000);
                 } else {
+                    // Supprimer l'entrée dans localStorage lorsque le temps est écoulé
+                    localStorage.removeItem('timeRemaining');
                     // Afficher le modal lorsque le temps est écoulé
                     $('#sessionExpiredModal').modal('show');
                 }
@@ -604,7 +623,8 @@
             updateCountdown();
         });
     </script>
-@endif
+    @endif
+
 
     <script>
         window.addEventListener('load', function() {
@@ -625,6 +645,8 @@
 
     <script src="{{asset('assets/js/app/js/form_load.js') }}"></script>
     <script src="{{asset('assets/js/app/js/form_sugg.js') }}"></script>
+    <script src="{{asset('assets/js/app/js/cookies.js') }}"></script>
+    <script src="{{asset('assets/js/app/js/cookies_data.js') }}"></script>
 
     @if (session('success'))
         <script>

@@ -27,11 +27,11 @@
                                                 - Les annonces ont une durée de <strong>{{$para->nbre_jours_ligne}} jours maximum.</strong> Passé ce délai, elles ne seront plus en ligne.
                                             </p>
                                         </li>
-                                        <li>
+                                        {{-- <li>
                                             <p class="small mb-0 fs-14px">
                                                 - Si aucun renouvellement n'est effectué dans <strong>les 5 jours</strong> suivant la désactivation, l'annonce sera <strong>supprimée définitivement</strong>.
                                             </p>
-                                        </li>
+                                        </li> --}}
                                         <li>
                                            <p class="small mb-0 fs-14px">
                                                 - Si l'annonce n'est plus disponible, veuillez marquer son <strong>statut comme "indisponible"</strong>. Dans ce cas, l'annonce ne sera pas supprimée définitivement mais sera <strong>retirée de la liste des annonces disponible</strong>.
@@ -314,7 +314,7 @@
                                                             if (selectedValue == 'oui') {
                                                                 document.getElementById('div_papier').style.display='none';
                                                                 document.getElementById('div_imm').style.display='none';
-                                                                document.getElementById('imm').value='neant';
+                                                                document.getElementById('imm').value='AA-000-AA';
 
                                                             } else {
                                                                 document.getElementById('div_papier').style.display='block';

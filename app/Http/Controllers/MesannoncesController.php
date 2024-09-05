@@ -8,7 +8,6 @@ use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
@@ -17,13 +16,23 @@ use App\Models\Ville;
 use App\Models\Type_marque;
 use App\Models\Annonce;
 use App\Models\Annonce_photo;
+use App\Models\Annonce_vente;
+use App\Models\Annonce_contact;
+use App\Models\Annonce_refresh;
 use App\Models\Annonce_error;
+use App\Models\Annonce_formule;
+use App\Models\User_formule;
+use App\Models\Formule;
+use App\Models\Credit_auto;
+use App\Models\Parametrage;
+use App\Models\Signal_annonce;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class MesannoncesController extends Controller
 {
@@ -170,9 +179,48 @@ class MesannoncesController extends Controller
                         ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque', 'users.name as nom_user', 'users.prenom as prenom_user', 'users.email as email_user', 'users.image_chemin as photo_user')
                         ->first();
 
+            if($ann->type_annonce === 'vente') {
+                $vente = Annonce_vente::where('annonce_id', '=', $ann->id)->first();
+
+                $ann->credit_auto = $vente->credit_auto;
+                $ann->kilometrage = $vente->kilometrage;
+                $ann->hors_taxe = $vente->hors_taxe;
+                $ann->troc = $vente->troc;
+                $ann->negociable = $vente->negociable;
+                $ann->nbre_cle = $vente->nbre_cle;
+                $ann->visite_techn = $vente->visite_techn;
+                $ann->assurance = $vente->assurance;
+                $ann->papier = $vente->papier;
+
+                if ($vente->credit_auto === 'oui') {
+                    $credit = Credit_auto::where('annonce_id', '=', $ann->id)->first();
+
+                    $ann->credit_auto_mois = $credit->nbre_mois;
+                    $ann->prix_apport = $credit->prix_apport;
+                    $ann->prix_mois = $credit->prix_mois;
+                }
+            }
+
+            $contact = Annonce_contact::where('annonce_id', '=', $ann->id)->first();
+            $ann->whatsapp = $contact ? $contact->whatsapp : null;
+            $ann->appel = $contact ? $contact->appel : null;
+            $ann->sms = $contact ? $contact->sms : null;
+
+
+            $formule = Annonce_formule::where('annonce_id', '=', $ann->id)->first();
+
+            if ($formule) {
+
+                $ann->nbre_photo = $formule->nbre_photo;
+                $ann->duree_vie = $formule->duree_vie;
+                $ann->nbre_refresh = $formule->nbre_refresh;
+                $ann->tete_liste = $formule->tete_liste;
+                $ann->top_annonce = $formule->top_annonce;
+            }
+
         $photos = Annonce_photo::where('annonce_id', '=', $ann->id)->get();
 
-        return view('vehicule.mes_annonces.detail',['imgqr'=>$imgqr, 'data_qrcode'=>$data_qrcode, 'ann'=>$ann, 'photos'=>$photos]);
+        return view('vehicule.mes_annonces.detail',['imgqr'=>$imgqr, 'data_qrcode'=>$data_qrcode, 'ann'=>$ann, 'photos'=>$photos,]);
     }
 
     public function trait_dispo($uuid)
@@ -269,6 +317,36 @@ class MesannoncesController extends Controller
                         ->where('uuid', '=', $uuid)
                         ->select('annonces.*', 'villes.id as ville_id', 'marques.id as marque_id', 'type_marques.id as type_marque_id', 'users.phone as phone_user',)
                         ->first();
+
+        $contact = Annonce_contact::where('annonce_id', '=', $ann->id)->first();
+        $ann->whatsapp = $contact->whatsapp;
+        $ann->appel = $contact->appel;
+        $ann->sms = $contact->sms;
+
+        $vente = Annonce_vente::where('annonce_id', '=', $ann->id)->first();
+        $ann->credit_auto = $vente->credit_auto;
+        $ann->kilometrage = $vente->kilometrage;
+        $ann->hors_taxe = $vente->hors_taxe;
+        $ann->troc = $vente->troc;
+        $ann->negociable = $vente->negociable;
+        $ann->nbre_cle = $vente->nbre_cle;
+        $ann->visite_techn = $vente->visite_techn;
+        $ann->assurance = $vente->assurance;
+        $ann->papier = $vente->papier;
+
+        if ($vente->credit_auto === 'oui') {
+            $credit = Credit_auto::where('annonce_id', '=', $ann->id)->first();
+
+            $ann->credit_auto_mois = $credit->nbre_mois;
+            $ann->prix_apport = $credit->prix_apport;
+            $ann->prix_mois = $credit->prix_mois;
+        } else{
+
+            $ann->credit_auto_mois = '0';
+            $ann->prix_apport = '0';
+            $ann->prix_mois = '0';
+        }
+
         $photos = Annonce_photo::where('annonce_id', '=', $ann->id)->get();
 
         return view('vehicule.annonce.update.vente',['marques' => $marques,'villes' => $villes,'types' => $types,'ann'=>$ann,'photos'=>$photos,]);
@@ -287,6 +365,12 @@ class MesannoncesController extends Controller
                         ->where('uuid', '=', $uuid)
                         ->select('annonces.*', 'villes.id as ville_id', 'marques.id as marque_id', 'type_marques.id as type_marque_id', 'users.phone as phone_user',)
                         ->first();
+
+        $contact = Annonce_contact::where('annonce_id', '=', $ann->id)->first();
+        $ann->whatsapp = $contact->whatsapp;
+        $ann->appel = $contact->appel;
+        $ann->sms = $contact->sms;
+
         $photos = Annonce_photo::where('annonce_id', '=', $ann->id)->get();
 
         return view('vehicule.annonce.update.location',['marques' => $marques,'villes' => $villes,'types' => $types,'ann'=>$ann,'photos'=>$photos]);
@@ -301,6 +385,7 @@ class MesannoncesController extends Controller
             return back()->with('error', 'Cette immatriculation existe déjà.');
         }
 
+        DB::beginTransaction();
         // Créer une nouvelle annonce
         $ann = Annonce::where('uuid','=',$uuid)->first();
         $ann->imm = str_replace(' ', '', $request->input('imm'));
@@ -320,43 +405,59 @@ class MesannoncesController extends Controller
         $ann->description = $request->description;
         $ann->localisation = $request->localisation;
         $ann->ville_id = $request->ville_id;
-        $ann->whatsapp = $request->whatsapp;
-        $ann->appel = $request->appel;
-        $ann->sms = $request->sms;
         $ann->nbre_porte = $request->nbre_porte;
         $ann->type_annonce = $request->type_annonce;
 
-        if ($request->type_annonce === 'vente') {
+        try {
 
-            $ann->hors_taxe = $request->hors_taxe;
-            if ($request->hors_taxe === 'oui') {
-                $ann->papier = 'non';
-            }else{
-                $ann->papier = $request->papier;
+            if (!$ann->save()) {
+                return back()->with('error', 'Erreur lors de la mise à jour de l\'annonce.');
             }
 
-            $ann->kilometrage = $request->kilometrage;
-            $ann->troc = $request->troc;
-            $ann->visite_techn = $request->visite_techn;
-            $ann->assurance = $request->assurance;
-            $ann->nbre_cle = $request->nbre_cle;
-            $ann->negociable = $request->negociable;
+            $tel = Annonce_contact::where('annonce_id', '=', $ann->id)->first();
+            $tel->whatsapp = $request->whatsapp;
+            $tel->appel = $request->appel;
+            $tel->sms = $request->sms;
 
-            $ann->credit_auto = $request->credit_auto;
-
-            if ($request->credit_auto === 'oui') {
-
-                $ann->credit_auto_mois = $request->credit_auto_mois;
-                $ann->prix_apport = $request->prix_apport;
-                $ann->prix_mois = $request->prix_mois;
-            }else{
-                $ann->credit_auto_mois = '0';
-                $ann->prix_apport = '0';
-                $ann->prix_mois = '0';
+            if (!$tel->save()) {
+                Annonce_error::create(['motif' => 'les contacts n\'ont pas pu être mis a jour.','user_id' => Auth::user()->id]);
+                throw new \Exception('Erreur lors de la mise à jour de l\'annonce.');
             }
-        }
 
-        if ($ann->save()) {
+            if ($ann->type_annonce === 'vente') {
+
+                $vente = Annonce_vente::where('annonce_id', '=', $ann->id)->first();
+                $vente->hors_taxe = $request->hors_taxe;
+                $vente->kilometrage = $request->kilometrage;
+                $vente->troc = $request->troc;
+                $vente->papier = $request->papier;
+                $vente->visite_techn = $request->visite_techn;
+                $vente->assurance = $request->assurance;
+                $vente->nbre_cle = $request->nbre_cle;
+                $vente->negociable = $request->negociable;
+                $vente->credit_auto = $request->credit_auto;
+                if (!$vente->save()) {
+                    Annonce_error::create(['motif' => 'les vente n\'ont pas pu être mis a jour.','user_id' => Auth::user()->id]);
+                    throw new \Exception('Erreur lors de la mise à jour de l\'annonce.');
+                }
+
+                $credit = Credit_auto::where('annonce_id', '=', $ann->id)->first();
+                if ($request->credit_auto === 'oui') {
+                    $credit->nbre_mois = $request->credit_auto_mois;
+                    $credit->prix_apport = $request->prix_apport;
+                    $credit->prix_mois = $request->prix_mois;
+                }else{
+                    $credit->nbre_mois = '0';
+                    $credit->prix_apport = '0';
+                    $credit->prix_mois = '0';
+                }
+
+                if (!$credit->save()) {
+                    Annonce_error::create(['motif' => 'les credits auto n\'ont pas pu être mis a jour.','user_id' => Auth::user()->id]);
+                    throw new \Exception('Erreur lors de la mise à jour de l\'annonce.');
+                }
+            }
+
             // Vérification des fichiers images
             for ($i = 1; $i <= $request->nbre_photo; $i++) {
                 if ($request->input('update'.$i) === '1') {
@@ -368,7 +469,7 @@ class MesannoncesController extends Controller
                             $filename = time() . '_' . Str::random(10) . '.' .$file->getClientOriginalName();
                         } else {
                             Annonce_error::create(['motif' => 'Une ou plusieurs images sont invalides.','user_id' => Auth::user()->id]);
-                            return back()->with('error', 'Certaines images ne sont pas valides.Veuillez sélectionner des images valides.');
+                            throw new \Exception('Erreur lors de la mise à jour de l\'annonce.');
                         }
 
                         $path = $request->file('image' . ($i))->storeAs('public/images', $filename);
@@ -382,25 +483,23 @@ class MesannoncesController extends Controller
                         $photo->image_chemin = $path;
                         if (!$photo->save()) {
                             Annonce_error::create(['motif' => 'Échec de la mise à jour des images.','user_id' => Auth::user()->id]);
-                            return back()->with('error', 'Échec de la mise à jour de l\'annonce.');
+                            throw new \Exception('Erreur lors de la mise à jour de l\'annonce.');
                         }
 
                     }else {
                         Annonce_error::create(['motif' => 'Veuillez sélectionner toutes les images requises.','user_id' => Auth::user()->id]);
-
-                        return back()->with('warning', 'Certaines images ne sont pas valides.Veuillez sélectionner des images valides.');
+                        throw new \Exception('Erreur lors de la mise à jour de l\'annonce.');
                     }
-
                 }
             }
 
+            DB::commit();
             return redirect()->route('index_mesannonces')->with('success','Mise à jour éffectuée.');
 
+        } catch (\Exception $e) {
+            DB::rollback(); // Rollback transaction en cas d'erreur
+            Annonce_error::create(['motif' => $e->getMessage(), 'user_id' => Auth::user()->id]);
+            return redirect()->route('index_mesannonces')->with('error','Échec de la mise à jour de l\'annonce.');
         }
-
-        Annonce_error::create(['motif' => 'Échec de la publication de l\'annonce.','user_id' => Auth::user()->id]);
-
-        return redirect()->back()->with('error','Échec de la mise à jour de l\'annonce.');
     }
-
 }

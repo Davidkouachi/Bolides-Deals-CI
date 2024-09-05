@@ -173,7 +173,12 @@
                                     </li>
                                     <li class="nav-item"> 
                                         <a class="nav-link" data-bs-toggle="tab" href="#description">
-                                            Descriptions / Conditions
+                                            Descriptions
+                                        </a> 
+                                    </li>
+                                    <li class="nav-item"> 
+                                        <a class="nav-link" data-bs-toggle="tab" href="#contact">
+                                            Contacts
                                         </a> 
                                     </li>
                                 </ul>
@@ -598,6 +603,22 @@
                                         <p>
                                             {{$ann->description}}
                                         </p>
+                                    </div>
+                                    <div class="tab-pane" id="contact">
+                                        <ul class="list list-sm list-checked">
+                                            <li>
+                                                <strong>Appel : </strong>
+                                                {{$ann->appel ? : 'Aucun' }}
+                                            </li>
+                                            <li>
+                                                <strong>Sms : </strong>
+                                                {{$ann->sms ? : 'Aucun' }}
+                                            </li>
+                                            <li>
+                                                <strong>Whatsapp : </strong>
+                                                {{$ann->whatsapp ? : 'Aucun' }}
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>

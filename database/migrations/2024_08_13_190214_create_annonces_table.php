@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('nbre_porte');
             $table->string('statut');
             $table->string('date_hors_ligne')->nullable();
+            $table->integer('refresh_nbre')->default(0);
             $table->string('uuid')->unique()->index();
             $table->text('description');
             $table->unsignedBigInteger('marque_id');

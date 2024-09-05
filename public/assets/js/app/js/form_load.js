@@ -1,6 +1,5 @@
 function handleFormSubmit(event) {
     event.preventDefault(); // Prevent default form submission
-    Preload modal HTML
     var modalHtml = `
                 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
                     <div class="modal-dialog modal-dialog-centered modal-lg align-items-center justify-content-center">
@@ -23,7 +22,6 @@ function handleFormSubmit(event) {
     var modal = new bootstrap.Modal(document.getElementById('modalL'));
     modal.show();
 
-    If all validations pass, submit the form
     this.submit();
 }
 

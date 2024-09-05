@@ -316,15 +316,11 @@
 
                                                             if (selectedValue == 'oui') {
                                                                 document.getElementById('div_papier').style.display='none';
-                                                                document.getElementById('div_assurance').style.display='none';
-                                                                document.getElementById('div_visite_techn').style.display='none';
                                                                 document.getElementById('div_imm').style.display='none';
-                                                                document.getElementById('imm').value='neant';
+                                                                document.getElementById('imm').value='AA-123-AA';
 
                                                             } else {
                                                                 document.getElementById('div_papier').style.display='block';
-                                                                document.getElementById('div_assurance').style.display='block';
-                                                                document.getElementById('div_visite_techn').style.display='block';
                                                                 document.getElementById('div_imm').style.display='block';
                                                                 document.getElementById('imm').value='';
                                                             }
@@ -346,7 +342,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 col-md-6" id="div_papier" @if($ann->hors_taxe === 'oui') style="display: non;" @else style="display: block;" @endif>
+                                                <div class="col-lg-4 col-md-6" id="div_papier" @if($ann->hors_taxe === 'oui') style="display: none;" @else style="display: block;" @endif>
                                                     <div class="form-group">
                                                         <label class="form-label" for="cp1-team-size">Papiers à jour</label>
                                                         <div class="form-control-wrap">
@@ -380,7 +376,7 @@
                                                    <div class="form-group">
                                                         <label class="form-label">Assurance</label>
                                                         <div class="form-control-wrap">
-                                                            <input required name="assurance" type="date" class="form-control form-control-md" min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ \Carbon\Carbon::parse($ann->asurance)->translatedFormat('Y-m-d') }}" >
+                                                            <input id="assurance" required name="assurance" type="date" class="form-control form-control-md" value="{{ \Carbon\Carbon::parse($ann->asurance)->translatedFormat('Y-m-d') }}" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -388,7 +384,7 @@
                                                    <div class="form-group">
                                                         <label class="form-label">Visite technique</label>
                                                         <div class="form-control-wrap">
-                                                            <input required name="visite_techn" type="date" class="form-control form-control-md" min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ \Carbon\Carbon::parse($ann->visite_techn)->translatedFormat('Y-m-d') }}" >
+                                                            <input id="visite_techn" required name="visite_techn" type="date" class="form-control form-control-md" value="{{ \Carbon\Carbon::parse($ann->visite_techn)->translatedFormat('Y-m-d') }}" >
                                                         </div>
                                                     </div>
                                                 </div>

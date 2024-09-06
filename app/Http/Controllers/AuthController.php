@@ -34,6 +34,7 @@ class AuthController extends Controller
     {
         $login = $request->input('login'); // L'utilisateur peut entrer soit un email, soit un numéro de téléphone
         $password = $request->input('password');
+        $remember = $request->has('remember'); // Récupérer la valeur du champ "remember"
 
         // Vérifier si le login est un email ou un numéro de téléphone
         $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
@@ -43,11 +44,11 @@ class AuthController extends Controller
 
         // Vérifier si l'utilisateur existe et s'il est bloqué
         if ($user && $user->lock === 'oui') {
-            return redirect()->back()->with('user_locked','Cet compte est temporairement bloqué. Vous ne pouvez pas accéder à votre Profil pour le moment. Veuillez réessayer plus tard ou contacter le support si vous pensez qu\'il s\'agit d\'une erreur.');
+            return redirect()->back()->with('user_locked', 'Cet compte est temporairement bloqué. Vous ne pouvez pas accéder à votre Profil pour le moment. Veuillez réessayer plus tard ou contacter le support si vous pensez qu\'il s\'agit d\'une erreur.');
         }
 
         // Essayer de se connecter avec l'email ou le numéro de téléphone
-        if (Auth::attempt([$fieldType => $login, 'password' => $password])) {
+        if (Auth::attempt([$fieldType => $login, 'password' => $password], $remember)) {
 
             // Effacer l'URL prévue en session pour éviter des redirections indésirables
             Session::forget('url.intended');
@@ -65,6 +66,7 @@ class AuthController extends Controller
         return redirect()->back()->withInput($request->only('login'))
             ->with('error', 'L\'authentification a échoué. Veuillez vérifier vos informations d\'identification et réessayer.');
     }
+
 
 
     public function trait_registre(Request $request)

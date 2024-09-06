@@ -52,7 +52,7 @@ class Controller
                         ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque')
                         ->where('annonces.statut', '=', 'en ligne')
                         // ->sortByDesc('annonces.created_at')
-                        ->orderBy('annonces.created_at', 'Desc')
+                        ->orderBy('annonces.refresh_date', 'desc')
                         ->get();
         foreach ($anns as $value) {
             $firstPhoto = Annonce_photo::where('annonce_id', '=', $value->id)

@@ -16,6 +16,7 @@ use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\ParametrageController;
 use App\Http\Controllers\FormuleController;
 use App\Http\Controllers\StatistiqueController;
+use App\Http\Controllers\RefreshAnnonceController;
 
 
 Route::middleware(['auth'])->group(function () {
@@ -51,6 +52,10 @@ Route::middleware(['auth','statuthorsligne','CheckPapierJourMiddleware'])->group
     Route::get('/Mes Annonces/Mise à jour/Vente/{uuid}', [MesannoncesController::class, 'update_vente'])->name('update_vente');
     Route::get('/Mes Annonces/Mise à jour/Location/{uuid}', [MesannoncesController::class, 'update_location'])->name('update_location');
     Route::post('/trait_annonce_update/{uuid}', [MesannoncesController::class, 'trait_annonce_update'])->name('trait_annonce_update');
+    Route::get('/Mes Annonces/Renouvelement/Vente/{uuid}', [RefreshAnnonceController::class, 'refresh_vente'])->name('refresh_vente');
+    Route::get('/Mes Annonces/Renouvelement/Location/{uuid}', [RefreshAnnonceController::class, 'refresh_location'])->name('refresh_location');
+    Route::post('/trait_annonce_refresh/{uuid}', [RefreshAnnonceController::class, 'trait_annonce_refresh'])->name('trait_annonce_refresh');
+
 
     Route::get('/Statistique', [StatistiqueController::class, 'index_stat'])->name('index_stat');
     Route::get('/stat_anne', [StatistiqueController::class, 'stat_anne'])->name('stat_anne');
@@ -81,7 +86,7 @@ Route::middleware(['role:ADMINISTRATEUR'])->group(function () {
     Route::post('/trait_nbre_refresh', [ParametrageController::class, 'trait_nbre_refresh'])->name('trait_nbre_refresh');
     Route::post('/trait_nbre_photo', [ParametrageController::class, 'trait_nbre_photo'])->name('trait_nbre_photo');
 
-    Route::get('/Formules', [BordController::class, 'index_formule'])->name('index_formule');
+    Route::get('/Tableau de Bord/Formules', [BordController::class, 'index_formule'])->name('index_formule');
     Route::post('/trait_formule', [FormuleController::class, 'trait_formule'])->name('trait_formule');
     Route::post('/trait_formule_update/{id}', [FormuleController::class, 'trait_formule_update'])->name('trait_formule_update');
 
@@ -111,3 +116,5 @@ Route::get('/Send suggestion/{id}', [SuggestionController::class, 'send_sugg'])-
 Route::get('/Annonces Vendeur/{id}', [AnnonceController::class, 'annonce_user'])->name('annonce_user');
 
 Route::post('/Signal Annonce', [AnnonceController::class, 'signal_annonce'])->name('signal_annonce');
+
+Route::get('/Formule', [FormuleController::class, 'index_formule_all'])->name('index_formule_all');

@@ -112,7 +112,7 @@
                                         <ul class="product-badges">
                                             <li>
                                                 <span class="badge bg-danger">
-                                                    <em class="icon ni ni-camera"></em>
+                                                    <em class="icon ni ni-img"></em>
                                                     <span>{{$ann->nbre_photo}}</span>
                                                 </span>
                                             </li>
@@ -154,7 +154,7 @@
                                             {{$ann->prix.' Fcfa'}}
                                         </div>
                                         <span class="text-soft text-center">
-                                            {{\Carbon\Carbon::parse($ann->created_at)->diffForHumans() }}
+                                            {{\Carbon\Carbon::parse($ann->refresh_date)->diffForHumans() }}
                                         </span>
                                     </div>
                                 </div>

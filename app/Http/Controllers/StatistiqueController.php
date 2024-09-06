@@ -47,14 +47,14 @@ class StatistiqueController extends Controller
             $value->photo = $firstPhoto ? $firstPhoto->image_chemin : null;
         }
 
-        $canns = Annonce::where('user_id', '=', Auth::user()->id)
+        $tanns = Annonce::where('user_id', '=', Auth::user()->id)
                         ->join('marques', 'marques.id', '=', 'annonces.marque_id')
                         ->select('annonces.*', 'marques.marque as marque')
                         ->orderByRaw('REPLACE(prix, ".", "") + 0 DESC') // Convertir le prix en nombre pour la comparaison
                         ->take(10)
                         ->get();
 
-        foreach ($canns as $value) {
+        foreach ($tanns as $value) {
             $firstPhoto = Annonce_photo::where('annonce_id', '=', $value->id)
                 ->orderBy('created_at', 'asc')
                 ->first();
@@ -62,7 +62,10 @@ class StatistiqueController extends Controller
             $value->photo = $firstPhoto ? $firstPhoto->image_chemin : null;
         }
 
-        return view('statistique.index',['anns'=>$anns,'canns'=>$canns]);
+        $vanns = $tanns->where('type_annonce', '=', 'vente');
+        $lanns = $tanns->where('type_annonce', '=', 'location');
+
+        return view('statistique.index',['anns'=>$anns,'vanns'=>$vanns,'lanns'=>$lanns,'tanns' => $tanns]);
     }
 
     public function stat_anne(Request $request)

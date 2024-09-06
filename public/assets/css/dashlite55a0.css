@@ -52357,7 +52357,7 @@ div.dataTables_wrapper div.dataTables_filter .dark-mode input,
     box-shadow: 0 5px 40px 0 rgba(16, 25, 36, .3);
     color: #fff;
     background: #f2426e;
-    z-index: 99999
+    z-index: 9
 }
 
 .pmo-st:active,

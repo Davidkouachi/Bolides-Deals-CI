@@ -60,7 +60,7 @@ class AnnonceController extends Controller
             ->join('type_marques','type_marques.id','=','annonces.type_marque_id')
             ->where('annonces.statut','=','en ligne')
             ->select('annonces.*', 'villes.nom as ville', 'marques.marque as marque', 'marques.image_chemin as marque_photo', 'type_marques.nom as type_marque')
-            ->orderBy('annonces.created_at', 'desc');
+            ->orderBy('annonces.refresh_date', 'desc');
 
         // Appliquez les filtres
 
@@ -345,6 +345,7 @@ class AnnonceController extends Controller
         $ann->uuid = (string) Str::uuid();
         $ann->nbre_porte = $request->nbre_porte;
         $ann->type_annonce = $request->type_annonce;
+        $ann->refresh_date = Carbon::now();
 
         try {
 

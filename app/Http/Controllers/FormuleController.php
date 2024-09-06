@@ -16,10 +16,14 @@ use App\Models\Ville;
 use App\Models\Type_marque;
 use App\Models\Annonce;
 use App\Models\Annonce_photo;
+use App\Models\Annonce_contact;
+use App\Models\Annonce_refresh;
 use App\Models\Annonce_error;
+use App\Models\Formule;
+use App\Models\User_formule;
+use App\Models\Credit_auto;
 use App\Models\Parametrage;
 use App\Models\Signal_annonce;
-use App\Models\Formule;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Cache;
@@ -30,6 +34,24 @@ use Illuminate\Support\Facades\DB;
 
 class FormuleController extends Controller
 {
+    public function index_formule_all()
+    {
+        $formules = Formule::all();
+
+        $formule_user = null;
+        
+        if (Auth::check()) {
+            $formule_user = User_formule::join('users', 'users.id', '=', 'user_formules.user_id')
+                            ->join('formules', 'formules.id', '=', 'user_formules.formule_id')
+                            ->where('user_formules.user_id', '=', Auth::user()->id)
+                            ->where('user_formules.statut', '=', 'en cours')
+                            ->select('formules.id as formule_id')
+                            ->first();
+        }
+
+        return view('formule.index', ['formules'=>$formules, 'formule_user' => $formule_user]);
+    }
+
     public function trait_formule(Request $request)
     {
         $verf = Formule::where('nom', '=', $request->nom)->first();

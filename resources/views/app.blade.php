@@ -161,7 +161,7 @@
                                             <span class="fs-15px"></span>
                                         </a>
                                     </li>
-                                    @ENDIF
+                                    @endif
                                     <li class="dropdown notification-dropdown" hidden>
                                         <a class=" nk-quick-nav-icon" href="{{route('index_paye')}}">
                                             <em class="icon ni ni-money"></em>
@@ -214,15 +214,6 @@
                                             </div>
                                         </div>
                                     </li> --}}
-                                    @endauth
-
-                                    @auth()
-                                    <li class="dropdown notification-dropdown">
-                                        <a class=" nk-quick-nav-icon" href="">
-                                            <em class="icon ni ni-sign-usdc"></em>
-                                            <span class="fs-15px"></span>
-                                        </a>
-                                    </li>
                                     @endauth
 
                                     @yield('menu_haut')
@@ -363,32 +354,117 @@
                 @yield('content')
 
                 <div class="nk-footer">
-                    <div class="container-xl wide-xl">
-                        <div class="nk-footer-wrap">
+                    <div class="container-xl wide-xl bg-white rounded p-2">
+                        <div class="nk-footer-wrap mt-2">
                             <div class="nk-footer-copyright">
-                                <span class="w-20" >
-                                    @if(Auth::check())
-                                        @if (session('session_time_remaining'))
-                                            <span id="countdown">{{ gmdate('H:i:s', session('session_time_remaining')) }}</span>
-                                        @endif
-                                    @endif
-                                    Copyright © <script>
-                                    document.write(new Date().getFullYear())
-                                    </script> 
-                                    Bolides Deals CI Dévéloppé par DAVID Kouachi.
-                                </span>
-                                <marquee  behavior="" direction="" hidden>
-                                    <span class="text-danger" >
-                                        Conseils de sécurité :
-                                    </span>
-                                    <span class="" >
-                                        1- N'envoyer pas de paiement sans avoir vérifié le véhicule ou l'identité du vendeur, 2- Rencontrer de préference le vendeur dans un lieu public fréquenté ou dans un parc automobile, 3- Etre accompagner de son mecanicien, pour des vérifications approfondie du véhicule.
-                                    </span>
-                                </marquee>
+                                <div class="container">
+                                    <div class="row g-custom-x">
+                                        <div class="col-lg-3 mt-2">
+                                            <div class="widget">
+                                                <h5>A Propos</h5>
+                                                <p>
+                                                    <strong>Bolides Deals CI</strong> est une application web dédiée à la mise en relation entre acheteurs, vendeurs et locataires de véhicules en Côte d'Ivoire. Elle permet aux utilisateurs de consulter et publier des annonces pour la vente et la location de voitures.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 mt-2">
+                                            <div class="widget">
+                                                <h5>Contact Info</h5>
+                                                <ul class="">
+                                                    <li>
+                                                        <span>
+                                                            <em class="icon ni ni-location"></em>
+                                                            Abidjan, Cocody rivera abatta
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <span>
+                                                            <em class="icon ni ni-call"></em>
+                                                            +225 0102514392
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <span>
+                                                            <em class="icon ni ni-mail"></em>
+                                                            <a href="mailto:bolidesdealsci@gmail.com">
+                                                                bolidesdealsci@gmail.com
+                                                            </a>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 mt-2">
+                                            <h5>Liens Rapides</h5>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="widget">
+                                                        <ul>
+                                                            <li>
+                                                                <em class="icon ni ni-home" ></em>
+                                                                <a href="{{route('index_accueil')}}">Accueil</a>
+                                                            </li>
+                                                            <li>
+                                                                <em class="icon ni ni-box-view-fill" ></em>
+                                                                <a href="{{route('index_annonce')}}">Annonces</a>
+                                                            </li>
+                                                            <li>
+                                                                <em class="icon ni ni-sign-usdc" ></em>
+                                                                <a href="{{route('index_formule_all')}}">Formule</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 mt-2">
+                                            <div class="widget">
+                                                <h5>Réseaux Sociaux</h5>
+                                                <div class="social-icons">
+                                                    <a class="btn btn-outline-success btn-white btn-dim btn-sm mt-1" href="#">
+                                                        <em class="icon ni ni-whatsapp"></em>
+                                                    </a>
+                                                    <a class="btn btn-outline-primary btn-white btn-dim btn-sm mt-1" href="#">
+                                                        <em class="icon ni ni-facebook-f"></em>
+                                                    </a>
+                                                    <a class="btn btn-outline-info btn-white btn-dim btn-sm mt-1" href="#">
+                                                        <em class="icon ni ni-twitter"></em>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nk-footer-wrap mt-2">
+                            <div class="container wide-lg">
+                                <div class="row g-3">
+                                    <div class="col-lg-6 order-lg-last">
+                                        <ul class="nav nav-sm justify-content-center justify-content-lg-end">
+                                            <li class="nav-item"><a class="nav-link" href="#">Terms & Condition</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="#">Privacy Policy</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="#">Help</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="nk-block-content text-center text-lg-left">
+                                            <p class="text-soft">
+                                                <span class="w-20">
+                                                    Copyright © <script>
+                                                    document.write(new Date().getFullYear())
+                                                    </script>
+                                                    Bolides Deals CI Dévéloppé par DAVID Kouachi.
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -417,6 +493,7 @@
             <em class="icon ni ni-chat-circle" style="font-size: 25px;"></em>
         </div>
     </a> --}}
+
     @if(!request()->routeIs('index_detail'))
     <div class="pmo-lv pmo-dark active p-3" style="width: 200px;">
         <a class="" @if(Auth::check()) data-bs-toggle="modal" data-bs-target="#modalAnnonceNew" @else data-bs-toggle="modal" data-bs-target="#LoginRequis" @endif>
@@ -552,79 +629,6 @@
             <button id="acceptCookies" class="btn btn-primary">Accepter</button>
         </p>
     </div>
-
-
-
-    @if(Auth::check())
-    <div class="modal fade" tabindex="-1" id="sessionExpiredModal" aria-modal="true" role="dialog" style="position: fixed;" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content bg-white">
-                <div class="modal-body modal-body-lg text-center">
-                    <div class="nk-modal">
-                        <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger"></em>
-                        <h4 class="nk-modal-title">Session Expirée</h4>
-                        <div class="nk-modal-text">
-                            <div class="caption-text">
-                                <span>
-                                    Vous serez déconnecté et redirigé vers la page d'accueil
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nk-modal-action">
-                            <button class="btn btn-lg btn-mw btn-outline-light btn-dim btn-white me-2" onclick="window.location.href='{{ route('index_accueil') }}'">
-                                Ok
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const countdownElement = document.getElementById('countdown');
-
-            // Récupérer le temps restant soit depuis le stockage local, soit depuis la session
-            let timeRemaining = localStorage.getItem('timeRemaining') 
-                ? parseInt(localStorage.getItem('timeRemaining'), 10)
-                : parseInt('{{ session('session_time_remaining') }}', 10);
-            
-            // Fonction pour mettre à jour le compte à rebours
-            function updateCountdown() {
-                if (timeRemaining > 0) {
-                    timeRemaining--;
-                    localStorage.setItem('timeRemaining', timeRemaining); // Enregistrer le temps restant dans localStorage
-
-                    // Convertir les secondes restantes en format HH:MM:SS
-                    let hours = Math.floor(timeRemaining / 3600);
-                    let minutes = Math.floor((timeRemaining % 3600) / 60);
-                    let seconds = timeRemaining % 60;
-
-                    // Ajouter un zéro devant les chiffres uniques
-                    hours = hours < 10 ? '0' + hours : hours;
-                    minutes = minutes < 10 ? '0' + minutes : minutes;
-                    seconds = seconds < 10 ? '0' + seconds : seconds;
-
-                    // Mettre à jour l'affichage du compte à rebours
-                    countdownElement.textContent = hours + ':' + minutes + ':' + seconds;
-                    
-                    // Mettre à jour le compte à rebours après une seconde
-                    setTimeout(updateCountdown, 1000);
-                } else {
-                    // Supprimer l'entrée dans localStorage lorsque le temps est écoulé
-                    localStorage.removeItem('timeRemaining');
-                    // Afficher le modal lorsque le temps est écoulé
-                    $('#sessionExpiredModal').modal('show');
-                }
-            }
-            
-            // Démarrer le compte à rebours
-            updateCountdown();
-        });
-    </script>
-    @endif
-
 
     <script>
         window.addEventListener('load', function() {

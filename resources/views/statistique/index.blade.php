@@ -104,13 +104,45 @@
                             <div class="card-inner">
                                 <div class="card-title-group">
                                     <div class="card-title">
-                                        <h6 class="title">Top 10 des Véhicules Chers</h6>
+                                        <h6 class="title">Top 10 des Véhicules Chers : Ventes</h6>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-inner pt-0" data-simplebar style="height: 400px;">
                                 <ul class="gy-4">
-                                    @foreach($canns as $key => $value)
+                                    @foreach($vanns as $key => $value)
+                                    <li class="justify-between align-center border-bottom border-0 border-dashed">
+                                        <div class="align-center">
+                                            <div class="user-avatar sq bg-transparent">
+                                                <img src="{{ Storage::url($value->photo) }}" alt="{{ $value->marque }}" class="thumb">
+                                            </div>
+                                            <div class="ms-2">
+                                                <div class="lead-text">
+                                                    {{$value->marque}}
+                                                    {{$value->model}}
+                                                    {{$value->annee}}
+                                                </div>
+                                                <div class="sub-text">{{$value->prix.' Fcfa'}}</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card card-full">
+                            <div class="card-inner">
+                                <div class="card-title-group">
+                                    <div class="card-title">
+                                        <h6 class="title">Top 10 des Véhicules Chers : Locations</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-inner pt-0" data-simplebar style="height: 400px;">
+                                <ul class="gy-4">
+                                    @foreach($lanns as $key => $value)
                                     <li class="justify-between align-center border-bottom border-0 border-dashed">
                                         <div class="align-center">
                                             <div class="user-avatar sq bg-transparent">

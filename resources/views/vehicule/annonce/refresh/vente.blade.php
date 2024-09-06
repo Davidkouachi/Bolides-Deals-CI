@@ -11,7 +11,7 @@
                 <div class="nk-block-between g-3">
                     <div class="nk-block-head-content">
                         <h3 class="nk-block-title ">
-                            Mise à jour Vente
+                            Renouvelement Vente
                         </h3>
                     </div>
                     <div class="nk-block-head-content">
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="nk-block nk-block-lg">
-                <form class="nk-block" id="form" action="{{route('trait_annonce_update',$ann->uuid)}}" method="post" enctype="multipart/form-data">
+                <form class="nk-block" id="form" action="{{route('trait_annonce_refresh',$ann->uuid)}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row g-gs" >
                         <div class="col-12">
@@ -691,8 +691,8 @@
                                             <div class="form-group row g-gs align-items-center justify-content-center">
                                                 <div class="col-12 text-center" >
                                                     <button type="submit" class="btn btn-md btn-white btn-dim btn-outline-success ">
-                                                        <span>Publier l'annonce</span>
-                                                        <em class="icon ni ni-send"></em>
+                                                        <span>Terminer</span>
+                                                        <em class="icon ni ni-check-circle"></em>
                                                     </button>
                                                 </div>
                                             </div>
@@ -707,8 +707,8 @@
     </div>
 </div>
 
-<script src="{{asset('assets/js/app/js/annonce/update/vente/download_image.js') }}"></script>
-<script src="{{asset('assets/js/app/js/annonce/update/vente/form.js') }}"></script>
+<script src="{{asset('assets/js/app/js/annonce/refresh/vente/download_image.js') }}"></script>
+<script src="{{asset('assets/js/app/js/annonce/refresh/vente/form.js') }}"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

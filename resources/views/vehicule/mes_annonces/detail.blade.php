@@ -96,11 +96,12 @@
                                     </div>
                                 </div>
                             </div>
+                            @if($ann->statut === 'en ligne')
                             <div class="col-12">
                                 <div class="alert alert-warning alert-dismissible fade show mb-4 rounded-6" role="alert">
                                     @php
                                         $dureeVie = (int)$ann->duree_vie;
-                                        $createdAt = \Carbon\Carbon::parse($ann->created_at);
+                                        $createdAt = \Carbon\Carbon::parse($ann->refresh_date);
                                         $expirationDate = $createdAt->addDays($dureeVie);
                                         $today = \Carbon\Carbon::now();
                                         $remainingDays = $expirationDate->diffInDays($today, false);
@@ -121,6 +122,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             <div class="col-12">
                                 <ul class="filter-button-group mb-4 pb-1 align-items-center justify-content-center">
                                     @foreach($photos as $value)
@@ -617,7 +619,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12 mt-4">
+                            <div class="col-12 mt-4">
                                 <div class="card-inner">
                                     <div class="team">
                                         <div class="user-card user-card-s2">
@@ -634,7 +636,7 @@
                                                         <em class="icon ni ni-trash"></em>
                                                     </a>
                                                     @if($ann->statut === 'hors ligne' && $ann->refresh_nbre < $ann->nbre_refresh)
-                                                    <a class="btn btn-white btn-warning btn-dim btn-sm mt-1 me-1" data-bs-toggle="modal" data-bs-target="#modalAnnoncerefresh">
+                                                    <a class="btn btn-white btn-warning btn-dim btn-sm mt-1 me-1" @if($ann->type_annonce === 'vente') href="{{route('refresh_vente',$ann->uuid)}}" @else href="{{route('refresh_location',$ann->uuid)}}" @endif>
                                                         <span>Renouveler l'annonce</span>
                                                         <em class="icon ni ni-reload"></em>
                                                     </a>
@@ -654,13 +656,13 @@
                                                     @if($ann->type_annonce === 'vente' && $ann->statut === 'en ligne' || $ann->statut === 'hors ligne' )
                                                     <a class="btn btn-white btn-success btn-dim btn-sm mt-1 me-1" href="" >
                                                         <span>Véhicule Vendu</span>
-                                                        <em class="icon ni ni-cross-circle"></em>
+                                                        <em class="icon ni ni-check-circle-cut"></em>
                                                     </a>
                                                     @endif
                                                     @if($ann->type_annonce === 'location' && $ann->statut === 'en ligne' || $ann->statut === 'hors ligne' )
                                                     <a class="btn btn-white btn-success btn-dim btn-sm mt-1 me-1" href="" >
                                                         <span>Véhicule loué</span>
-                                                        <em class="icon ni ni-cross-circle"></em>
+                                                        <em class="icon ni ni-check-circle-cut"></em>
                                                     </a>
                                                     @endif
                                                 </div>
@@ -668,6 +670,11 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-12">
+                                <h6 class="mb-1 text-center">
+                                    Nombre de renouvelement restant : {{(int)$ann->nbre_refresh - (int)$ann->refresh_nbre}}
+                                </h6>
                             </div>
                         </div>
                     </div>

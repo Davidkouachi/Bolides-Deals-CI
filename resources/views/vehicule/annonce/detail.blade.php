@@ -31,7 +31,7 @@
             <nav>    
                 <ul class="breadcrumb">        
                     <li class="breadcrumb-item">
-                        <a>Annonce crée le {{ \Carbon\Carbon::parse($ann->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}</a>
+                        <a>Annonce publié le {{ \Carbon\Carbon::parse($ann->refresh_date)->translatedFormat('j F Y '.' à '.' H:i:s') }}</a>
                     </li>   
                 </ul>
             </nav>
@@ -724,7 +724,7 @@
                                             {{$value->prix.' Fcfa'}}
                                         </div>
                                         <span class="text-soft text-center"> 
-                                            {{\Carbon\Carbon::parse($value->created_at)->diffForHumans() }}
+                                            {{\Carbon\Carbon::parse($value->refresh_date)->diffForHumans() }}
                                         </span>
                                     </div>
                                 </div>

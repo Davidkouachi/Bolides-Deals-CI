@@ -55,6 +55,14 @@
                                             <input type="password" name="password" class="form-control form-control-md" id="password" placeholder="Entrer votre Mot de passe">
                                         </div>
                                     </div>
+                                    <div class="form-group" >
+                                        <div class="custom-control custom-checkbox">    
+                                            <input name="remember" type="checkbox" class="custom-control-input" id="customCheck1">
+                                            <label class="custom-control-label" for="customCheck1">
+                                                Se souvenir de moi
+                                            </label>
+                                        </div>
+                                    </div>
                                     <div class="form-group row g-gs">
                                         <div class="col-6">
                                             <a href="javascript:void(0);" onclick="history.back()" class="btn btn-md btn-white btn-dim btn-outline-danger btn-block">
@@ -86,17 +94,27 @@
                     </div>
                     <div class="nk-footer nk-auth-footer-full">
                         <div class="container wide-lg">
-                            <div class="row g-3">
-                                <div class="col-lg-6 order-lg-last">
+                            <div class="row g-gs">
+                                {{-- <div class="col-lg-6 order-lg-last">
                                     <ul class="nav nav-sm justify-content-center justify-content-lg-end">
                                         <li class="nav-item"><a class="nav-link" href="#">Terms & Condition</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#">Privacy Policy</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#">Help</a></li>
                                     </ul>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                <div class="col-12">
                                     <div class="nk-block-content text-center text-lg-left">
-                                        <p class="text-soft">&copy; 2023 Dashlite. All Rights Reserved.</p>
+                                        <p class="text-soft">
+                                            <span class="w-20">
+                                                @if(Auth::check())
+                                                    @if (session('session_time_remaining'))
+                                                    <span id="countdown">{{ gmdate('H:i:s', session('session_time_remaining')) }}</span>
+                                                    @endif
+                                                @endif
+                                                Copyright © <script>document.write(new Date().getFullYear())</script>
+                                                Bolides Deals CI Dévéloppé par DAVID Kouachi.
+                                            </span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>

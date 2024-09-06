@@ -11,7 +11,7 @@
                 <div class="nk-block-between g-3">
                     <div class="nk-block-head-content">
                         <h3 class="nk-block-title ">
-                            Mise à jour Vente
+                            Renouvelement Location
                         </h3>
                     </div>
                     <div class="nk-block-head-content">
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="nk-block nk-block-lg">
-                <form class="nk-block" id="form" action="{{route('trait_annonce_update',$ann->uuid)}}" method="post" enctype="multipart/form-data">
+                <form class="nk-block" id="form" action="{{route('trait_annonce_refresh',$ann->uuid)}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row g-gs" >
                         <div class="col-12">
@@ -55,7 +55,7 @@
                                                                     <div class="user-card user-card-s2">
                                                                         <label class="form-label text-center" > Photo de la marque</label>
                                                                         <div class="user-avatar xl sq border p-1" style="background: transparent;">
-                                                                            <img class="thumb" id="marqueImages">
+                                                                            <img class="thumb" id="marqueImage">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -119,17 +119,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 col-md-6" id="div_km">
-                                                   <div class="form-group">
-                                                        <label class="form-label" for="default-05">Kilométrage</label>
-                                                        <div class="form-control-wrap">
-                                                            <div class="form-text-hint">
-                                                                <span class="overline-title">KM</span>
-                                                            </div>
-                                                            <input required type="tel" name="kilometrage" class="form-control" id="km" placeholder="saisie obligatoire" maxlength="7" value="{{$ann->kilometrage}}">
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="col-lg-4 col-md-6" id="div_trans">
                                                     <div class="form-group">
                                                         <label class="form-label" for="cp1-team-size">Transmission</label>
@@ -172,7 +161,7 @@
                                                         <div class="form-control-wrap">
                                                             <select required class="form-select js-select2" data-placeholder="selectionner" name="nbre_place">
                                                                 <option value=""></option>
-                                                                @for($i=1; $i < 51 ; $i++)
+                                                                @for($i = 1; $i < 51; $i++)
                                                                     <option value="{{ $i }}" 
                                                                         @if(isset($ann->nbre_place) && $ann->nbre_place == $i) 
                                                                             selected 
@@ -294,97 +283,18 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 col-md-6" id="div_hors_taxe">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="cp1-team-size">Hors taxe</label>
-                                                        <div class="form-control-wrap">
-                                                            <select id="hors_taxe" required class="form-select js-select2" data-placeholder="selectionner" name="hors_taxe">
-                                                                <option value="oui" @if(isset($ann->hors_taxe) && $ann->hors_taxe == 'oui') selected @endif>
-                                                                    Oui
-                                                                </option>
-                                                                <option value="non" @if(isset($ann->hors_taxe) && $ann->hors_taxe == 'non') selected @endif>
-                                                                    Non
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <script>
-                                                    document.addEventListener('DOMContentLoaded', function() {
-                                                        $('#hors_taxe').on('change', function() {
-                                                            var selectedValue = $(this).val();
-
-                                                            if (selectedValue == 'oui') {
-                                                                document.getElementById('div_papier').style.display='none';
-                                                                document.getElementById('div_imm').style.display='none';
-                                                                document.getElementById('imm').value='AA-123-AA';
-
-                                                            } else {
-                                                                document.getElementById('div_papier').style.display='block';
-                                                                document.getElementById('div_imm').style.display='block';
-                                                                document.getElementById('imm').value='';
-                                                            }
-                                                        });
-                                                    });
-                                                </script>
-                                                <div class="col-lg-4 col-md-6" id="div_imm" @if($ann->hors_taxe === 'oui') style="display: none;" @endif >
+                                                <div class="col-lg-4 col-md-6" id="div_imm" >
                                                     <div class="form-group">
                                                         <label class="form-label" for="cp1-team-size">
                                                             Immatriculation
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input id="imm" required name="imm" type="text" class="form-control form-control-md" placeholder="Entrer l'immatriculation du véhicule sans espace" oninput="removeSpaces(this)" value="{{$ann->imm}}" >
+                                                            <input id="imm" required name="imm" type="text" class="form-control form-control-md" placeholder="Entrer l'immatriculation du véhicule sans espace" oninput="removeSpaces(this)" value="{{$ann->imm}}">
                                                             <script>
                                                                 function removeSpaces(input) {
                                                                     input.value = input.value.replace(/\s+/g, '');
                                                                 }
                                                             </script>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-6" id="div_papier" @if($ann->hors_taxe === 'oui') style="display: none;" @else style="display: block;" @endif>
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="cp1-team-size">Papiers à jour</label>
-                                                        <div class="form-control-wrap">
-                                                            <select id="papier" required class="form-select js-select2" data-placeholder="selectionner" name="papier">
-                                                                <option value="oui" @if(isset($ann->papier) && $ann->papier == 'oui') selected @endif>
-                                                                    Oui
-                                                                </option>
-                                                                <option value="non" @if(isset($ann->papier) && $ann->papier == 'non') selected @endif>
-                                                                    Non
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <script>
-                                                    document.addEventListener('DOMContentLoaded', function() {
-                                                        $('#papier').on('change', function() {
-                                                            var selectedValue = $(this).val();
-
-                                                            if (selectedValue == 'oui') {
-                                                                document.getElementById('div_assurance').style.display='block';
-                                                                document.getElementById('div_visite_techn').style.display='block';
-                                                            } else {
-                                                                document.getElementById('div_assurance').style.display='none';
-                                                                document.getElementById('div_visite_techn').style.display='none';
-                                                            }
-                                                        });
-                                                    });
-                                                </script>
-                                                <div class="col-lg-4 col-md-6" id="div_assurance" @if($ann->papier === 'oui') style="display: block;" @else style="display: none;" @endif>
-                                                   <div class="form-group">
-                                                        <label class="form-label">Assurance</label>
-                                                        <div class="form-control-wrap">
-                                                            <input id="assurance" required name="assurance" type="date" class="form-control form-control-md" value="{{ \Carbon\Carbon::parse($ann->asurance)->translatedFormat('Y-m-d') }}" >
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-6" id="div_visite_techn" @if($ann->papier === 'oui') style="display: block;" @else style="display: none;" @endif>
-                                                   <div class="form-group">
-                                                        <label class="form-label">Visite technique</label>
-                                                        <div class="form-control-wrap">
-                                                            <input id="visite_techn" required name="visite_techn" type="date" class="form-control form-control-md" value="{{ \Carbon\Carbon::parse($ann->visite_techn)->translatedFormat('Y-m-d') }}" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -413,7 +323,8 @@
                                                         <label class="form-label" for="cp1-team-size">Type d'annonce</label>
                                                         <div class="form-control-wrap">
                                                             <select required class="form-select js-select2" data-placeholder="selectionner" id="typeAnnonce" name="type_annonce">
-                                                                <option selected value="vente">Vente</option>
+                                                                <option value=""></option>
+                                                                <option selected value="location">Location</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -423,24 +334,9 @@
                                                         <label class="form-label" for="default-05">Prix</label>
                                                         <div class="form-control-wrap">
                                                             <div class="form-text-hint">
-                                                                <span class="overline-title">Fcfa</span>
+                                                                <span class="overline-title">Fcfa / 24H</span>
                                                             </div>
                                                             <input required type="tel" class="form-control" id="prix" placeholder="saisie obligatoire" name="prix" value="{{$ann->prix}}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-6" id="div_porte">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="cp1-team-size">Prix négociable</label>
-                                                        <div class="form-control-wrap">
-                                                            <select required class="form-select js-select2" data-placeholder="selectionner" name="negociable">
-                                                                <option value="oui" @if(isset($ann->negociable) && $ann->negociable == 'oui') selected @endif>
-                                                                    Oui
-                                                                </option>
-                                                                <option value="non" @if(isset($ann->negociable) && $ann->negociable == 'non') selected @endif>
-                                                                    Non
-                                                                </option>
-                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -449,7 +345,6 @@
                                                         <label class="form-label" for="cp1-team-size">Ville</label>
                                                         <div class="form-control-wrap">
                                                             <select required id="sousCategorieSelect" class="form-select js-select2" data-placeholder="Selectionner" name="ville_id">
-                                                                <option value=""></option>
                                                                 @foreach($villes as $value)
                                                                 <option value="{{ $value->id }}" 
                                                                     @if(isset($ann->ville_id) && $ann->ville_id == $value->id)
@@ -467,107 +362,6 @@
                                                         <label class="form-label">Localisation</label>
                                                         <div class="form-control-wrap">
                                                             <input required name="localisation" type="text" class="form-control form-control-md" placeholder="saisie obligatoire" value="{{$ann->localisation}}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-6" id="div_cle">
-                                                   <div class="form-group">
-                                                        <label class="form-label">Nombre de clés</label>
-                                                        <div class="form-control-wrap">
-                                                            <select required class="form-select js-select2" data-placeholder="Selectionner" name="nbre_cle">
-                                                                <option value="1" @if(isset($ann->nbre_cle) && $ann->nbre_cle == '1') selected @endif>
-                                                                    1 clé
-                                                                </option>
-                                                                <option value="2" @if(isset($ann->nbre_cle) && $ann->nbre_cle == '2') selected @endif>
-                                                                    2 clés
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-6" id="div_troc">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="cp1-team-size">Troc Possible</label>
-                                                        <div class="form-control-wrap">
-                                                            <select required class="form-select js-select2" data-placeholder="selectionner" name="troc">
-                                                                <option value="oui" @if(isset($ann->troc) && $ann->troc == 'oui') selected @endif>
-                                                                    Oui
-                                                                </option>
-                                                                <option value="non" @if(isset($ann->troc) && $ann->troc == 'non') selected @endif>
-                                                                    Non
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-6" id="div_credit_auto">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="cp1-team-size">
-                                                            Crédit Auto
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <select required class="form-select js-select2" data-placeholder="selectionner" name="credit_auto" id="credit_auto">
-                                                                <option value="oui" @if(isset($ann->credit_auto) && $ann->credit_auto == 'oui') selected @endif >Oui</option>
-                                                                <option value="non" @if(isset($ann->credit_auto) && $ann->credit_auto == 'non') selected @endif >Non</option>
-                                                            </select>
-                                                            <script>
-                                                                document.addEventListener('DOMContentLoaded', function() {
-                                                                    $('#credit_auto').on('change', function() {
-                                                                        var selectedValue = $(this).val();
-
-                                                                        if (selectedValue == 'oui') {
-                                                                            document.getElementById('div_credit_auto_mois').style.display='block';
-                                                                            document.getElementById('div_prix_apport').style.display='block';
-                                                                            document.getElementById('div_prix_mois').style.display='block';
-
-                                                                        } else {
-                                                                            document.getElementById('div_credit_auto_mois').style.display='none';
-                                                                            document.getElementById('div_prix_apport').style.display='none';
-                                                                            document.getElementById('div_prix_mois').style.display='none';
-                                                                        }
-                                                                    });
-                                                                });
-                                                            </script>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-6" id="div_credit_auto_mois" @if($ann->credit_auto == 'non') style="display: none;" @endif>
-                                                   <div class="form-group">
-                                                        <label class="form-label">
-                                                            Crédit Auto nombre de mois
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <select required class="form-select js-select2" data-placeholder="selectionner" id="credit_auto_mois" name="credit_auto_mois">
-                                                                @for($i = 0; $i < 51; $i++)
-                                                                    <option value="{{ $i }}" {{ $i == $ann->credit_auto_mois ? 'selected' : '' }}>{{ $i }}</option>
-                                                                @endfor
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-6" id="div_prix_apport" @if($ann->credit_auto == 'non') style="display: none;" @endif>
-                                                   <div class="form-group">
-                                                        <label class="form-label" for="default-05">
-                                                            Apport initial
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <div class="form-text-hint">
-                                                                <span class="overline-title">Fcfa</span>
-                                                            </div>
-                                                            <input required type="tel" class="form-control" id="prix_apport" placeholder="Apport initial du crédit auto" name="prix_apport" value="{{$ann->prix_apport}}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-6" id="div_prix_mois" @if($ann->credit_auto == 'non') style="display: none;" @endif>
-                                                   <div class="form-group">
-                                                        <label class="form-label" for="default-05">
-                                                            Somme a payée
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <div class="form-text-hint">
-                                                                <span class="overline-title">Fcfa / mois</span>
-                                                            </div>
-                                                            <input required type="tel" class="form-control" id="prix_mois" name="prix_mois" value="{{$ann->prix_mois}}" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -691,8 +485,8 @@
                                             <div class="form-group row g-gs align-items-center justify-content-center">
                                                 <div class="col-12 text-center" >
                                                     <button type="submit" class="btn btn-md btn-white btn-dim btn-outline-success ">
-                                                        <span>Publier l'annonce</span>
-                                                        <em class="icon ni ni-send"></em>
+                                                        <span>Terminer</span>
+                                                        <em class="icon ni ni-check-circle"></em>
                                                     </button>
                                                 </div>
                                             </div>
@@ -707,52 +501,13 @@
     </div>
 </div>
 
-<script src="{{asset('assets/js/app/js/annonce/update/vente/download_image.js') }}"></script>
-<script src="{{asset('assets/js/app/js/annonce/update/vente/form.js') }}"></script>
+<script src="{{asset('assets/js/app/js/annonce/refresh/location/download_image.js') }}"></script>
+<script src="{{asset('assets/js/app/js/annonce/refresh/location/form.js') }}"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const prixApport = document.getElementById('prix_apport');
-            const creditAutoMois = document.getElementById('credit_auto_mois');
-            const prixMois = document.getElementById('prix_mois');
-            const prix = document.getElementById('prix');
-
-            function calculateMonthlyPayment() {
-                const apport = parseInt(prixApport.value.replace(/\./g, '')) || 0;
-                const prixTotal = parseInt(prix.value.replace(/\./g, '')) || 0;
-                const months = parseInt(creditAutoMois.value) || 1;
-                const remainingAmount = prixTotal - apport;
-                const monthlyPayment = Math.floor(remainingAmount / months);
-                prixMois.value = formatPrice(monthlyPayment.toString());
-            }
-
-            prixApport.addEventListener('input', function() {
-                this.value = formatPrice(this.value);
-                calculateMonthlyPayment();
-            });
-
-            prix.addEventListener('input', function() {
-                this.value = formatPrice(this.value);
-                calculateMonthlyPayment();
-            });
-
-            $('#credit_auto_mois').on('change', function() {
-                calculateMonthlyPayment();
-            });
-
-            function formatPrice(input) {
-                input = input.replace(/\./g, '');
-                return input.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            }
-
-            // Initial calculation on page load
-            calculateMonthlyPayment();
-        });
-    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var imageElement = document.getElementById('marqueImages');
+            var imageElement = document.getElementById('marqueImage');
 
             // Convertir les données PHP en format JSON pour JavaScript
             var marques = @json($marques);
@@ -817,20 +572,9 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Écouter l'événement d'entrée sur les champs de texte
-            document.getElementById('km').addEventListener('input', function() {
-                this.value = formatPrice(this.value);
-            });
             // Écouter l'événement d'entrée sur les champs de texte
             document.getElementById('prix').addEventListener('input', function() {
                 this.value = formatPrice(this.value);
-            });
-
-            // Événement pour permettre uniquement les chiffres
-            document.getElementById('km').addEventListener('keypress', function(event) {
-                const key = event.key;
-                if (isNaN(key)) {
-                    event.preventDefault();
-                }
             });
 
             // Événement pour permettre uniquement les chiffres

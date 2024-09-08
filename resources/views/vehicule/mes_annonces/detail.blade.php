@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="nk-block">
-                <div class="card">
+                <div class="card @php if($ann->type_annonce == 'vente') echo 'alert alert-pro alert-info'; else echo 'alert alert-pro alert-warning'; @endphp ">
                     <div class="card-inner">
                         <div class="row pb-5">
                             <div class="col-12">
@@ -619,6 +619,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @if((int)$ann->nbre_refresh - (int)$ann->refresh_nbre != '0')
                             <div class="col-12 mt-4">
                                 <div class="card-inner">
                                     <div class="team">
@@ -647,21 +648,27 @@
                                                         <em class="icon ni ni-check-circle-cut"></em>
                                                     </a>
                                                     @endif
-                                                    @if( $ann->statut === 'en ligne' )
+                                                    @if( $ann->statut === 'en ligne' || $ann->statut === 'hors ligne' )
                                                     <a class="btn btn-white btn-gray btn-dim btn-sm mt-1 me-1" href="{{route('trait_indispo',$ann->uuid)}}" >
                                                         <span>En réparation</span>
                                                         <em class="icon ni ni-cross-circle"></em>
                                                     </a>
                                                     @endif
                                                     @if($ann->type_annonce === 'vente' && $ann->statut === 'en ligne' || $ann->statut === 'hors ligne' )
-                                                    <a class="btn btn-white btn-success btn-dim btn-sm mt-1 me-1" href="" >
+                                                    <a class="btn btn-white btn-success btn-dim btn-sm mt-1 me-1" href="{{route('trait_vendu', $ann->uuid)}}" >
                                                         <span>Véhicule Vendu</span>
                                                         <em class="icon ni ni-check-circle-cut"></em>
                                                     </a>
                                                     @endif
-                                                    @if($ann->type_annonce === 'location' && $ann->statut === 'en ligne' || $ann->statut === 'hors ligne' )
-                                                    <a class="btn btn-white btn-success btn-dim btn-sm mt-1 me-1" href="" >
+                                                    @if($ann->type_annonce === 'location' && ($ann->statut === 'en ligne' || $ann->statut === 'hors ligne') )
+                                                    <a class="btn btn-white btn-success btn-dim btn-sm mt-1 me-1" href="{{route('trait_louer', $ann->uuid)}}" >
                                                         <span>Véhicule loué</span>
+                                                        <em class="icon ni ni-check-circle-cut"></em>
+                                                    </a>
+                                                    @endif
+                                                    @if($ann->type_annonce === 'location' && $ann->statut === 'louer' )
+                                                    <a class="btn btn-white btn-success btn-dim btn-sm mt-1 me-1" href="{{route('trait_dispo',$ann->uuid)}}" >
+                                                        <span>Véhicule Disponible</span>
                                                         <em class="icon ni ni-check-circle-cut"></em>
                                                     </a>
                                                     @endif
@@ -676,6 +683,7 @@
                                     Nombre de renouvelement restant : {{(int)$ann->nbre_refresh - (int)$ann->refresh_nbre}}
                                 </h6>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -683,7 +691,7 @@
 
             @if($ann->statut === 'en ligne')
             <div class="nk-block">
-                <div class="card">
+                <div class="card @php if($ann->type_annonce == 'vente') echo 'alert alert-pro alert-info'; else echo 'alert alert-pro alert-warning'; @endphp ">
                     <div class="card-inner mt-n5">
                         <div class="team">
                             <div class="user-card user-card-s2">

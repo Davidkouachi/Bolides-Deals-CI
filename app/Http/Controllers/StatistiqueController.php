@@ -116,14 +116,18 @@ class StatistiqueController extends Controller
 
     public function stat_statut(Request $request)
     {
-        $total_ligne = Annonce::where('statut', 'en ligne')->where('user_id', Auth::user()->id)->count();
-        $total_hligne = Annonce::where('statut', 'hors ligne')->where('user_id', Auth::user()->id)->count();
-        $total_indispo = Annonce::where('statut', 'indisponible')->where('user_id', Auth::user()->id)->count();
+        $total_ligne = Annonce::where('statut', '=', 'en ligne')->where('user_id', Auth::user()->id)->count();
+        $total_hligne = Annonce::where('statut', '=', 'hors ligne')->where('user_id', Auth::user()->id)->count();
+        $total_indispo = Annonce::where('statut', '=', 'indisponible')->where('user_id', Auth::user()->id)->count();
+        $total_vendu = Annonce::where('statut', '=', 'vendu')->where('user_id', Auth::user()->id)->count();
+        $total_louer = Annonce::where('statut', '=', 'louer')->where('user_id', Auth::user()->id)->count();
 
         return response()->json([
             'total_ligne' => $total_ligne,
             'total_hligne' => $total_hligne,
             'total_indispo' => $total_indispo,
+            'total_vendu' => $total_vendu,
+            'total_louer' => $total_louer,
         ]);
     }
 }

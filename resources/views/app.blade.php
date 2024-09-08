@@ -178,6 +178,15 @@
                                     @endif
 
                                     @auth()
+                                    <li class="dropdown notification-dropdown">
+                                        <a class=" nk-quick-nav-icon" data-bs-toggle="modal" data-bs-target="#modalAnnonceNew">
+                                            <em class="icon ni ni-plus-circle"></em>
+                                            <span class="fs-15px"></span>
+                                        </a>
+                                    </li>
+                                    @endauth
+
+                                    @auth()
                                     {{-- <li class="dropdown notification-dropdown">
                                         <a class="nk-quick-nav-icon" data-bs-toggle="modal" data-bs-target="#modalAnnonceNew">
                                             <div class="icon-status icon-status-info">
@@ -293,7 +302,7 @@
                                                             </span>
                                                         </a>
                                                     </li>
-                                                    @if(session('role')->nom === 'ADMINISTRATEUR')
+                                                    @if(Auth::check() && Auth::user()->role === 'ADMINISTRATEUR')
                                                     <li>
                                                         <a href="{{route('index_accueil_bord')}}">
                                                             <em class="icon ni ni-setting">
@@ -424,7 +433,7 @@
                                                     <a class="btn btn-outline-success btn-white btn-dim btn-sm mt-1" href="#">
                                                         <em class="icon ni ni-whatsapp"></em>
                                                     </a>
-                                                    <a class="btn btn-outline-primary btn-white btn-dim btn-sm mt-1" href="#">
+                                                    <a class="btn btn-outline-primary btn-white btn-dim btn-sm mt-1" target="_bank" href="https://www.facebook.com/profile.php?id=61564901360088&mibextid=LQQJ4d" title="facebook">
                                                         <em class="icon ni ni-facebook-f"></em>
                                                     </a>
                                                     <a class="btn btn-outline-info btn-white btn-dim btn-sm mt-1" href="#">
@@ -494,7 +503,7 @@
         </div>
     </a> --}}
 
-    @if(!request()->routeIs('index_detail'))
+    @if(request()->routeIs('index_accueil','index_annonce'))
     <div class="pmo-lv pmo-dark active p-3" style="width: 200px;">
         <a class="" @if(Auth::check()) data-bs-toggle="modal" data-bs-target="#modalAnnonceNew" @else data-bs-toggle="modal" data-bs-target="#LoginRequis" @endif>
             <div class="pmo-text text-white">

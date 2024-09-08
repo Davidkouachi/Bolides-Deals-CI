@@ -33,6 +33,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/Mes Annonces/Véhicule disponible/{uuid}', [MesannoncesController::class, 'trait_dispo'])->name('trait_dispo');
     Route::get('/Mes Annonces/Véhicule indisponible/{uuid}', [MesannoncesController::class, 'trait_indispo'])->name('trait_indispo');
     Route::get('/Mes Annonces/Supprimer annonce/{uuid}', [MesannoncesController::class, 'delete_ann'])->name('delete_ann');
+    Route::get('/Mes Annonces/Véhicule vendu/{uuid}', [MesannoncesController::class, 'trait_vendu'])->name('trait_vendu');
+    Route::get('/Mes Annonces/Véhicule louer/{uuid}', [MesannoncesController::class, 'trait_louer'])->name('trait_louer');
 
     Route::get('/Nouvelle Annonces/Vente', [AnnonceController::class, 'index_annonce_new_vente'])->name('index_annonce_new_vente');
     Route::get('/Nouvelle Annonces/Location', [AnnonceController::class, 'index_annonce_new_location'])->name('index_annonce_new_location');

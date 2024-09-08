@@ -55,6 +55,10 @@
                                                 <span>Renouvelement d'une annonce: {{$value->nbre_refresh}} fois </span>
                                             </li>
                                             <li>
+                                                <em class="icon text-danger ni ni-cross-circle"></em>
+                                                <span>Vente Flash</span>
+                                            </li>
+                                            <li>
                                                 @if($value->badge === 'oui')
                                                     <em class="icon text-success ni ni-check-circle-fill"></em>
                                                 @else

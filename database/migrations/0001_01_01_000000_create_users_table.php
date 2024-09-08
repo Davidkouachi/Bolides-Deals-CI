@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('image_nom')->unique()->nullable();
             $table->string('image_chemin')->unique()->nullable();
             $table->unsignedBigInteger('role_id');
+            $table->string('role')->index();
             $table->foreign('role_id')->references('id')->on('roles');
             $table->rememberToken();
             $table->timestamps();

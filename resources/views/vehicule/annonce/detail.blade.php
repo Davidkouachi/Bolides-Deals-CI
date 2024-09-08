@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <nav>    
+            <nav class="mt-n3" >    
                 <ul class="breadcrumb">        
                     <li class="breadcrumb-item">
                         <a>Annonce publié le {{ \Carbon\Carbon::parse($ann->refresh_date)->translatedFormat('j F Y '.' à '.' H:i:s') }}</a>
@@ -36,7 +36,7 @@
                 </ul>
             </nav>
             <div class="nk-block">
-                <div class="card">
+                <div class="card @php if($ann->type_annonce == 'vente') echo 'alert alert-pro alert-info'; else echo 'alert alert-pro alert-warning'; @endphp " >
                     <div class="card-inner">
                         <div class="row ">
                             <div class="col-lg-12">
@@ -82,7 +82,7 @@
                 </div>
             </div>
             <div class="nk-block">
-                <div class="card">
+                <div class="card @php if($ann->type_annonce == 'vente') echo 'alert alert-pro alert-info'; else echo 'alert alert-pro alert-warning'; @endphp " >
                     <div class="card-inner">
                         <div class="row pb-5">
                             <div class="col-lg-12">
@@ -645,7 +645,7 @@
                 </div>
             </div>
             <div class="nk-block">
-                <div class="card">
+                <div class="card @php if($ann->type_annonce == 'vente') echo 'alert alert-pro alert-info'; else echo 'alert alert-pro alert-warning'; @endphp " >
                     <div class="card-inner mt-n5">
                         <div class="team">
                             <div class="user-card user-card-s2">

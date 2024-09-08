@@ -31,7 +31,7 @@
                         <div class="card-title-group mb-3">
                             <div class="card-title ">
                                 <h6 class="title">
-                                    Tendances des annonces
+                                    Performance des Annonces
                                 </h6>
                                 <div class="form-group align-items-center mt-4 w-50">
                                     <div class="form-control-wrap">
@@ -191,7 +191,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-
             fetchData();
 
             $(document).ready(function() {
@@ -201,7 +200,6 @@
             });
 
             function fetchData() {
-
                 var annee = $('#yearSelect').val();
 
                 $.ajax({
@@ -226,7 +224,13 @@
                     dynamicFields.removeChild(dynamicFields.firstChild);
                 }
 
-                const months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+                const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jui', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
+
+                // Calculer la valeur maximale pour l'axe des ordonnées
+                const maxVente = Math.max(...data.vente);
+                const maxLocation = Math.max(...data.location);
+                const maxTotal = Math.max(...data.vente.map((v, i) => v + data.location[i]));
+                const maxY = Math.max(maxTotal + 1); // Ajouter 5 à la valeur maximale et garantir que c'est au moins 7
 
                 var ctx = document.getElementById('camenber').getContext('2d');
                 var myChart = new Chart(ctx, {
@@ -236,24 +240,22 @@
                         datasets: [
                             {
                                 label: 'Total des Annonces ('+data.total_annonces+')',
-                                data: data.vente.map((v, i) => v + data.location[i]), // Assurez-vous que 'total_annonces' est fourni dans la réponse JSON
+                                data: data.vente.map((v, i) => v + data.location[i]),
                                 fill: false,
-                                borderColor: 'rgb(242, 66, 110)', // Couleur noire pour le total des annonces
+                                borderColor: 'rgb(242, 66, 110)',
                                 tension: 0.4
                             },
                             {
                                 label: 'Vente Total ('+data.total_vente+')',
                                 data: data.vente,
-                                fill: false, // Activer le remplissage pour l'effet de zone
-                                // backgroundColor: 'rgba(0, 0, 255, 0.3)',
+                                fill: false,
                                 borderColor: 'rgb(5, 142, 252)',
                                 tension: 0.4
                             },
                             {
                                 label: 'Location Total ('+data.total_location+')',
                                 data: data.location,
-                                fill: false, // Activer le remplissage pour l'effet de zone
-                                // backgroundColor: 'rgba(255, 165, 0, 0.3)',
+                                fill: false,
                                 borderColor: 'rgb(253, 151, 34)',
                                 tension: 0.4
                             }
@@ -262,8 +264,26 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Diagramme des performance des Annonces'
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                ticks: {
+                                    beginAtZero: true,
+                                    steps: 1,
+                                    stepValue: 5,
+                                    max: maxY,
+                                }
+                            }]
+                        },
                     },
-                }); 
+                });
             }
         });
     </script>
@@ -299,13 +319,13 @@
                 var myChart = new Chart(ctx, {
                     type: 'doughnut',
                     data: {
-                        labels: ['En ligne ('+data.total_ligne+')', 'Hors ligne ('+data.total_hligne+')', 'Indisponible ('+data.total_indispo+')'],
+                        labels: ['En ligne ('+data.total_ligne+')', 'Hors ligne ('+data.total_hligne+')', 'Indisponible ('+data.total_indispo+')', 'Vendu ('+data.total_vendu+')', 'Loué ('+data.total_louer+')'],
                         datasets: [
                             {
                                 label: 'Statuts des annonces',
-                                data: [data.total_ligne, data.total_hligne, data.total_indispo],
-                                backgroundColor: ['rgb(15, 202, 122)', 'rgb(242, 66, 110)', 'rgb(253, 151, 34)'],
-                                borderColor: ['rgb(15, 202, 122)', 'rgb(242, 66, 110)', 'rgb(253, 151, 34)'],
+                                data: [data.total_ligne, data.total_hligne, data.total_indispo,data.total_vendu,data.total_louer],
+                                backgroundColor: ['rgb(15, 202, 122)', 'rgb(242, 66, 110)', 'rgb(253, 151, 34)','rgb(22, 118, 251)', 'rgb(128, 145, 167)'],
+                                borderColor: ['rgb(15, 202, 122)', 'rgb(242, 66, 110)', 'rgb(253, 151, 34)', 'rgb(22, 118, 251)', 'rgb(128, 145, 167)'],
                                 borderWidth: 1,
                                 borderColor: 'white',
                             }

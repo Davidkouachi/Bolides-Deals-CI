@@ -39,7 +39,7 @@
                                     <div class="form-group">
                                         <label class="form-label">Email ou Téléphone</label>
                                         <div class="form-control-wrap">
-                                            <input name="login" type="text" class="form-control form-control-md" id="login" placeholder="Entrer votre Email ou Téléphone" value="{{ old('login') }}" autocomplete="off">
+                                            <input name="login" type="text" class="form-control form-control-md" id="login" placeholder="Entrer votre Email ou Téléphone" value="{{ old('login') }}" >
                                         </div>
                                     </div>
                                     <div class="form-group">

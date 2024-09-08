@@ -259,6 +259,42 @@ class MesannoncesController extends Controller
         }
     }
 
+    public function trait_vendu($uuid)
+    {
+        $verf = Annonce::where('uuid', '=', $uuid)->first();
+
+        if ($verf) {
+            $verf->statut = 'vendu';
+
+            if ($verf->save()) {
+                return redirect()->back()->with('car', 'Véhicule Vendu');
+            }else{
+                return redirect()->back()->with('error', 'une erreur est survenu, veuillez réssayer plutard');
+            }
+
+        }else{
+            return redirect()->back()->with('error', 'une erreur est survenu, veuillez réssayer plutard');
+        }
+    }
+
+    public function trait_louer($uuid)
+    {
+        $verf = Annonce::where('uuid', '=', $uuid)->first();
+
+        if ($verf) {
+            $verf->statut = 'louer';
+
+            if ($verf->save()) {
+                return redirect()->back()->with('car', 'Véhicule Louer');
+            }else{
+                return redirect()->back()->with('error', 'une erreur est survenu, veuillez réssayer plutard');
+            }
+
+        }else{
+            return redirect()->back()->with('error', 'une erreur est survenu, veuillez réssayer plutard');
+        }
+    }
+
     public function delete_ann($uuid)
     {
         // Démarrer une transaction

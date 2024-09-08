@@ -35,9 +35,9 @@ class DatabaseSeeder extends Seeder
         $role_admin =Role::create(['nom' => 'ADMINISTRATEUR']);
         $role_user =Role::create(['nom' => 'UTILISATEUR']);
 
-        $admin = User::create(['name' => 'Admin','prenom' => 'admin','phone' => '0585782723','lock' => 'non','email' => 'admin@gmail.com','adresse' => 'Néant','date_mdp' => now(),'password' => bcrypt('Admin001'),'role_id' => $role_admin->id,]);
+        $admin = User::create(['name' => 'Admin','prenom' => 'admin','phone' => '0585782723','lock' => 'non','email' => 'admin@gmail.com','adresse' => 'Néant','date_mdp' => now(),'password' => bcrypt('Admin001'),'role_id' => $role_admin->id,'role' => $role_admin->nom,]);
         
-        $user = User::create(['name' => 'Vender','prenom' => 'vendeur','phone' => '0585782725','lock' => 'non','email' => 'vendeur@gmail.com','adresse' => 'Néant','date_mdp' => now(),'password' => bcrypt('Vendeur001'),'role_id' => $role_user->id,]);
+        $user = User::create(['name' => 'Vender','prenom' => 'vendeur','phone' => '0585782725','lock' => 'non','email' => 'vendeur@gmail.com','adresse' => 'Néant','date_mdp' => now(),'password' => bcrypt('Vendeur001'),'role_id' => $role_user->id,'role' => $role_admin->nom,]);
 
         $villes = [
             'Abengourou','Abidjan','Aboisso','Adiaké','Adzopé','Agnibilékrou','Akoupé','Arrah','Bangolo','Bassawa','Bettié','Bocanda','Bondoukou','Bonoua','Botro','Bouaké','Bouna','Boundiali','Dabou', 'Daloa','Danané','Daoukro','Dianra','Dimbokro','Divo','Duekoué','Facobly','Ferkessédougou','Gagnoa','Grand-Bassam','Grand-Lahou','Gouiné','Guiglo','Guitry','Gbon','Issia',

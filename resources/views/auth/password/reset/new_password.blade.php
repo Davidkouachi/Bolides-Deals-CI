@@ -20,13 +20,13 @@
         <div class="nk-main ">
             <div class="nk-wrap nk-wrap-nosidebar">
                 <div class="nk-content ">
-                    <div class="nk-block nk-block-middle nk-auth-body wide-xs" style="margin-top: -20px;">
+                    <div class="nk-block nk-block-middle nk-auth-body wide-xs" style="margin-top: 0px;">
                         <div class="brand-logo text-center">
                             <a href="#" class="logo-link">
-                                <img height="200px" width="200px" src="{{asset('images/logo/logo.png')}}">
+                                <img height="150px" width="150px" src="{{asset('images/logo/logo.png')}}">
                             </a>
                         </div>
-                        <div class="card" style="margin-top: -30px;">
+                        <div class="card">
                             <div class="card-inner card-inner-lg">
                                 <div class="nk-block-head">
                                     <div class="nk-block-head-content">

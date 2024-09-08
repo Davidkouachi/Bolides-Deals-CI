@@ -35,11 +35,7 @@ class StatutHorsLigneMiddleware
 
             if ($value->statut === 'en ligne') {
 
-                if ($value->refresh_nbre === 0) {
-                    $daysDifference = floor(Carbon::parse($value->created_at)->diffInRealDays($currentDate));
-                }else{
-                    $daysDifference = floor(Carbon::parse($value->refresh_date)->diffInRealDays($currentDate));
-                }
+                $daysDifference = floor(Carbon::parse($value->refresh_date)->diffInRealDays($currentDate));
 
                 if ($daysDifference > $refresh->duree_vie) {
                     // Mettre à jour le statut de l'annonce à "hors ligne"

@@ -120,6 +120,7 @@ class AuthController extends Controller
         $user->password = bcrypt($password );
         $user->lock = 'non';
         $user->role_id =  $role_acheteur->id;
+        $user->role =  'UTILISATEUR';
 
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
@@ -139,7 +140,6 @@ class AuthController extends Controller
         if ($user->save()) {
             return redirect()->route('index_login')->with('success','Compte créer avec succès. Veuillez vous connectez maintenant');
         }
-    
     }
 
     public function deconnexion(Request $request)
